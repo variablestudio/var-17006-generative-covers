@@ -43,17 +43,64 @@ canvas {
   }
 
   loadCSVFile("data/okladki.csv", function(data) {
-    data.forEach(function(book, i) {
-      console.log(i, book[2], book[3]);
-    });
+    console.log(JSON.stringify(data.shift()));
+
+    var i = 0;
+    function nextCover() {
+      var book = data[i];
+      makeCover(book[1], book[2]);
+      i = (i + 1) % data.length;
+
+      setTimeout(nextCover, 1000);
+    }
+
+    nextCover();
   });
 
+  function clear() {
+    project.activeLayer.remove();
+    var layer = new Layer();
+  }
 
-  var path = new Path();
-  path.strokeColor = 'black';
-  var start = new Point(100, 100);
-  path.moveTo(start);
-  path.lineTo(start + [ 100, -50 ]);
+  function makeCover(author, title) {
+    clear();
+
+    var niceBlue = "#27D1E7";
+    var paleYellow = "rgb(255, 255, 240)";
+
+    var margins = 0;
+    var rect = new Path.Rectangle(new Point(margins,margins), view.size - new Size(2 * margins, 2 * margins));
+    rect.fillColor = niceBlue;
+
+    var path = new Path();
+    path.strokeColor = 'black';
+    var start = new Point(view.size.width/2, 0);
+    path.moveTo(start);
+    path.lineTo([0, view.size.width/2]);
+
+    var authorText = new PointText(new Point(50, 100));
+    authorText.justification = 'left';
+    authorText.content = author;
+    authorText.characterStyle = {
+      fontSize: 20,
+      fillColor: paleYellow,
+    };
+
+    var titleWords = title.split(' ');
+
+    titleWords.forEach(function(word, wordIndex) {
+      var titleText = new PointText(new Point(50, 200 + wordIndex * 75));
+      titleText.justification = 'left';
+      titleText.content = word;
+      titleText.characterStyle = {
+        fontSize: 50,
+        fillColor: paleYellow,
+      };
+    });
+
+    view.draw();
+  }
+
 </script>
 </head>
 <body>
