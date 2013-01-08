@@ -62,6 +62,14 @@ canvas {
     var layer = new Layer();
   }
 
+  function formatAuthorName(name) {
+    var tokens = name.split(', ');
+    if (tokens.length == 2)
+      return tokens[1] + ' ' + tokens[0];
+    else
+      return tokens[0];
+  }
+
   function makeCover(author, title) {
     clear();
 
@@ -80,7 +88,7 @@ canvas {
 
     var authorText = new PointText(new Point(50, 100));
     authorText.justification = 'left';
-    authorText.content = author;
+    authorText.content = formatAuthorName(author);
     authorText.characterStyle = {
       fontSize: 20,
       fillColor: paleYellow,
