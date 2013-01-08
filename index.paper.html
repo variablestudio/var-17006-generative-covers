@@ -14,13 +14,17 @@ body {
   left: 50%;
 }
 
-canvas {
+#cover {
   background: rgba(255, 255, 255, 1);
   margin: 0 auto;
   display: block;
   margin-top: -300px;
   margin-left: -225px;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+}
+
+canvas {
+  background: rgba(255, 255, 255, 1);
 }
 </style>
 <script type="text/javascript" src="js/paper.js"></script>
@@ -51,7 +55,7 @@ canvas {
       makeCover(book[1], book[2]);
       i = (i + 1) % data.length;
 
-      setTimeout(nextCover, 1000);
+      //setTimeout(nextCover, 1000);
     }
 
     nextCover();
@@ -70,6 +74,243 @@ canvas {
       return tokens[0];
   }
 
+  function makeElem(type, attribs) {
+    attribs = attribs || {};
+    var elem = document.createElement(type);
+    for(var i in attribs) {
+      elem[i] = attribs[i];
+    }
+    return elem;
+  }
+
+  function makeCanvas(attribs) {
+    var canvas = makeElem("canvas", attribs);
+    return canvas;
+  }
+
+  function makeImg(attribs) {
+    return makeElem("img", attribs);
+  }
+
+  function makeDiv(attribs) {
+    return makeElem("div", attribs);
+  }
+
+  function makeText(text) {
+    return document.createTextNode(text);
+  }
+
+  //var strDataURI = oCanvas.toDataURL("image/jpeg");
+
+  (function() {
+    var canvas = document.createElement("canvas");
+    canvas.width = 100;
+    canvas.height = 100;
+    document.body.appendChild(canvas);
+    var ctx = canvas.getContext('2d');
+    ctx.canvas = canvas;
+    var fontFamily = "Arial, san-serif";
+    var fontSize = 14;
+    getFontMetrics = function (props) {
+      var text = props.text;
+      var baseline = props.baseline || "alphabetic";
+      var drawBaseline = props.drawBaseline || false;
+      if (props.fontFamily) fontFamily = props.fontFamily;
+      if (props.fontSize) fontSize = props.fontSize;
+      // setting up the canvas
+      ctx.save(); // create canvas to use as buffer
+      ctx.font = fontSize + "px " + fontFamily;
+      var textWidth = ctx.measureText(text).width;
+      console.log("textWidth", textWidth);
+      // This keeps font in-screen, measureText().width doesn't
+      // quite do it in some cases. For instance "j", or the letter "f"
+      // in the font "Zapfino".
+      var offsetx = fontSize * 2;
+      var offsety = fontSize * 2;
+      var cwidth = ctx.canvas.width = Math.round(textWidth + offsetx * 2);
+      var cheight = ctx.canvas.height = Math.round(offsety * 2);
+      console.log("cwidth", cwidth);
+      if (typeof (baseline) == "string") {
+          //offsety = 0; // using <canvas> baseline //MOD by Marcin
+          ctx.textBaseline = baseline;
+      }
+      // ctx.font has to be called twice because resetting the size resets the state
+      ctx.font = fontSize + "px " + fontFamily;
+      ctx.fillStyle = "#000000";
+
+      console.log("offsetx", offsetx, offsety, fontSize * 2);
+      ctx.fillText(text, offsetx, offsety);
+      //ctx.fillText(text, 10, 10);
+      // drawing baseline
+      if (drawBaseline) {
+          ctx.fillRect(0, canvas.height / 2, canvas.width, 1);
+      }
+      // grabbing image data
+      var imageData = ctx.getImageData(0, 0, cwidth, cheight);
+      var data = imageData.data;
+      // calculating top
+      var top = 0;
+      var pos = 0;
+      while (pos < data.length) {
+          if (data[pos + 3]) {
+              pos -= pos % (cwidth * 4); // back to beginning of the line top = (pos / 4) / cwidth; // calculate pixel position top -= offsety - fontSize; pos = data.length; // exit loop } pos += 4; } // calculating bottom var bottom = 0; var pos = data.length; while (pos > 0) {
+              if (data[pos + 3]) {
+                  pos -= pos % (cwidth * 4); // back to beginning of the line
+                  bottom = (pos / 4) / cwidth;
+                  bottom -= offsety - fontSize;
+                  pos = 0; // exit loop
+              }
+              pos -= 4;
+          }
+          top = pos;
+          // calculating left
+          var left = 0;
+          var col = 0,
+              row = 0; // left bounds
+          while (row < cheight && col < cwidth) {
+              var px = data[(row * cwidth * 4) + (col * 4) + 3];
+              if (px) {
+                  left = col - offsetx;
+                  row = cheight;
+                  col = cwidth;
+              }
+              row++;
+              if (row % cheight == 0) {
+                  row = 0;
+                  col++;
+              }
+          }
+          // calculating right
+          var right = 0;
+          var col = cwidth,
+              row = 0; // right bounds
+          while (row < cheight && col > 0) {
+              if (data[(row * cwidth * 4) + (col * 4) + 3]) {
+                  right = col - offsetx;
+                  row = cheight;
+                  col = cwidth;
+              }
+              row++;
+              if (row % cheight == 0) {
+                  row = 0;
+                  col--;
+              }
+          }
+          // calculating real-bottom
+          var realBottom = 0;
+          var pos = data.length;
+          while (pos > 0) {
+              if (data[pos + 3]) {
+                  pos -= pos % (cwidth * 4); // back to beginning of the line
+                  realBottom = (pos / 4) / cwidth;
+                  pos = 0; // exit loop
+              }
+              pos -= 4;
+          }
+          // restoring state
+          ctx.restore();
+          // returning raw-metrics
+          if (drawBaseline) {
+              ctx.fillStyle = "#FF0000";
+              ctx.fillRect(right, 0, 1, canvas.height);
+              ctx.fillRect(-left, 0, 1, canvas.height);
+              ctx.fillRect(0, realBottom, canvas.width, 1);
+              ctx.fillRect(0, fontSize - top, canvas.width, 1);
+          }
+          console.log("top", top);
+          return {
+              "left": (-left),
+              "top": (fontSize - top),
+              "width": (right + left),
+              "height": (realBottom - fontSize + top),
+              "bottom": realBottom
+          }
+      };
+    }
+  })();
+
+  function measureText2(textObj) {
+    var metrics = getFontMetrics({
+      text: textObj.content,
+      fontFamily : textObj.characterStyle.font,
+      fontSize : textObj.characterStyle.fontSize,
+      drawBaseline : true
+    });
+    console.log(textObj.content, JSON.stringify(metrics));
+    return {
+      width: metrics.width,
+      height: metrics.height
+    }
+  }
+
+  var measureTextCanvas;
+  var measureTextContext;
+  function measureText(textObj, leading) {
+    leading = leading || 0;
+    if (!measureTextCanvas) {
+      measureTextCanvas = document.createElement("canvas");
+      document.body.appendChild(measureTextCanvas);
+      measureTextContext = measureTextCanvas.getContext('2d');
+    }
+
+    measureTextContext.font = textObj.characterStyle.fontSize + "pt " + textObj.characterStyle.font;
+
+    measureTextContext.fillStyle = "#fF0000";
+    measureTextContext.fillText(textObj.content, 50, 50);
+
+    var width = measureTextContext.measureText(textObj.content).width;
+    console.log("width", width);
+    var height = textObj.characterStyle.fontSize + leading;
+    return {
+      width: width,
+      height: height
+    }
+  }
+
+  var counter = 0;
+  function measureText3(textObj, lineHeight) {
+    var canvas = makeCanvas({width:1, height:1});
+    var img = makeImg({src : canvas.toDataURL()});
+    var parent = makeDiv({id : "elem" + counter++});
+    parent.appendChild(makeText(textObj.content));
+    parent.appendChild(img);
+    img.style.display = "none";
+    parent.style.display = "inline";
+    parent.style.fontFamily = textObj.characterStyle.font;
+    parent.style.fontSize = textObj.characterStyle.fontSize + "px";
+    parent.style.display.none;
+
+    document.body.appendChild(parent);
+
+    var measureHeight = parent.offsetHeight;
+    var measureWidth = parent.offsetWidth;
+
+    //// making sure super-wide text stays in-bounds
+    img.style.display = "inline";
+    var forceWidth = measureWidth + img.offsetWidth;
+
+    //// capturing the "top" and "bottom" baseline
+    parent.style.cssText = "margin: 50px 0; display: block; width: " + forceWidth + "px";
+    var TopCSS = img.offsetTop - 49;
+    var HeightCSS = parent.offsetHeight;
+    var BottomCSS = TopCSS - HeightCSS;
+    console.log(measureHeight, HeightCSS);
+    //// capturing the "middle" baseline
+    //parent.style.cssText = "line-height: 0; display: block; width: " + forceWidth + "px";
+    //var MiddleCSS = image.offsetTop + 1;
+
+    //control = document.getElementById("control");
+    //control.style.display = "inline";
+    //control.textContent = textObj.content;
+    //control.style.fontFamily = textObj.characterStyle.font;
+    //control.style.fontSize = textObj.characterStyle.fontSize + "px";
+    return {
+        width: measureWidth,
+        height: measureHeight
+    };
+    document.body.removeChild(parent);
+  };
+
   function makeCover(author, title) {
     clear();
 
@@ -86,25 +327,45 @@ canvas {
     path.moveTo(start);
     path.lineTo([0, view.size.width/2]);
 
+    var authorFontSize = view.size.height * 0.03;
+    var titleFontSize = view.size.height * 0.06;
+
     var authorText = new PointText(new Point(50, 100));
     authorText.justification = 'left';
     authorText.content = formatAuthorName(author);
     authorText.characterStyle = {
-      fontSize: 20,
-      fillColor: paleYellow,
+      fontFamily: "Arial",
+      fontSize: authorFontSize,
+      fillColor: paleYellow
     };
 
     var titleWords = title.split(' ');
 
+    var titleWordsAnchor = new Point(50, 200);
+    var titleWordsLeading = titleFontSize * 0.75;
+
+    var totalTextHeight = 0;
+    var maxTextWidth = 0;
     titleWords.forEach(function(word, wordIndex) {
-      var titleText = new PointText(new Point(50, 200 + wordIndex * 75));
+      var titleText = new PointText(titleWordsAnchor + [0, wordIndex * (titleFontSize + titleWordsLeading)]);
       titleText.justification = 'left';
       titleText.content = word;
       titleText.characterStyle = {
-        fontSize: 50,
-        fillColor: paleYellow,
+        font: "Arial",
+        fontSize: titleFontSize,
+        fillColor: paleYellow
       };
+      //console.log((titleText.characterStyle));
+      //ctx.textBaseline = “top”;
+      //console.log(titleText.getBounds());
+      var bounds = measureText(titleText, 1.5);
+      //console.log("bounds.height", bounds.height);
+      totalTextHeight += bounds.height + titleWordsLeading;
+      maxTextWidth = Math.max(maxTextWidth, bounds.width);
     });
+
+    var textBoundsRect = new Path.Rectangle(titleWordsAnchor - [0, titleFontSize], new Size(maxTextWidth, totalTextHeight));
+    textBoundsRect.strokeColor = "#FF0000";
 
     view.draw();
   }
@@ -114,6 +375,7 @@ canvas {
 <body>
   <div id="canvasContainer">
     <canvas id="cover" width="450" height="600"></canvas>
+    <span id="control">Hello world!</span>
   </div>
 </body>
 </html>
