@@ -55,7 +55,7 @@ canvas {
       makeCover(book[1], book[2]);
       i = (i + 1) % data.length;
 
-      //setTimeout(nextCover, 1000);
+      setTimeout(nextCover, 1000);
     }
 
     nextCover();
@@ -142,7 +142,7 @@ canvas {
     var titleFontSize = view.size.height * 0.06;
 
     var authorText = new PointText(new Point(50, 100));
-    authorText.justification = 'left';
+    authorText.justification = "left";
     authorText.content = formatAuthorName(author);
     authorText.characterStyle = {
       fontFamily: "Arial",
@@ -150,33 +150,67 @@ canvas {
       fillColor: paleYellow
     };
 
-    var titleWords = title.split(' ');
 
-    var titleWordsAnchor = new Point(50, 200);
-    var titleWordsLeading = titleFontSize * 0.75;
+    function breakText(text, font, fontSize, maxWidth) {
+      var words = text.split(" ");
+      var lines = [];
+      var currentLine = "";
+      while(words.length > 0) {
+        var word = words.shift();
+        var newLine = currentLine;
+        if (newLine.length > 0) newLine += " ";
+        newLine += word;
+        var measurements = measureText(newLine, font, fontSize);
+        if (measurements.width > maxWidth) {
+          lines.push(currentLine);
+          currentLine = word;
+        }
+        else {
+          currentLine = newLine;
+        }
+      }
+      lines.push(currentLine);
+      return lines;
+    }
 
-    var totalTextHeight = 0;
+    var titleWordsAnchor = new Point(50, 175);
+    var titleWordsLeading = titleFontSize * 0.5;
+    var totalTextHeight = view.size.height;
     var maxTextWidth = 0;
+    var titleWords;
+    var drawDebug = false;
+
+    var numTries = 0;
+    while(totalTextHeight > view.size.height/2 && ++numTries < 10) {
+      titleFontSize *= 0.9;
+      titleWordsLeading = titleFontSize * 0.5;
+      titleWords = breakText(title, "Arial", titleFontSize, view.size.width - titleWordsAnchor.x * 2);
+
+      totalTextHeight = 0;
+      maxTextWidth = 0;
+      titleWords.forEach(function(word, wordIndex) {
+        var measurements = measureText(word, "Arial", titleFontSize);
+        totalTextHeight += measurements.height + titleWordsLeading;
+        maxTextWidth = Math.max(maxTextWidth, measurements.width);
+      });
+    }
+
     titleWords.forEach(function(word, wordIndex) {
       var titleText = new PointText(titleWordsAnchor + [0, wordIndex * (titleFontSize + titleWordsLeading)]);
-      titleText.justification = 'left';
+      titleText.justification = "left";
       titleText.content = word;
       titleText.characterStyle = {
         font: "Arial",
         fontSize: titleFontSize,
         fillColor: paleYellow
       };
-      //console.log((titleText.characterStyle));
-      //ctx.textBaseline = “top”;
-      //console.log(titleText.getBounds());
-      var bounds = measureTextObj(titleText, 1.5);
-      //console.log("bounds.height", bounds.height);
-      totalTextHeight += bounds.height + titleWordsLeading;
-      maxTextWidth = Math.max(maxTextWidth, bounds.width);
+      var bounds = measureTextObj(titleText);
     });
 
-    var textBoundsRect = new Path.Rectangle(titleWordsAnchor - [0, titleFontSize], new Size(maxTextWidth, totalTextHeight));
-    textBoundsRect.strokeColor = "#FF0000";
+    if (drawDebug) {
+      var textBoundsRect = new Path.Rectangle(titleWordsAnchor - [0, titleFontSize], new Size(maxTextWidth, totalTextHeight));
+      textBoundsRect.strokeColor = "#FF0000";
+    }
 
     view.draw();
   }
@@ -186,7 +220,6 @@ canvas {
 <body>
   <div id="canvasContainer">
     <canvas id="cover" width="450" height="600"></canvas>
-    <span id="control">Hello world!</span>
   </div>
 </body>
 </html>
