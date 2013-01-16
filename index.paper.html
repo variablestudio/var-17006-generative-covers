@@ -64,7 +64,6 @@ img.thumb {
   function onBooksLoaded(loadedBooks) {
     books = books.concat(loadedBooks);
     if (++numSourcesLoaded == 2) {
-      console.log(books.length);
       processBooks();
       makeCovers();
     }

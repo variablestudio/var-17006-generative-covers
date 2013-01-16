@@ -21,7 +21,6 @@ OK.Data.loadCSVFile = function(path, callback) {
 OK.Data.fromCSV = function(path, callback) {
   OK.Data.loadCSVFile(path, function(data) {
     var colNames = data.shift();
-    console.log(colNames);
     var books = data.map(function(bookAttribs) {
       return {
         categories: bookAttribs[0].split(',').map(function(c) { return c.trim(); }),
