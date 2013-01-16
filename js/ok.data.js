@@ -24,7 +24,7 @@ OK.Data.fromCSV = function(path, callback) {
     console.log(colNames);
     var books = data.map(function(bookAttribs) {
       return {
-        categories: bookAttribs[0],
+        categories: bookAttribs[0].split(',').map(function(c) { return c.trim(); }),
         author: bookAttribs[1],
         title: bookAttribs[2],
         publicationTitle: bookAttribs[3],
@@ -40,6 +40,7 @@ OK.Data.fromCSV = function(path, callback) {
 
 OK.Data.fromJSON = function(path, callback) {
   OK.Data.loadTextFile(path, function(data) {
-    callback(JSON.parse(data));
+    var books = JSON.parse(data);
+    callback(books);
   });
 };
