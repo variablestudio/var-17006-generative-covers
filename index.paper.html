@@ -4,14 +4,28 @@
 <meta charset="UTF-8">
 <title>Otwórz ksiązkę</title>
 <style type="text/css">
+html {
+  height: 100%;
+}
+
 body {
-  background: rgb(150, 150, 150)
+  background: rgb(255, 255, 255);
+  height: 100%;
+  display: block;
+  background: no-repeat center center fixed;
+  background-image: url(css/wood.jpg);
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  padding: 0;
+  padding-left: 320px;
 }
 
 #canvasContainer {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 315px;
+  left: 240px;
 }
 
 #cover {
@@ -20,11 +34,19 @@ body {
   display: block;
   margin-top: -300px;
   margin-left: -225px;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
 }
 
 canvas {
   background: rgba(255, 255, 255, 1);
+}
+
+img.thumb {
+  width: 150px;
+  height: 200px;
+  margin: 0.5em;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  float: left;
 }
 </style>
 <script type="text/javascript" src="js/paper.js"></script>
@@ -36,16 +58,33 @@ canvas {
   var books = [];
   var numSourcesLoaded = 0;
 
+  OK.Data.fromCSV("data/okladki.csv", onBooksLoaded);
+  OK.Data.fromJSON("data/books.json", onBooksLoaded);
+
   function onBooksLoaded(loadedBooks) {
     books = books.concat(loadedBooks);
     if (++numSourcesLoaded == 2) {
       console.log(books.length);
+      processBooks();
       makeCovers();
     }
   }
 
-  OK.Data.fromCSV("data/okladki.csv", onBooksLoaded);
-  OK.Data.fromJSON("data/books.json", onBooksLoaded);
+  function processBooks() {
+    var categories = {};
+    books.forEach(function(book) {
+      console.log(book.categories);
+      //var bookCategories = book.categories.split(',')
+      //bookCategories.forEach(function(category) {
+      //  category = category.trim();
+      //  categories[category] = true;
+      //});
+    });
+    var categoriesNames = [];
+    for(var categoryName in categories) {
+      categoriesNames.push(categoryName);
+    }
+  }
 
   function makeCovers() {
     var i = 0;
@@ -136,14 +175,14 @@ canvas {
 
     var path = new Path();
     path.strokeColor = '#FFF';
-    var start = new Point(view.size.width/2, 0);
+    var start = new Point(view.size.width/3, 0);
     path.moveTo(start);
-    path.lineTo([0, view.size.width/2]);
+    path.lineTo([0, view.size.width/3]);
 
     var authorFontSize = view.size.height * 0.03;
     var titleFontSize = view.size.height * 0.06;
 
-    var authorText = new PointText(new Point(50, 100));
+    var authorText = new PointText(new Point(view.size.width*0.1, view.size.height * 0.17));
     authorText.justification = "left";
     authorText.content = formatAuthorName(author);
     authorText.characterStyle = {
@@ -174,7 +213,7 @@ canvas {
       return lines;
     }
 
-    var titleWordsAnchor = new Point(50, 175);
+    var titleWordsAnchor = new Point(view.size.width*0.1, view.size.height*0.3);
     var titleWordsLeading = titleFontSize * 0.5;
     var totalTextHeight = view.size.height;
     var maxTextWidth = 0;
@@ -214,13 +253,19 @@ canvas {
     }
 
     view.draw();
+
+    var coverCanvas = document.getElementById("cover");
+    var img = makeImg();
+    img.src = coverCanvas.toDataURL();
+    img.className = "thumb";
+    document.body.appendChild(img);
   }
 
 </script>
 </head>
 <body>
   <div id="canvasContainer">
-    <canvas id="cover" width="450" height="600"></canvas>
+    <canvas id="cover" width="300" height="400"></canvas>
   </div>
 </body>
 </html>
