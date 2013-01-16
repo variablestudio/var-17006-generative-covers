@@ -29,6 +29,7 @@ canvas {
 </style>
 <script type="text/javascript" src="js/paper.js"></script>
 <script type="text/javascript" src="js/CSVToArray.js"></script>
+<script type="text/javascript" src="js/chroma.js"></script>
 <script type="text/paperscript" canvas="cover">
   function loadTextFile(path, callback) {
     var r = new XMLHttpRequest();
@@ -109,7 +110,6 @@ canvas {
       measureTextContext.fillStyle = "#fF0000";
 
       var width = measureTextContext.measureText(text).width;
-      console.log("width", width);
       var height = fontSize;
       return {
         width: width,
@@ -128,12 +128,15 @@ canvas {
     var niceBlue = "#27D1E7";
     var paleYellow = "rgb(255, 255, 240)";
 
+    var colorHSL = chroma.hex(niceBlue).hsl();
+    niceBlue = chroma.hsl(Math.random() * 255, 0.3, colorHSL[2]).hex();
+
     var margins = 0;
     var rect = new Path.Rectangle(new Point(margins,margins), view.size - new Size(2 * margins, 2 * margins));
     rect.fillColor = niceBlue;
 
     var path = new Path();
-    path.strokeColor = 'black';
+    path.strokeColor = '#FFF';
     var start = new Point(view.size.width/2, 0);
     path.moveTo(start);
     path.lineTo([0, view.size.width/2]);
@@ -149,7 +152,6 @@ canvas {
       fontSize: authorFontSize,
       fillColor: paleYellow
     };
-
 
     function breakText(text, font, fontSize, maxWidth) {
       var words = text.split(" ");
