@@ -30,37 +30,34 @@ canvas {
 <script type="text/javascript" src="js/paper.js"></script>
 <script type="text/javascript" src="js/CSVToArray.js"></script>
 <script type="text/javascript" src="js/chroma.js"></script>
+<script type="text/javascript" src="js/ok.data.js"></script>
 <script type="text/paperscript" canvas="cover">
-  function loadTextFile(path, callback) {
-    var r = new XMLHttpRequest();
-    r.open("GET", path, true);
-    r.onreadystatechange = function () {
-    if (r.readyState != 4 || r.status != 200) return;
-      callback(r.responseText);
-    };
-    r.send();
+
+  var books = [];
+  var numSourcesLoaded = 0;
+
+  function onBooksLoaded(loadedBooks) {
+    books = books.concat(loadedBooks);
+    if (++numSourcesLoaded == 2) {
+      console.log(books.length);
+      makeCovers();
+    }
   }
 
-  function loadCSVFile(path, callback) {
-    loadTextFile(path, function(data) {
-      callback(CSVToArray(data));
-    });
-  }
+  OK.Data.fromCSV("data/okladki.csv", onBooksLoaded);
+  OK.Data.fromJSON("data/books.json", onBooksLoaded);
 
-  loadCSVFile("data/okladki.csv", function(data) {
-    console.log(JSON.stringify(data.shift()));
-
+  function makeCovers() {
     var i = 0;
     function nextCover() {
-      var book = data[i];
-      makeCover(book[1], book[2]);
-      i = (i + 1) % data.length;
+      makeCover(books[i]);
+      i = (i + 1) % books.length;
 
       setTimeout(nextCover, 1000);
     }
 
     nextCover();
-  });
+  }
 
   function clear() {
     project.activeLayer.remove();
@@ -122,7 +119,9 @@ canvas {
     return measureText(textObj.content, textObj.characterStyle.font, textObj.characterStyle.fontSize);
   }
 
-  function makeCover(author, title) {
+  function makeCover(book) {
+    var author = book.author;
+    var title = book.title;
     clear();
 
     var niceBlue = "#27D1E7";
