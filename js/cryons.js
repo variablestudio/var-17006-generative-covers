@@ -78,7 +78,7 @@ SkCanvasCrayon.prototype.clear = function() {
 
 //-----------------------------------------------------------------------------
 
-function HTMLCanvasCryon(canvas) {
+function HTMLCanvasCrayon(canvas) {
   this.canvas = canvas;
   this.context = canvas.getContext('2d');
   this.styles = {};
@@ -86,7 +86,7 @@ function HTMLCanvasCryon(canvas) {
   this.currentStyle = this.styles['default'];
 }
 
-HTMLCanvasCryon.prototype.createStyle = function() {
+HTMLCanvasCrayon.prototype.createStyle = function() {
   var style = {
     color: [0, 0, 0, 255],
     stroke: true,
@@ -95,7 +95,7 @@ HTMLCanvasCryon.prototype.createStyle = function() {
   return style;
 };
 
-HTMLCanvasCryon.prototype.style = function(styleName) {
+HTMLCanvasCrayon.prototype.style = function(styleName) {
   if (!this.styles[styleName]) {
     this.styles[styleName] = this.createStyle();
   }
@@ -103,14 +103,14 @@ HTMLCanvasCryon.prototype.style = function(styleName) {
   return this;
 };
 
-HTMLCanvasCryon.prototype.color = function(color) {
+HTMLCanvasCrayon.prototype.color = function(color) {
   if (typeof color == 'string') {
     this.currentStyle.color = color;
   }
   return this;
 };
 
-HTMLCanvasCryon.prototype.fill = function(enabled) {
+HTMLCanvasCrayon.prototype.fill = function(enabled) {
   var on;
   if (typeof enabled == 'string') {
     this.color(enabled);
@@ -127,7 +127,7 @@ HTMLCanvasCryon.prototype.fill = function(enabled) {
   return this;
 };
 
-HTMLCanvasCryon.prototype.stroke = function(enabled) {
+HTMLCanvasCrayon.prototype.stroke = function(enabled) {
   var on;
   if (typeof enabled == 'string') {
     this.color(enabled);
@@ -144,7 +144,7 @@ HTMLCanvasCryon.prototype.stroke = function(enabled) {
   return this;
 };
 
-HTMLCanvasCryon.prototype.rect = function(x, y, w, h) {
+HTMLCanvasCrayon.prototype.rect = function(x, y, w, h) {
   if (this.currentStyle.fill) {
     this.context.fillStyle = this.currentStyle.color;
     this.context.fillRect(x, y, w, h);
@@ -156,12 +156,12 @@ HTMLCanvasCryon.prototype.rect = function(x, y, w, h) {
   return this;
 };
 
-HTMLCanvasCryon.prototype.circle = function(x, y, r) {
+HTMLCanvasCrayon.prototype.circle = function(x, y, r) {
   //this.canvas.drawCircle(this.currentStyle, x, y, r);
   return this;
 };
 
-HTMLCanvasCryon.prototype.line = function(x1, y1, x2, y2) {
+HTMLCanvasCrayon.prototype.line = function(x1, y1, x2, y2) {
   this.context.beginPath();
   this.context.moveTo(x1, y1);
   this.context.lineTo(x2, y2);
@@ -178,18 +178,18 @@ HTMLCanvasCryon.prototype.line = function(x1, y1, x2, y2) {
   return this;
 };
 
-HTMLCanvasCryon.prototype.clear = function() {
+HTMLCanvasCrayon.prototype.clear = function() {
   this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
   return this;
 };
 
 (function() {
   if (typeof document !== 'undefined') {
-    Crayon = HTMLCanvasCryon;
-    console.log("HTMLCanvasCryon enabled");
+    Crayon = HTMLCanvasCrayon;
+    console.log("HTMLCanvasCrayon enabled");
   }
   else {
-    console.log("HTMLCanvasCryon disabled");
+    console.log("HTMLCanvasCrayon disabled");
   }
 })();
 
