@@ -65,64 +65,36 @@ OK.Covers.push((function() {
     }
 
     var margins = 0;
-    /*
-    with(paper) {
-      var author = book.author;
-      var title = book.title;
+    var author = book.author;
+    var title = book.title;
 
-      //clear
-      project.activeLayer.remove();
-      var layer = new Layer();
-      */
+    crayon.clear();
 
     var niceBlue = "#27D1E7";
     var paleYellow = "rgb(255, 255, 240)";
-      //var colorHSL = chroma.hex(niceBlue).hsl();
 
-      //niceBlue = chroma.hsl(Math.random() * 255, 0.8, colorHSL[2]).hex();
-
-      //console.log(view, view.size);
-      //var rect = new Path.Rectangle(new Point(margins, margins), new Size(view.size.width - 2 * margins, view.size.height -  2 * margins));
-      //rect.fillColor = niceBlue;
+    var colorHSL = chroma.hex(niceBlue).hsl();
+    niceBlue = chroma.hsl(Math.random() * 255, 0.8, colorHSL[2]).hex();
 
     crayon.fill(niceBlue).rect(margins, margins, crayon.canvas.width - 2 * margins, crayon.canvas.height - 2 * margins);
 
-
-    crayon.stroke("#FFFFFF");
+    crayon.fill(paleYellow).rect(margins, margins, crayon.canvas.width - 2 * margins, crayon.canvas.height/3 - 2 * margins);
 
     var step = 10 + Math.random() * 20;
       for(var i=0; i<1000; i+=step) {
         var a = { x : 0, y : 10 + i };
         var b = { x : 10 + i, y : 0 };
 
-        crayon.line(a.x, a.y, b.x, b.y);
+        crayon.reset();
+        crayon.stroke("#FFFFFF").line(a.x, a.y, b.x, b.y);
         var k = Math.random();
-        //crayon.rotate(-45).translate(a.x + (b.x - a.x) * k + 2, a.y + (b.y - a.y) * k + 2)
-        //var rect = new Path.Rectangle(new Point(), new Size(10 + Math.random() * 200, 3));
-        //rect.rotate(-45);
-        //rect.fillColor = "#FFFFFF";
+        crayon.fill("#FFFFFF")
+          .translate(a.x + (b.x - a.x) * k + 2, a.y + (b.y - a.y) * k + 2)
+          .rotate(-45)
+          .rect(0, 0, 10 + Math.random() * 200, 3);
       }
 
       /*
-
-      var step = 10 + Math.random() * 20;
-      for(var i=0; i<1000; i+=step) {
-        var a = new Point(0, 10 + i);
-        var b = new Point(10 + i, 0);
-        var line = new Path.Line(a, b);
-        line.strokeColor = "#FFFFFF";
-        var k = Math.random();
-        var rect = new Path.Rectangle(new Point(a.x + (b.x - a.x) * k + 2, a.y + (b.y - a.y) * k + 2), new Size(10 + Math.random() * 200, 3));
-        rect.rotate(-45);
-        rect.fillColor = "#FFFFFF";
-      }
-
-      var path = new Path();
-      path.strokeColor = '#FFF';
-      var start = new Point(view.size.width/3, 0);
-      path.moveTo(start);
-      path.lineTo([0, view.size.width/3]);
-
       var authorFontSize = view.size.height * 0.03;
       var titleFontSize = view.size.height * 0.06;
 
