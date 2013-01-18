@@ -52,10 +52,13 @@ img.thumb {
 <script type="text/javascript" src="js/CSVToArray.js"></script>
 <script type="text/javascript" src="js/chroma.js"></script>
 <script type="text/javascript" src="js/crayons.js"></script>
+<script type="text/javascript" src="js/processing-1.4.1.min.js"></script>
 <script type="text/javascript" src="js/ok.data.js"></script>
-<!--<script type="text/javascript" src="js/ok.covers.simplest.js"></script>-->
-<script type="text/javascript" src="js/ok.covers.minimal.cryons.js"></script>
-<!--<script type="text/javascript" src="js/ok.covers.minimal.js"></script>-->
+<script type="text/javascript" src="js/ok.covers.simplest.js"></script>
+<!--<script type="text/javascript" src="js/ok.covers.minimal.cryons.js"></script>-->
+<script type="text/javascript" src="js/ok.covers.minimal.js"></script>
+<script type="text/javascript" src="js/ok.covers.minimal.p5.js"></script>
+
 <script type="text/javascript">
 
   var books = [];
@@ -67,7 +70,7 @@ img.thumb {
   function onBooksLoaded(loadedBooks) {
     books = books.concat(loadedBooks);
     if (++numSourcesLoaded == 2) {
-      processBooks();
+      //processBooks();
       makeCovers();
     }
   }
@@ -75,17 +78,21 @@ img.thumb {
   function processBooks() {
     var categories = {};
     books.forEach(function(book) {
-      //console.log(book.categories);
-      //var bookCategories = book.categories.split(',')
-      //bookCategories.forEach(function(category) {
-      //  category = category.trim();
-      //  categories[category] = true;
-      //});
+      if (book.categories.length > 5) console.log(book);
+      book.categories.forEach(function(category) {
+        categories[category] = categories[category] ? categories[category] + 1 : 1;
+      });
     });
     var categoriesNames = [];
     for(var categoryName in categories) {
-      categoriesNames.push(categoryName);
+      categoriesNames.push({name:categoryName, count:categories[categoryName]});
     }
+    categoriesNames.sort(function(a, b) {
+      return a.count - b.count;
+    });
+    categoriesNames.forEach(function(category) {
+      //console.log(JSON.stringify(category));
+    })
   }
 
   function makeCovers() {
@@ -97,7 +104,9 @@ img.thumb {
       OK.Covers[coverAlgorithmId].makeCover(books[i]);
       i = (i + 1) % books.length;
 
-      setTimeout(nextCover, 1000);
+      if (i < 20) {
+        setTimeout(nextCover, 1000);
+      }
     }
 
     nextCover();
