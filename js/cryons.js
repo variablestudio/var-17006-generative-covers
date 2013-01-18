@@ -84,6 +84,7 @@ function HTMLCanvasCrayon(canvas) {
   this.styles = {};
   this.styles['default'] = this.createStyle();
   this.currentStyle = this.styles['default'];
+  this.transformStack = [];
 }
 
 HTMLCanvasCrayon.prototype.createStyle = function() {
@@ -144,43 +145,100 @@ HTMLCanvasCrayon.prototype.stroke = function(enabled) {
   return this;
 };
 
-HTMLCanvasCrayon.prototype.rect = function(x, y, w, h) {
+HTMLCanvasCrayon.prototype.beforeDraw = function() {
+  this.context.save();
+
   if (this.currentStyle.fill) {
     this.context.fillStyle = this.currentStyle.color;
+  }
+
+  if (this.currentStyle.stroke) {
+    this.context.strokeStyle = this.currentStyle.color;
+  }
+
+  this.transformStack.forEach(function(transform) {
+    transform();
+  });
+};
+
+HTMLCanvasCrayon.prototype.afterDraw = function() {
+  this.context.restore();
+};
+
+HTMLCanvasCrayon.prototype.rect = function(x, y, w, h) {
+  this.beforeDraw();
+
+  if (this.currentStyle.fill) {
     this.context.fillRect(x, y, w, h);
   }
   if (this.currentStyle.stroke) {
-    this.context.strokeStyle = this.currentStyle.color;
     this.context.strokeRect(x, y, w, h);
   }
+
+  this.afterDraw();
   return this;
 };
 
 HTMLCanvasCrayon.prototype.circle = function(x, y, r) {
+  this.beforeDraw();
   //this.canvas.drawCircle(this.currentStyle, x, y, r);
+  this.afterDraw();
   return this;
 };
 
+
 HTMLCanvasCrayon.prototype.line = function(x1, y1, x2, y2) {
+  this.beforeDraw();
+
   this.context.beginPath();
   this.context.moveTo(x1, y1);
   this.context.lineTo(x2, y2);
   this.context.closePath();
 
   if (this.currentStyle.fill) {
-    this.context.fillStyle = this.currentStyle.color;
     this.context.fill();
   }
   if (this.currentStyle.stroke) {
-    this.context.strokeStyle = this.currentStyle.color;
     this.context.stroke();
   }
+
+  this.afterDraw();
   return this;
 };
 
 HTMLCanvasCrayon.prototype.clear = function() {
   this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  this.reset();
   return this;
+};
+
+HTMLCanvasCrayon.prototype.translate = function(x, y) {
+  var context = this.context;
+  this.transformStack.push(function() {
+    context.translate(x, y);
+  });
+  return this;
+};
+
+HTMLCanvasCrayon.prototype.rotate = function(deg) {
+  var context = this.context;
+  var rad = deg / 180 * Math.PI;
+  this.transformStack.push(function() {
+    context.rotate(rad);
+  });
+  return this;
+};
+
+HTMLCanvasCrayon.prototype.scale = function(x, y) {
+  var context = this.context;
+  this.transformStack.push(function() {
+    context.scale(x, y);
+  });
+  return this;
+};
+
+HTMLCanvasCrayon.prototype.reset = function() {
+  this.transformStack = [];
 };
 
 (function() {
