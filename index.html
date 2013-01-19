@@ -52,11 +52,11 @@ img.thumb {
 <script type="text/javascript" src="js/CSVToArray.js"></script>
 <script type="text/javascript" src="js/chroma.js"></script>
 <script type="text/javascript" src="js/crayons.js"></script>
-<script type="text/javascript" src="js/processing-1.4.1.min.js"></script>
+<script type="text/javascript" src="js/processing-1.4.1-api.js"></script>
 <script type="text/javascript" src="js/ok.data.js"></script>
-<script type="text/javascript" src="js/ok.covers.simplest.js"></script>
+<!--<script type="text/javascript" src="js/ok.covers.simplest.js"></script>-->
 <!--<script type="text/javascript" src="js/ok.covers.minimal.cryons.js"></script>-->
-<script type="text/javascript" src="js/ok.covers.minimal.js"></script>
+<!--<script type="text/javascript" src="js/ok.covers.minimal.js"></script>-->
 <script type="text/javascript" src="js/ok.covers.minimal.p5.js"></script>
 
 <script type="text/javascript">
@@ -64,6 +64,17 @@ img.thumb {
   var books = [];
   var numSourcesLoaded = 0;
 
+  var measureDate = []
+  function startMeasuring() {
+    measureDate.push((new Date()).getTime());
+  }
+  function endMeasuring(msg) {
+    var date = (new Date()).getTime();
+    var startDate = measureDate.pop();
+    console.log(msg + " : " + Math.floor((date - startDate)/10)/100);
+  }
+
+  startMeasuring();
   OK.Data.fromCSV("data/okladki.csv", onBooksLoaded);
   OK.Data.fromJSON("data/books.json", onBooksLoaded);
 
@@ -71,6 +82,7 @@ img.thumb {
     books = books.concat(loadedBooks);
     if (++numSourcesLoaded == 2) {
       //processBooks();
+      endMeasuring("Loading books");
       makeCovers();
     }
   }
@@ -100,13 +112,15 @@ img.thumb {
 
     var i = 0;
     function nextCover() {
+      startMeasuring();
       var coverAlgorithmId = Math.floor(Math.random() * OK.Covers.length);
       OK.Covers[coverAlgorithmId].makeCover(books[i]);
       i = (i + 1) % books.length;
 
       if (i < 20) {
-        setTimeout(nextCover, 1000);
+        //setTimeout(nextCover, 1000);
       }
+      endMeasuring("Making cover");
     }
 
     nextCover();
