@@ -79,7 +79,6 @@ OK.Covers.push((function() {
     niceBlue = chroma.hsl(Math.random() * 255, 0.8, colorHSL[2]).hex();
 
     crayon.fill(niceBlue).rect(margins, margins, crayon.canvas.width - 2 * margins, crayon.canvas.height - 2 * margins);
-    crayon.fill(paleYellow).rect(margins, margins, crayon.canvas.width - 2 * margins, crayon.canvas.height/3 - 2 * margins);
 
     var step = 10 + Math.random() * 20;
     for(var i=0; i<1000; i+=step) {
@@ -98,14 +97,32 @@ OK.Covers.push((function() {
 
     //crayon.reset();
 
-    var authorFontSize = crayon.canvas.height * 0.03;
+    var authorFontSize = crayon.canvas.height * 0.04;
     var titleFontSize = crayon.canvas.height * 0.06;
 
-    crayon.fill("#FF0000").font("Arial", authorFontSize);
-    crayon.text(book.author, 50, 50);
+    //authorText.point.x, totalTextHeight + titleFontSize + view.size.height*0.05
 
-    crayon.fill("#000000").font("Arial", titleFontSize);
-    crayon.text(book.title, 50, 150);
+    var titleX = crayon.canvas.width * 0.1;
+    var titleY = crayon.canvas.width * 0.1 + titleFontSize * 0.8;
+    var titleWidth = crayon.canvas.width * 0.8;
+
+    crayon.fill("#000000").font("Arial", titleFontSize, 0.15);
+    var titleHeight = crayon.textBlock(book.title, titleX, titleY, titleWidth);
+
+    crayon.fill("#FF0000").font("Arial", authorFontSize);
+    crayon.text(formatAuthorName(book.author), titleX, titleY + titleHeight + 2 * authorFontSize);
+
+    var textHeight = titleY + titleHeight + 2 * authorFontSize;
+
+    crayon.fill(paleYellow).rect(margins, margins, crayon.canvas.width - 2 * margins, textHeight + crayon.canvas.width * 0.1);
+
+    crayon.fill("#000000").font("Arial", titleFontSize, 0.15);
+    crayon.textBlock(book.title, titleX, titleY, titleWidth);
+
+    crayon.fill("#FF0000").font("Arial", authorFontSize);
+    crayon.text(formatAuthorName(book.author), titleX, titleY + titleHeight + 2 * authorFontSize);
+
+    //crayon.fill(false).stroke("#FF0000").rect(titleX, titleY, titleWidth, titleHeight);
 
       /*
       var authorFontSize = view.size.height * 0.03;

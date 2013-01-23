@@ -92,7 +92,10 @@ HTMLCanvasCrayon.prototype.createStyle = function() {
   var style = {
     color: [0, 0, 0, 255],
     stroke: true,
-    fill: false
+    fill: false,
+    fontName: "Arial",
+    fontSize: 12,
+    textLeading: 0 //the same as fontSize
   };
   return style;
 };
@@ -147,9 +150,11 @@ HTMLCanvasCrayon.prototype.stroke = function(enabled) {
 };
 
 //fontSize in px
-HTMLCanvasCrayon.prototype.font = function(fontName, fontSize) {
+HTMLCanvasCrayon.prototype.font = function(fontName, fontSize, textLeading) {
+  if (typeof textLeading === "undefined") textLeading = 0;
   this.currentStyle.fontName = fontName;
   this.currentStyle.fontSize = Math.floor(fontSize);
+  this.currentStyle.textLeading = textLeading;
 };
 
 HTMLCanvasCrayon.prototype.beforeDraw = function() {
@@ -228,6 +233,59 @@ HTMLCanvasCrayon.prototype.text = function(str, x, y) {
   }
 
   this.afterDraw();
+};
+
+//assumes that beforeDraw() was called and context has current font style set up
+HTMLCanvasCrayon.prototype.textBlockSplitLines = function(str, maxWidth) {
+  //var width = measureTextContext.measureText(text).width;
+  var words = str.split(" ");
+  var lines = [];
+  var currentLine = "";
+  while(words.length > 0) {
+    var word = words.shift();
+    var newLine = currentLine;
+    if (newLine.length > 0) newLine += " ";
+    newLine += word;
+    var measurements = this.context.measureText(newLine);
+    if (measurements.width > maxWidth) {
+      lines.push(currentLine);
+      currentLine = word;
+    }
+    else {
+      currentLine = newLine;
+    }
+  }
+  lines.push(currentLine);
+  return lines;
+};
+
+HTMLCanvasCrayon.prototype.textBlock = function(str, x, y, width) {
+  this.beforeDraw();
+
+  var lines = [];
+
+  if (Object.prototype.toString.call(str) === '[object Array]') {
+    lines = str;
+  }
+  else {
+    lines = this.textBlockSplitLines(str, width);
+  }
+
+  var dy = y;// + this.currentStyle.fontSize;
+
+  if (this.currentStyle.fill) {
+    lines.forEach(function(line) {
+      this.context.fillText(line, x, dy);
+      dy += this.currentStyle.fontSize * (1.0 + this.currentStyle.textLeading);
+    }.bind(this));
+  }
+  if (this.currentStyle.stroke) {
+    this.context.strokeText(str, x, y);
+  }
+
+  this.afterDraw();
+
+  return dy - y - this.currentStyle.fontSize * (1.0 + this.currentStyle.textLeading);
 };
 
 HTMLCanvasCrayon.prototype.clear = function() {
