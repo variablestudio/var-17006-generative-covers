@@ -54,10 +54,7 @@ img.thumb {
 <script type="text/javascript" src="js/crayons.js"></script>
 <script type="text/javascript" src="js/processing-1.4.1-api.js"></script>
 <script type="text/javascript" src="js/ok.data.js"></script>
-<!--<script type="text/javascript" src="js/ok.covers.simplest.js"></script>-->
-<!--<script type="text/javascript" src="js/ok.covers.minimal.cryons.js"></script>-->
-<!--<script type="text/javascript" src="js/ok.covers.minimal.js"></script>-->
-<script type="text/javascript" src="js/ok.covers.minimal.p5.js"></script>
+<script type="text/javascript" src="js/ok.covers.minimal.cryons.js"></script>
 
 <script type="text/javascript">
 
@@ -118,7 +115,7 @@ img.thumb {
       i = (i + 1) % books.length;
 
       if (i < 20) {
-        //setTimeout(nextCover, 1000);
+        setTimeout(nextCover, 1000);
       }
       endMeasuring("Making cover");
     }
