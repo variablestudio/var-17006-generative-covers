@@ -105,5 +105,5 @@ OK.Covers.push((function() {
   return {
     name : "Minimal",
     makeCover : makeCover
-  }
+  };
 })());

@@ -77,7 +77,8 @@ OK.Covers.push((function() {
   }
 
   return {
+    enabled : false,
     name : "Simplest",
     makeCover : makeCover
-  }
+  };
 })());
