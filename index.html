@@ -86,7 +86,6 @@ img.thumb {
   function processBooks() {
     var categories = {};
     books.forEach(function(book) {
-      if (book.categories.length > 5) console.log(book);
       book.categories.forEach(function(category) {
         categories[category] = categories[category] ? categories[category] + 1 : 1;
       });
@@ -108,7 +107,7 @@ img.thumb {
 
     var i = 0;
     function nextCover() {
-      startMeasuring();
+      //startMeasuring();
       var coverAlgorithmId = Math.floor(Math.random() * OK.Covers.length);
       OK.Covers[coverAlgorithmId].makeCover(books[i]);
       i = (i + 1) % books.length;
@@ -116,7 +115,7 @@ img.thumb {
       if (i < 20) {
         setTimeout(nextCover, 1000);
       }
-      endMeasuring("Making cover");
+      //endMeasuring("Making cover");
     }
 
     nextCover();
