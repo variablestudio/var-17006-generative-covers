@@ -97,126 +97,35 @@ OK.Covers.push((function() {
       crayon.restore();
     }
 
-    //crayon.reset();
+    var author = formatAuthorName(book.author);
 
     var authorFontSize = crayon.canvas.height * 0.04;
     var titleFontSize = crayon.canvas.height * 0.06;
 
     //authorText.point.x, totalTextHeight + titleFontSize + view.size.height*0.05
 
-    var titleX = crayon.canvas.width * 0.1;
-    var titleY = crayon.canvas.width * 0.1 + titleFontSize * 0.8;
+    var titleX = crayon.canvas.width * 0.08;
+    var titleY = crayon.canvas.width * 0.08;
     var titleWidth = crayon.canvas.width * 0.8;
 
-    crayon.font("Arial", titleFontSize, 0.15);
+    crayon.font("Arial", titleFontSize, 0.25);
     var titleLines = breakLines(crayon, book.title, titleWidth);
     var titleMeasurements = crayon.measureText(titleLines);
+    var titleAscent = -titleMeasurements.y;
 
-    crayon.fill(paleYellow).rect(margins, margins, crayon.canvas.width - 2 * margins, titleY + titleMeasurements.height);
+    titleY += titleAscent;
 
+    crayon.font("Arial", authorFontSize);
+    var authorMeasurements = crayon.measureText(author);
+
+    crayon.fill(paleYellow).rect(margins, margins, crayon.canvas.width - 2 * margins, titleY + titleMeasurements.height + authorMeasurements.height + titleAscent/2);
+
+    crayon.font("Arial", titleFontSize, 0.25);
     crayon.fill("#000000").text(titleLines, titleX, titleY);
-    crayon.fill(false).stroke("#FF0000").rect(titleX, titleY + titleMeasurements.y, titleMeasurements.width, titleMeasurements.height);
 
-    //crayon.fill("#000000").font("Arial", titleFontSize, 0*0.15);
-    /*
-    var titleHeight = crayon.textBlock(book.title, titleX, titleY, titleWidth);
+    crayon.font("Arial", authorFontSize);
+    crayon.fill("#FF0000").text(author, titleX, titleY + titleMeasurements.height);
 
-    crayon.fill("#FF0000").font("Arial", authorFontSize);
-    crayon.text(formatAuthorName(book.author), titleX, titleY + titleHeight + 2 * authorFontSize);
-
-    var textHeight = titleY + titleHeight + 2 * authorFontSize;
-
-    crayon.fill("#000000").font("Arial", titleFontSize, 0.15);
-    crayon.textBlock(book.title, titleX, titleY, titleWidth);
-
-    crayon.fill("#FF0000").font("Arial", authorFontSize);
-    crayon.text(formatAuthorName(book.author), titleX, titleY + titleHeight + 2 * authorFontSize);
-    */
-
-    //crayon.fill(false).stroke("#FF0000").rect(titleX, titleY, titleWidth, titleHeight);
-
-      /*
-      var authorFontSize = view.size.height * 0.03;
-      var titleFontSize = view.size.height * 0.06;
-
-      var authorText = new PointText(new Point(view.size.width*0.1, view.size.height * 0.17));
-      authorText.justification = "left";
-      authorText.content = formatAuthorName(author);
-      authorText.characterStyle = {
-        fontFamily: "Arial",
-        fontSize: authorFontSize,
-        fillColor: "#DD4444"
-      };
-
-      function breakText(text, font, fontSize, maxWidth) {
-        var words = text.split(" ");
-        var lines = [];
-        var currentLine = "";
-        while(words.length > 0) {
-          var word = words.shift();
-          var newLine = currentLine;
-          if (newLine.length > 0) newLine += " ";
-          newLine += word;
-          var measurements = measureText(newLine, font, fontSize);
-          if (measurements.width > maxWidth) {
-            lines.push(currentLine);
-            currentLine = word;
-          }
-          else {
-            currentLine = newLine;
-          }
-        }
-        lines.push(currentLine);
-        return lines;
-      }
-
-      var titleWordsAnchor = new Point(view.size.width*0.1, view.size.height*0.1);
-      var titleWordsLeading = titleFontSize * 0.5;
-      var totalTextHeight = view.size.height;
-      var maxTextWidth = 0;
-      var titleWords;
-      var drawDebug = false;
-
-      var numTries = 0;
-      while(totalTextHeight > view.size.height/2 && ++numTries < 10) {
-        titleFontSize *= 0.9;
-        titleWordsLeading = titleFontSize * 0.5;
-        titleWords = breakText(title, "Arial", titleFontSize, view.size.width - titleWordsAnchor.x * 2);
-
-        totalTextHeight = 0;
-        maxTextWidth = 0;
-        titleWords.forEach(function(word, wordIndex) {
-          var measurements = measureText(word, "Arial", titleFontSize);
-          totalTextHeight += measurements.height + titleWordsLeading;
-          maxTextWidth = Math.max(maxTextWidth, measurements.width);
-        });
-      }
-
-      var rect = new Path.Rectangle(new Point(margins, margins), new Size(view.size.width - 2 * margins, totalTextHeight + titleFontSize + view.size.height*0.1));
-      rect.fillColor = paleYellow;
-
-      authorText.point = new Point(authorText.point.x, totalTextHeight + titleFontSize + view.size.height*0.05);
-      layer.addChild(authorText);
-
-      titleWords.forEach(function(word, wordIndex) {
-        var titleText = new PointText(new Point(titleWordsAnchor.x, titleWordsAnchor.y + wordIndex * (titleFontSize + titleWordsLeading)));
-        titleText.justification = "left";
-        titleText.content = word;
-        titleText.characterStyle = {
-          font: "Arial",
-          fontSize: titleFontSize,
-          fillColor: "#444"
-        };
-        var bounds = measureTextObj(titleText);
-      });
-
-      if (drawDebug) {
-        var textBoundsRect = new Path.Rectangle(new Point(titleWordsAnchor.x, titleWordsAnchor.y - titleFontSize), new Size(maxTextWidth, totalTextHeight));
-        textBoundsRect.strokeColor = "#FF0000";
-      }
-
-      view.draw();
-      */
     var coverCanvas = document.getElementById("cover");
     var img = makeImg();
     img.src = coverCanvas.toDataURL();
