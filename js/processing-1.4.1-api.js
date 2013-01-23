@@ -1127,7 +1127,7 @@
 
   function computeFontMetrics(pfont) {
     var hash = "processingjs_" + pfont.name.replace(/ /g, '_') + "_" + pfont.size;
-    var cache = localStorage[hash];
+    var cache = localStorage[hash] ? JSON.parse(localStorage[hash]) : false;
     var emQuad = 250,
       correctionFactor = pfont.size / emQuad;
     canvas.width = 2 * emQuad;
@@ -1175,7 +1175,7 @@
     pfont.ascent = correctionFactor * (baseline - ascent);
     pfont.descent = correctionFactor * (descent - baseline);
     var cache = { ascent : pfont.ascent, descent: pfont.descent };
-    localStorage[hash] = cache;
+    localStorage[hash] = JSON.stringify(cache);
     if (document.defaultView.getComputedStyle) {
       var leadDivHeight = document.defaultView.getComputedStyle(leadDiv, null).getPropertyValue("height");
       leadDivHeight = correctionFactor * leadDivHeight.replace("px", "");
