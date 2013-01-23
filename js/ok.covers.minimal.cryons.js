@@ -36,30 +36,32 @@ OK.Covers.push((function() {
     return document.createTextNode(text);
   }
 
-  var measureText = (function() {
-    var measureTextCanvas = document.createElement("canvas");
-    var measureTextContext = measureTextCanvas.getContext('2d');
-    return function(text, font, fontSize) {
-      measureTextContext.font = fontSize + "pt " + font;
-
-      measureTextContext.fillStyle = "#fF0000";
-
-      var width = measureTextContext.measureText(text).width;
-      var height = fontSize;
-      return {
-        width: width,
-        height: height
-      };
-    };
-  })();
-
-  function measureTextObj(textObj) {
-    return measureText(textObj.content, textObj.characterStyle.font, textObj.characterStyle.fontSize);
-  }
-
   var crayon;
 
   var frame = 0;
+
+  function breakLines(crayon, str, maxWidth) {
+    //var width = measureTextContext.measureText(text).width;
+    var words = str.split(" ");
+    var lines = [];
+    var currentLine = "";
+    while(words.length > 0) {
+      var word = words.shift();
+      var newLine = currentLine;
+      if (newLine.length > 0) newLine += " ";
+      newLine += word;
+      var measurements = crayon.measureText(newLine);
+      if (measurements.width > maxWidth && currentLine.length > 0) {
+        lines.push(currentLine);
+        currentLine = word;
+      }
+      else {
+        currentLine = newLine;
+      }
+    }
+    lines.push(currentLine);
+    return lines;
+  };
 
   function makeCover(book) {
     frame++;
@@ -106,7 +108,17 @@ OK.Covers.push((function() {
     var titleY = crayon.canvas.width * 0.1 + titleFontSize * 0.8;
     var titleWidth = crayon.canvas.width * 0.8;
 
-    crayon.fill("#000000").font("Arial", titleFontSize, 0.15);
+    crayon.font("Arial", titleFontSize, 0.15);
+    var titleLines = breakLines(crayon, book.title, titleWidth);
+    var titleMeasurements = crayon.measureText(titleLines);
+
+    crayon.fill(paleYellow).rect(margins, margins, crayon.canvas.width - 2 * margins, titleY + titleMeasurements.height);
+
+    crayon.fill("#000000").text(titleLines, titleX, titleY);
+    crayon.fill(false).stroke("#FF0000").rect(titleX, titleY + titleMeasurements.y, titleMeasurements.width, titleMeasurements.height);
+
+    //crayon.fill("#000000").font("Arial", titleFontSize, 0*0.15);
+    /*
     var titleHeight = crayon.textBlock(book.title, titleX, titleY, titleWidth);
 
     crayon.fill("#FF0000").font("Arial", authorFontSize);
@@ -114,13 +126,12 @@ OK.Covers.push((function() {
 
     var textHeight = titleY + titleHeight + 2 * authorFontSize;
 
-    crayon.fill(paleYellow).rect(margins, margins, crayon.canvas.width - 2 * margins, textHeight + crayon.canvas.width * 0.1);
-
     crayon.fill("#000000").font("Arial", titleFontSize, 0.15);
     crayon.textBlock(book.title, titleX, titleY, titleWidth);
 
     crayon.fill("#FF0000").font("Arial", authorFontSize);
     crayon.text(formatAuthorName(book.author), titleX, titleY + titleHeight + 2 * authorFontSize);
+    */
 
     //crayon.fill(false).stroke("#FF0000").rect(titleX, titleY, titleWidth, titleHeight);
 
