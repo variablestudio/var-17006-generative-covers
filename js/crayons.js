@@ -90,9 +90,8 @@ function HTMLCanvasCrayon(canvas) {
 
 HTMLCanvasCrayon.prototype.createStyle = function() {
   var style = {
-    color: [0, 0, 0, 255],
-    stroke: true,
-    fill: false,
+    stroke: false,
+    fill: "#000000",
     fontFamily: "Arial",
     fontSize: 12,
     textLeading: 0 //the same as fontSize
@@ -108,44 +107,13 @@ HTMLCanvasCrayon.prototype.style = function(styleName) {
   return this;
 };
 
-HTMLCanvasCrayon.prototype.color = function(color) {
-  if (typeof color == 'string') {
-    this.currentStyle.color = color;
-  }
+HTMLCanvasCrayon.prototype.fill = function(enabledColor) {
+  this.currentStyle.fill = enabledColor;
   return this;
 };
 
-HTMLCanvasCrayon.prototype.fill = function(enabled) {
-  var on;
-  if (typeof enabled == 'string') {
-    this.color(enabled);
-    on = true;
-  }
-  else if (typeof enabled == "boolean") {
-    on = enabled;
-  }
-  else {
-    on = false;
-  }
-  this.currentStyle.fill = on;
-  this.currentStyle.stroke = !on;
-  return this;
-};
-
-HTMLCanvasCrayon.prototype.stroke = function(enabled) {
-  var on;
-  if (typeof enabled == 'string') {
-    this.color(enabled);
-    on = true;
-  }
-  else if (typeof enabled == "boolean") {
-    on = enabled;
-  }
-  else {
-    on = false;
-  }
-  this.currentStyle.stroke = on;
-  this.currentStyle.fill = !on;
+HTMLCanvasCrayon.prototype.stroke = function(enabledColor) {
+  this.currentStyle.stroke = enabledColor;
   return this;
 };
 
@@ -162,11 +130,11 @@ HTMLCanvasCrayon.prototype.beforeDraw = function() {
   this.context.save();
 
   if (this.currentStyle.fill) {
-    this.context.fillStyle = this.currentStyle.color;
+    this.context.fillStyle = this.currentStyle.fill;
   }
 
   if (this.currentStyle.stroke) {
-    this.context.strokeStyle = this.currentStyle.color;
+    this.context.strokeStyle = this.currentStyle.stroke;
   }
 
   if (this.currentStyle.fontFamily && this.currentStyle.fontSize) {
