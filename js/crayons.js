@@ -145,6 +145,12 @@ HTMLCanvasCrayon.prototype.stroke = function(enabled) {
   return this;
 };
 
+//fontSize in px
+HTMLCanvasCrayon.prototype.font = function(fontName, fontSize) {
+  this.currentStyle.fontName = fontName;
+  this.currentStyle.fontSize = Math.floor(fontSize);
+};
+
 HTMLCanvasCrayon.prototype.beforeDraw = function() {
   this.context.save();
 
@@ -154,6 +160,10 @@ HTMLCanvasCrayon.prototype.beforeDraw = function() {
 
   if (this.currentStyle.stroke) {
     this.context.strokeStyle = this.currentStyle.color;
+  }
+
+  if (this.currentStyle.fontName && this.currentStyle.fontSize) {
+    this.context.font = this.currentStyle.fontSize + "px" + " " + this.currentStyle.fontName;
   }
 
   this.transformStack.forEach(function(transform) {
@@ -181,7 +191,7 @@ HTMLCanvasCrayon.prototype.rect = function(x, y, w, h) {
 
 HTMLCanvasCrayon.prototype.circle = function(x, y, r) {
   this.beforeDraw();
-  //this.canvas.drawCircle(this.currentStyle, x, y, r);
+  this.canvas.drawCircle(this.currentStyle, x, y, r);
   this.afterDraw();
   return this;
 };
@@ -204,6 +214,19 @@ HTMLCanvasCrayon.prototype.line = function(x1, y1, x2, y2) {
 
   this.afterDraw();
   return this;
+};
+
+HTMLCanvasCrayon.prototype.text = function(str, x, y) {
+  this.beforeDraw();
+
+  if (this.currentStyle.fill) {
+    this.context.fillText(str, x, y);
+  }
+  if (this.currentStyle.stroke) {
+    this.context.strokeText(str, x, y);
+  }
+
+  this.afterDraw();
 };
 
 HTMLCanvasCrayon.prototype.clear = function() {
