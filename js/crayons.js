@@ -94,6 +94,7 @@ HTMLCanvasCrayon.prototype.createStyle = function() {
     fill: "#000000",
     fontFamily: "Arial",
     fontSize: 12,
+    fontWeight: "normal",
     textLeading: 0 //the same as fontSize
   };
   return style;
@@ -118,10 +119,15 @@ HTMLCanvasCrayon.prototype.stroke = function(enabledColor) {
 };
 
 //fontSize in px
-HTMLCanvasCrayon.prototype.font = function(fontFamily, fontSize, textLeading) {
-  if (typeof textLeading === "undefined") textLeading = 0;
+HTMLCanvasCrayon.prototype.font = function(fontFamily, fontSize, fontWeight) {
   this.currentStyle.fontFamily = fontFamily;
   this.currentStyle.fontSize = Math.floor(fontSize);
+  this.currentStyle.fontWeight = fontWeight || this.currentStyle.fontWeight;
+  return this;
+};
+
+HTMLCanvasCrayon.prototype.paragraph = function(textAlign, textLeading) {
+  this.currentStyle.textAlign = textAlign;
   this.currentStyle.textLeading = textLeading;
   return this;
 };
@@ -138,7 +144,7 @@ HTMLCanvasCrayon.prototype.beforeDraw = function() {
   }
 
   if (this.currentStyle.fontFamily && this.currentStyle.fontSize) {
-    this.context.font = this.currentStyle.fontSize + "px" + " " + this.currentStyle.fontFamily;
+    this.context.font = this.currentStyle.fontWeight + " " + this.currentStyle.fontSize + "px" + " " + this.currentStyle.fontFamily;
   }
 
   this.transformStack.forEach(function(transform) {
