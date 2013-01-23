@@ -25,14 +25,17 @@ OK.Covers.push((function() {
     var authorFont;
     var titleFont;
 
+    var authorFontSize = canvasHeight * 0.03;
+    var titleFontSize = canvasHeight * 0.06;
+
     // Override draw function, by default it will be called 60 times per second
     p.setup = function() {
       startMeasuring();
       p.size(canvasWidth, canvasHeight);
       p.noLoop();
 
-      authorFont = p.createFont("Arial Bold", 20);
-      titleFont = p.createFont("Arial", 20);
+      authorFont = p.createFont("Arial", authorFontSize);
+      titleFont = p.createFont("Arial", titleFontSize);
       endMeasuring("p.setup");
     };
 
@@ -47,14 +50,13 @@ OK.Covers.push((function() {
       var paleYellow = [255, 255, 240];
 
       var colorHSL = chroma.hex(niceBlue).hsl();
-      var colorHue = Math.random() * 255;
-      niceBlue = chroma.hsl(colorHue, 0.84, 0.85).rgb;
-
+      var colorHue = Math.random() * 360;
+      niceBlue = chroma.hsl(colorHue, 0.8, colorHSL[2]).rgb;
       var niceBlueDark = chroma.hsl(colorHue, 0.84, 0.35).rgb;
 
       p.background(255);
 
-      p.fill(255, 0, 0);
+      //p.fill(255, 0, 0);
       p.textFont(authorFont);
 
       function breakText(text, maxWidth) {
@@ -78,6 +80,22 @@ OK.Covers.push((function() {
         lines.push(currentLine);
         return lines;
       }
+
+      var margins = 0;
+      var lineHeight = 25;
+
+      var textHeight = 65;// + lineHeight * (titleLines.length - 1);
+      //dy = canvasHeight - textHeight;
+
+      //var rect = new Path.Rectangle(new Point(margins, margins), new Size(view.size.width - 2 * margins, totalTextHeight + titleFontSize + view.size.height*0.1));
+      //rect.fillColor = paleYellow;
+
+      p.background(niceBlue[0], niceBlue[1], niceBlue[2]);
+      p.fill(paleYellow[0], paleYellow[1], paleYellow[2]);
+      p.noStroke();
+      p.rect(margins, margins, canvasWidth - 2 * margins, textHeight);
+
+      /*
 
       p.background(niceBlue[0], niceBlue[1], niceBlue[2]);
       p.noStroke();
@@ -122,6 +140,7 @@ OK.Covers.push((function() {
         dy += lineHeight;
       });
       endMeasuring("p.draw");
+      */  
     };
   }
   // attaching the sketchProc function to the canvas
