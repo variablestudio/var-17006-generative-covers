@@ -251,40 +251,6 @@ HTMLCanvasCrayon.prototype.text = function(str, x, y) {
   return this;
 };
 
-
-HTMLCanvasCrayon.prototype.textBlock = function(str, x, y, width) {
-  this.beforeDraw();
-
-  var lines = [];
-
-  if (Object.prototype.toString.call(str) === '[object Array]') {
-    lines = str;
-  }
-  else {
-    lines = this.textBlockSplitLines(str.trim(), width);
-  }
-
-  var dy = y;// + this.currentStyle.fontSize;
-
-  if (this.currentStyle.fill) {
-    lines.forEach(function(line) {
-      this.context.fillText(line, x, dy);
-      dy += this.currentStyle.fontSize * (1.0 + this.currentStyle.textLeading);
-    }.bind(this));
-  }
-  if (this.currentStyle.stroke) {
-    this.context.strokeText(str, x, y);
-  }
-
-  this.context.strokeStyle = "#FF0000";
-  //fontSize:44 bboxHeight:49 bboxWidth:130 ascent:40 descent:10 emHeight:47 enHeight:23.5
-  this.context.strokeRect(x, y - 40, x + width, lines.length * 49 + 10);
-
-  this.afterDraw();
-
-  return dy - y - this.currentStyle.fontSize * (1.0 + this.currentStyle.textLeading);
-};
-
 HTMLCanvasCrayon.prototype.clear = function() {
   this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
   this.reset();
