@@ -59,14 +59,16 @@ OK.Covers.push((function() {
 
   var crayon;
 
+  var frame = 0;
+
   function makeCover(book) {
+    frame++;
+
     if (!crayon) {
       crayon = new Crayon( document.getElementById("cover") );
     }
 
     var margins = 0;
-    var author = book.author;
-    var title = book.title;
 
     crayon.clear();
 
@@ -77,22 +79,33 @@ OK.Covers.push((function() {
     niceBlue = chroma.hsl(Math.random() * 255, 0.8, colorHSL[2]).hex();
 
     crayon.fill(niceBlue).rect(margins, margins, crayon.canvas.width - 2 * margins, crayon.canvas.height - 2 * margins);
-
     crayon.fill(paleYellow).rect(margins, margins, crayon.canvas.width - 2 * margins, crayon.canvas.height/3 - 2 * margins);
 
     var step = 10 + Math.random() * 20;
-      for(var i=0; i<1000; i+=step) {
-        var a = { x : 0, y : 10 + i };
-        var b = { x : 10 + i, y : 0 };
+    for(var i=0; i<1000; i+=step) {
+      var a = { x : 0, y : 10 + i };
+      var b = { x : 10 + i, y : 0 };
 
-        crayon.reset();
-        crayon.stroke("#FFFFFF").line(a.x, a.y, b.x, b.y);
-        var k = Math.random();
-        crayon.fill("#FFFFFF")
-          .translate(a.x + (b.x - a.x) * k + 2, a.y + (b.y - a.y) * k + 2)
-          .rotate(-45)
-          .rect(0, 0, 10 + Math.random() * 200, 3);
-      }
+      crayon.save();
+      crayon.stroke("#FFFFFF").line(a.x, a.y, b.x, b.y);
+      var k = Math.random();
+      crayon.fill("#FFFFFF")
+        .translate(a.x + (b.x - a.x) * k + 1, a.y + (b.y - a.y) * k + 1)
+        .rotate(-45)
+        .rect(0, 0, 10 + Math.random() * 200, 3);
+      crayon.restore();
+    }
+
+    //crayon.reset();
+
+    var authorFontSize = crayon.canvas.height * 0.03;
+    var titleFontSize = crayon.canvas.height * 0.06;
+
+    crayon.fill("#FF0000").font("Arial", authorFontSize);
+    crayon.text(book.author, 50, 50);
+
+    crayon.fill("#000000").font("Arial", titleFontSize);
+    crayon.text(book.title, 50, 150);
 
       /*
       var authorFontSize = view.size.height * 0.03;
