@@ -10,35 +10,7 @@ OK.Covers.push((function() {
       return tokens[0];
   }
 
-  function makeElem(type, attribs) {
-    attribs = attribs || {};
-    var elem = document.createElement(type);
-    for(var i in attribs) {
-      elem[i] = attribs[i];
-    }
-    return elem;
-  }
-
-  function makeCanvas(attribs) {
-    var canvas = makeElem("canvas", attribs);
-    return canvas;
-  }
-
-  function makeImg(attribs) {
-    return makeElem("img", attribs);
-  }
-
-  function makeDiv(attribs) {
-    return makeElem("div", attribs);
-  }
-
-  function makeText(text) {
-    return document.createTextNode(text);
-  }
-
   var crayon;
-
-  var frame = 0;
 
   function breakLines(crayon, str, maxWidth) {
     //var width = measureTextContext.measureText(text).width;
@@ -64,8 +36,6 @@ OK.Covers.push((function() {
   };
 
   function makeCover(book) {
-    frame++;
-
     if (!crayon) {
       crayon = new Crayon( document.getElementById("cover") );
     }
@@ -126,7 +96,7 @@ OK.Covers.push((function() {
 
 
     var coverCanvas = document.getElementById("cover");
-    var img = makeImg();
+    var img = document.createElement("img");
     img.src = coverCanvas.toDataURL();
     img.className = "thumb";
     document.body.appendChild(img);
