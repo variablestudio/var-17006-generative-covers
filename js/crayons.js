@@ -335,6 +335,10 @@ HTMLCanvasCrayon.prototype.reset = function() {
 };
 
 HTMLCanvasCrayon.prototype.measureText = function(str) {
+  if (Object.prototype.toString.call(str) === '[object Array]') {
+    return this.measureTextLines(str);
+  }
+
   var metrics = this.getFontMetrics(this.currentStyle.fontFamily, this.currentStyle.fontSize);
   var oldFont = this.context.font;
   this.context.font = this.currentStyle.fontSize + "px " + this.currentStyle.fontFamily;
@@ -347,6 +351,32 @@ HTMLCanvasCrayon.prototype.measureText = function(str) {
     height : metrics.bboxHeight
   };
 };
+
+HTMLCanvasCrayon.prototype.measureTextLines = function(str) {
+  var oldFont = this.context.font;
+  this.context.font = this.currentStyle.fontSize + "px " + this.currentStyle.fontFamily;
+  var metrics = this.getFontMetrics(this.currentStyle.fontFamily, this.currentStyle.fontSize);
+
+  var lines = str;
+
+  var maxWidth = 0;
+  lines.forEach(function(line) {
+    var lineWidth = this.context.measureText(line).width;
+    maxWidth = Math.max(maxWidth, lineWidth);
+  }.bind(this));
+
+  var height = lines.length * this.currentStyle.fontSize + (lines.length - 1) * this.currentStyle.fontSize * this.currentStyle.textLeading + metrics.descent;
+
+  this.context.font = oldFont;
+  return {
+    x : 0,
+    y : -metrics.ascent,
+    width : maxWidth,
+    height : height
+  };
+};
+
+
 
 //Based on code from http://mudcu.be/journal/2011/01/html5-typographic-metrics/ by Michael Deal
 HTMLCanvasCrayon.prototype.getFontMetrics = function(fontFamily, fontSize) {
