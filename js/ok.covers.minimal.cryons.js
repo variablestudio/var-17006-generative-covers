@@ -70,6 +70,8 @@ OK.Covers.push((function() {
       crayon = new Crayon( document.getElementById("cover") );
     }
 
+    crayon.style("default");
+
     var margins = 0;
 
     crayon.clear();
@@ -88,7 +90,7 @@ OK.Covers.push((function() {
       var b = { x : 10 + i, y : 0 };
 
       crayon.save();
-      crayon.stroke("#FFFFFF").line(a.x, a.y, b.x, b.y);
+      crayon.stroke("#FFFFFF").line(a.x, a.y, b.x, b.y).stroke(false);
       var k = Math.random();
       crayon.fill("#FFFFFF")
         .translate(a.x + (b.x - a.x) * k + 1, a.y + (b.y - a.y) * k + 1)
@@ -102,29 +104,26 @@ OK.Covers.push((function() {
     var authorFontSize = crayon.canvas.height * 0.04;
     var titleFontSize = crayon.canvas.height * 0.06;
 
-    //authorText.point.x, totalTextHeight + titleFontSize + view.size.height*0.05
-
     var titleX = crayon.canvas.width * 0.08;
     var titleY = crayon.canvas.width * 0.08;
     var titleWidth = crayon.canvas.width * 0.8;
 
-    crayon.font("Arial", titleFontSize, 0.25);
+    crayon.style("title").font("Arial", titleFontSize, 0.25).fill("#000000");
+
     var titleLines = breakLines(crayon, book.title, titleWidth);
     var titleMeasurements = crayon.measureText(titleLines);
     var titleAscent = -titleMeasurements.y;
 
     titleY += titleAscent;
 
-    crayon.font("Arial", authorFontSize);
+    crayon.style("author").font("Arial", authorFontSize).fill("#FF0000");
     var authorMeasurements = crayon.measureText(author);
 
-    crayon.fill(paleYellow).rect(margins, margins, crayon.canvas.width - 2 * margins, titleY + titleMeasurements.height + authorMeasurements.height + titleAscent/2);
+    crayon.style("default").fill(paleYellow).rect(margins, margins, crayon.canvas.width - 2 * margins, titleY + titleMeasurements.height + authorMeasurements.height + titleAscent/2);
 
-    crayon.font("Arial", titleFontSize, 0.25);
-    crayon.fill("#000000").text(titleLines, titleX, titleY);
+    crayon.style("title").text(titleLines, titleX, titleY);
+    crayon.style("author").text(author, titleX, titleY + titleMeasurements.height);
 
-    crayon.font("Arial", authorFontSize);
-    crayon.fill("#FF0000").text(author, titleX, titleY + titleMeasurements.height);
 
     var coverCanvas = document.getElementById("cover");
     var img = makeImg();
