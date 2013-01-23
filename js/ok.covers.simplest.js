@@ -1,8 +1,9 @@
 var OK = OK || {};
 OK.Covers = OK.Covers || [];
 
-
 OK.Covers.push((function() {
+  var crayon;
+
   function formatAuthorName(name) {
     var tokens = name.split(', ');
     if (tokens.length == 2)
@@ -11,161 +12,68 @@ OK.Covers.push((function() {
       return tokens[0];
   }
 
-  function makeElem(type, attribs) {
-    attribs = attribs || {};
-    var elem = document.createElement(type);
-    for(var i in attribs) {
-      elem[i] = attribs[i];
-    }
-    return elem;
-  }
-
-  function makeCanvas(attribs) {
-    var canvas = makeElem("canvas", attribs);
-    return canvas;
-  }
-
-  function makeImg(attribs) {
-    return makeElem("img", attribs);
-  }
-
-  function makeDiv(attribs) {
-    return makeElem("div", attribs);
-  }
-
-  function makeText(text) {
-    return document.createTextNode(text);
-  }
-
-  var measureText = (function() {
-    var measureTextCanvas = document.createElement("canvas");
-    var measureTextContext = measureTextCanvas.getContext('2d');
-    return function(text, font, fontSize) {
-      measureTextContext.font = fontSize + "pt " + font;
-
-      measureTextContext.fillStyle = "#fF0000";
-
-      var width = measureTextContext.measureText(text).width;
-      var height = fontSize;
-      return {
-        width: width,
-        height: height
+  function breakLines(crayon, str, maxWidth) {
+    //var width = measureTextContext.measureText(text).width;
+    var words = str.split(" ");
+    var lines = [];
+    var currentLine = "";
+    while(words.length > 0) {
+      var word = words.shift();
+      var newLine = currentLine;
+      if (newLine.length > 0) newLine += " ";
+      newLine += word;
+      var measurements = crayon.measureText(newLine);
+      if (measurements.width > maxWidth && currentLine.length > 0) {
+        lines.push(currentLine);
+        currentLine = word;
       }
-    };
-  })();
-
-  function measureTextObj(textObj) {
-    return measureText(textObj.content, textObj.characterStyle.font, textObj.characterStyle.fontSize);
+      else {
+        currentLine = newLine;
+      }
+    }
+    lines.push(currentLine);
+    return lines;
   }
 
   function makeCover(book) {
-    with(paper) {
-      var author = book.author;
-      var title = book.title;
-
-      var margins = 0;
-
-      //clear
-      project.activeLayer.remove();
-      var layer = new Layer();
-
-      var niceBlue = "#27D1E7";
-      var paleYellow = "rgb(255, 255, 240)";
-
-      var colorHSL = chroma.hex(niceBlue).hsl();
-      niceBlue = chroma.hsl(Math.random() * 255, 0.3, colorHSL[2]).hex();
-
-      //console.log(view, view.size);
-      var rect = new Path.Rectangle(new Point(margins, margins), new Size(view.size.width - 2 * margins, view.size.height -  2 * margins));
-      rect.fillColor = niceBlue;
-
-      var path = new Path();
-      path.strokeColor = '#FFF';
-      var start = new Point(view.size.width/3, 0);
-      path.moveTo(start);
-      path.lineTo([0, view.size.width/3]);
-
-      var authorFontSize = view.size.height * 0.03;
-      var titleFontSize = view.size.height * 0.06;
-
-      var authorText = new PointText(new Point(view.size.width*0.1, view.size.height * 0.17));
-      authorText.justification = "left";
-      authorText.content = formatAuthorName(author);
-      authorText.characterStyle = {
-        fontFamily: "Arial",
-        fontSize: authorFontSize,
-        fillColor: paleYellow
-      };
-
-      function breakText(text, font, fontSize, maxWidth) {
-        var words = text.split(" ");
-        var lines = [];
-        var currentLine = "";
-        while(words.length > 0) {
-          var word = words.shift();
-          var newLine = currentLine;
-          if (newLine.length > 0) newLine += " ";
-          newLine += word;
-          var measurements = measureText(newLine, font, fontSize);
-          if (measurements.width > maxWidth) {
-            lines.push(currentLine);
-            currentLine = word;
-          }
-          else {
-            currentLine = newLine;
-          }
-        }
-        lines.push(currentLine);
-        return lines;
-      }
-
-      var titleWordsAnchor = new Point(view.size.width*0.1, view.size.height*0.3);
-      var titleWordsLeading = titleFontSize * 0.5;
-      var totalTextHeight = view.size.height;
-      var maxTextWidth = 0;
-      var titleWords;
-      var drawDebug = false;
-
-      var numTries = 0;
-      while(totalTextHeight > view.size.height/2 && ++numTries < 10) {
-        titleFontSize *= 0.9;
-        titleWordsLeading = titleFontSize * 0.5;
-        titleWords = breakText(title, "Arial", titleFontSize, view.size.width - titleWordsAnchor.x * 2);
-
-        totalTextHeight = 0;
-        maxTextWidth = 0;
-        titleWords.forEach(function(word, wordIndex) {
-          var measurements = measureText(word, "Arial", titleFontSize);
-          totalTextHeight += measurements.height + titleWordsLeading;
-          maxTextWidth = Math.max(maxTextWidth, measurements.width);
-        });
-      }
-
-      titleWords.forEach(function(word, wordIndex) {
-        var titleText = new PointText(new Point(titleWordsAnchor.x, titleWordsAnchor.y + wordIndex * (titleFontSize + titleWordsLeading)));
-        titleText.justification = "left";
-        titleText.content = word;
-        titleText.characterStyle = {
-          font: "Arial",
-          fontSize: titleFontSize,
-          fillColor: paleYellow
-        };
-        var bounds = measureTextObj(titleText);
-      });
-
-      if (drawDebug) {
-        var textBoundsRect = new Path.Rectangle(new Point(titleWordsAnchor.x, titleWordsAnchor.y - titleFontSize), new Size(maxTextWidth, totalTextHeight));
-        textBoundsRect.strokeColor = "#FF0000";
-      }
-
-      view.draw();
-
-      var coverCanvas = document.getElementById("cover");
-      var img = makeImg();
-      img.src = coverCanvas.toDataURL();
-      img.className = "thumb";
-      document.body.appendChild(img);
+    if (!crayon) {
+      crayon = new Crayon( document.getElementById("cover") );
     }
+
+    crayon.clear();
+    crayon.style("default");
+
+    crayon.fill("#27D1E7").rect(0, 0, crayon.canvas.width, crayon.canvas.height);
+
+    var author = formatAuthorName(book.author.toUpperCase());
+
+    var authorFontSize = crayon.canvas.height * 0.04;
+    var titleFontSize = crayon.canvas.height * 0.06;
+
+    var titleX = crayon.canvas.width * 0.08;
+    var titleY = crayon.canvas.width * 0.08;
+    var titleWidth = crayon.canvas.width * 0.8;
+
+    crayon.style("title").font("Arial", titleFontSize, "bold").paragraph("left", 0.25).fill("#FFFFFF");
+
+    var titleLines = breakLines(crayon, book.title.toUpperCase(), titleWidth);
+    var titleMeasurements = crayon.measureText(titleLines);
+    var titleAscent = -titleMeasurements.y;
+
+    titleY += titleAscent;
+
+    crayon.style("author").font("Arial", authorFontSize).fill("#222222");
+    var authorMeasurements = crayon.measureText(author);
+
+    crayon.style("title").text(titleLines, titleX, titleY);
+    crayon.style("author").text(author, titleX, titleY + titleMeasurements.height);
+
+
+    var coverCanvas = document.getElementById("cover");
+    var img = document.createElement("img");
+    img.src = coverCanvas.toDataURL();
+    img.className = "thumb";
+    document.body.appendChild(img);
   }
 
   return {

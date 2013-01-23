@@ -78,7 +78,7 @@ OK.Covers.push((function() {
     var titleY = crayon.canvas.width * 0.08;
     var titleWidth = crayon.canvas.width * 0.8;
 
-    crayon.style("title").font("Arial", titleFontSize, 0.25).fill("#000000");
+    crayon.style("title").font("Arial", titleFontSize).paragraph("left", 0.25).fill("#000000");
 
     var titleLines = breakLines(crayon, book.title, titleWidth);
     var titleMeasurements = crayon.measureText(titleLines);
