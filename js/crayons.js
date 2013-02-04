@@ -91,6 +91,7 @@ function HTMLCanvasCrayon(canvas) {
 HTMLCanvasCrayon.prototype.createStyle = function() {
   var style = {
     stroke: false,
+    strokeWidth: 1,
     fill: "#000000",
     fontFamily: "Arial",
     fontSize: 12,
@@ -113,8 +114,9 @@ HTMLCanvasCrayon.prototype.fill = function(enabledColor) {
   return this;
 };
 
-HTMLCanvasCrayon.prototype.stroke = function(enabledColor) {
+HTMLCanvasCrayon.prototype.stroke = function(enabledColor, width) {
   this.currentStyle.stroke = enabledColor;
+  this.currentStyle.strokeWidth = width;
   return this;
 };
 
@@ -141,6 +143,7 @@ HTMLCanvasCrayon.prototype.beforeDraw = function() {
 
   if (this.currentStyle.stroke) {
     this.context.strokeStyle = this.currentStyle.stroke;
+    this.context.lineWidth = this.currentStyle.strokeWidth;
   }
 
   if (this.currentStyle.fontFamily && this.currentStyle.fontSize) {
