@@ -26,11 +26,7 @@ OK.Covers.push((function() {
     var paleYellow = "rgb(255, 255, 255)";
     var colorHSL = chroma.hex(niceBlue).hsl();
     var color = chroma.hsl(hue, 0.8, colorHSL[2]).hex();
-    var darkColor = chroma.hsl(hue, 0.8, colorHSL[2] * 0.8).hex();
     var lightColor = chroma.hsl(hue, 0.8, colorHSL[2] * 1.5).hex();
-
-    //darkColor = "#FFFFFF";
-    //lightColor = color;
 
     crayon.fill(color).rect(margins, margins, crayon.canvas.width - 2 * margins, crayon.canvas.height - 2 * margins);
 
@@ -74,21 +70,6 @@ OK.Covers.push((function() {
         crayon.restore();
       }
     }
-
-    for(var i=0; i<1000*0; i+=step) {
-      var a = { x : 0, y : 10 + i };
-      var b = { x : 10 + i, y : 0 };
-
-      crayon.save();
-      crayon.stroke("#FFFFFF").line(a.x, a.y, b.x, b.y).stroke(false);
-      var k = Math.random();
-      crayon.fill("#FFFFFF")
-        .translate(a.x + (b.x - a.x) * k + 1, a.y + (b.y - a.y) * k + 1)
-        .rotate(-45)
-        .rect(0, 0, 10 + Math.random() * 200, 3);
-      crayon.restore();
-    }
-
 
     var author = OK.Covers.Utils.formatAuthorName(book.author);
 
