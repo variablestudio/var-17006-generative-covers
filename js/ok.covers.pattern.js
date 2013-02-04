@@ -19,29 +19,53 @@ OK.Covers.push((function() {
     var paleYellow = "rgb(255, 255, 255)";
 
     var colorHSL = chroma.hex(niceBlue).hsl();
-    niceBlue = chroma.hsl(Math.random() * 255, 0.8, colorHSL[2]).hex();
+    var hue = Math.random() * 255;
+    var color = chroma.hsl(hue, 0.8, colorHSL[2]).hex();
+    var darkColor = chroma.hsl(hue, 0.8, colorHSL[2] * 0.8).hex();
+    var lightColor = chroma.hsl(hue, 0.8, colorHSL[2] * 1.5).hex();
 
-    crayon.fill(niceBlue).rect(margins, margins, crayon.canvas.width - 2 * margins, crayon.canvas.height - 2 * margins);
+    //darkColor = "#FFFFFF";
+    //lightColor = color;
 
-    var step = 50 + Math.random() * 50;
+    crayon.fill(color).rect(margins, margins, crayon.canvas.width - 2 * margins, crayon.canvas.height - 2 * margins);
+
+    var numX = 5 + Math.floor(Math.random() * 10);
+    var stepX = crayon.canvas.width / (numX + 1);
+    var stepY = stepX;
     //var step = 10 + Math.random() * 20;
-    var r = 10 + Math.random() * 50;
-    var r2 = 5 + Math.random() * 10;
+    var r = stepX * (0.2 + 0.4 * Math.random());
+    var r2 = 0.25 * stepX * (0.2 + 0.4 * Math.random());
 
-    for(var x=0; x<crayon.canvas.width; x+=step) {
-      for(var y=0; y<crayon.canvas.height; y+=step) {
+    crayon.fill(lightColor);
+
+    for(var x=0; x<=crayon.canvas.width + stepX/2; x+=stepX) {
+      for(var y=0; y<=crayon.canvas.height + stepY/2; y+=stepY) {
         crayon
           .save()
-          .fill("#FFFFFF")
           .translate(x, y)
           .rotate(-45)
-          .rect(-5 - r/2, 0, 10 + r*2, r2)
+          .scale(2, 2)
+          .rect(-r, -r2, r*2, r2*2)
           .rotate(90)
-          .rect(-5 - r/2, 0, 10 + r*2, r2)
+          .rect(-r, -r2, r*2, r2*2)
           .restore();
       }
     }
 
+    crayon.fill(darkColor);
+
+    for(var x=0; x<=crayon.canvas.width + stepX/2; x+=stepX) {
+      for(var y=0; y<=crayon.canvas.height + stepY/2; y+=stepY) {
+        crayon
+          .save()
+          .translate(x, y)
+          .rotate(-45)
+          .rect(-r, -r2, r*2, r2*2)
+          .rotate(90)
+          .rect(-r, -r2, r*2, r2*2)
+          .restore();
+      }
+    }
 
     for(var i=0; i<1000*0; i+=step) {
       var a = { x : 0, y : 10 + i };
