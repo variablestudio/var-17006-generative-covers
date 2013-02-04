@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Otwórz ksiązkę</title>
+<link href='http://fonts.googleapis.com/css?family=Libre+Baskerville:400,400italic' rel='stylesheet' type='text/css'>
 <style type="text/css">
 html {
   height: 100%;
@@ -52,11 +53,17 @@ img.thumb {
 <script type="text/javascript" src="js/CSVToArray.js"></script>
 <script type="text/javascript" src="js/chroma.js"></script>
 <script type="text/javascript" src="js/crayons.js"></script>
+<script type="text/javascript" src="js/pixels.js"></script>
 <script type="text/javascript" src="js/ok.data.js"></script>
 <script type="text/javascript" src="js/ok.covers.utils.js"></script>
-<script type="text/javascript" src="js/ok.covers.minimal.js"></script>
 <!--<script type="text/javascript" src="js/ok.covers.simplest.js"></script>-->
+<script type="text/javascript" src="js/ok.covers.minimal.js"></script>
 <script type="text/javascript" src="js/ok.covers.data.js"></script>
+<script type="text/javascript" src="js/ok.covers.pattern.js"></script>
+<script type="text/javascript" src="js/ok.covers.rule2.js"></script>
+<script type="text/javascript" src="js/ok.covers.blend.js"></script>
+<script type="text/javascript" src="js/ok.covers.bio.js"></script>
+
 
 <script type="text/javascript">
 
@@ -73,9 +80,11 @@ img.thumb {
     console.log(msg + " : " + Math.floor((date - startDate)/10)/100);
   }
 
-  startMeasuring();
-  OK.Data.fromCSV("data/okladki.csv", onBooksLoaded);
-  OK.Data.fromJSON("data/books.json", onBooksLoaded);
+  window.onload = function() {
+    startMeasuring();
+    OK.Data.fromCSV("data/okladki.csv", onBooksLoaded);
+    OK.Data.fromJSON("data/books.json", onBooksLoaded);
+  }
 
   function onBooksLoaded(loadedBooks) {
     books = books.concat(loadedBooks);
@@ -130,6 +139,7 @@ img.thumb {
 <body>
   <div id="canvasContainer">
     <canvas id="cover" width="300" height="400"></canvas>
+    <div style="font-family:Libre Baskerville">&nbsp;</div>
   </div>
 </body>
 </html>
