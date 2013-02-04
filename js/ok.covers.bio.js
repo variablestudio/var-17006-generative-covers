@@ -27,7 +27,7 @@ OK.Covers.push((function() {
 
     crayon.fill(lightColor).rect(margins, margins, crayon.canvas.width - 2 * margins, crayon.canvas.height - 2 * margins);
 
-    crayon.fill(false).stroke("#000000", 1);
+    crayon.fill(false).stroke("rgba(255, 255, 255, 0.15)", 3);
 
     var buds = [];
     crayon.save();
@@ -86,6 +86,7 @@ OK.Covers.push((function() {
 
       grow();
     }
+
     buds.push({
       x : branchStartX,
       y : crayon.canvas.height,
@@ -94,6 +95,26 @@ OK.Covers.push((function() {
       level : 0
     });
     grow();
+
+    while(buds.length > 0) {
+      grow();
+    }
+
+    crayon.fill(false).stroke("#333333", 1);
+
+    //branchAngle = 15 + Math.random() * 15;
+    //branchInitLen = crayon.canvas.width * (0.09 + Math.random() * 0.07);
+    branchStartX += 10;
+
+    buds.push({
+      x : branchStartX,
+      y : crayon.canvas.height,
+      dir : -90,
+      len : branchInitLen,
+      level : 0
+    });
+    grow();
+
     crayon.restore();
 
 
