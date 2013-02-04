@@ -316,8 +316,6 @@ HTMLCanvasCrayon.prototype.measureTextLines = function(str) {
   };
 };
 
-
-
 //Based on code from http://mudcu.be/journal/2011/01/html5-typographic-metrics/ by Michael Deal
 HTMLCanvasCrayon.prototype.getFontMetrics = function(fontFamily, fontSize) {
   var container;
