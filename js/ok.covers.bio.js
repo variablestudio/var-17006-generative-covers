@@ -103,15 +103,15 @@ OK.Covers.push((function() {
     var author = OK.Covers.Utils.formatAuthorName(book.author);
 
     var authorFontSize = crayon.canvas.height * 0.02;
-    var titleFontSize = crayon.canvas.height * 0.04;
+    var titleFontSize = crayon.canvas.height * 0.03;
 
     var shiftY = 20;
 
-    var titleX = crayon.canvas.width * 0.08;
-    var titleY = crayon.canvas.width * 0.08;
+    var titleX = crayon.canvas.width * 0.06;
+    var titleY = crayon.canvas.width * 0.06;
     var titleWidth = crayon.canvas.width * 0.8;
 
-    crayon.style("title").font("Libre Baskerville", titleFontSize, "bold").paragraph("left", 0.25).fill(lightColor);
+    crayon.style("title").font("Libre Baskerville", titleFontSize, "bold").paragraph("left", 0.25).fill("#333333");
 
     var titleLines = OK.Covers.Utils.breakLines(crayon, book.title.toUpperCase(), titleWidth);
     var titleMeasurements = crayon.measureText(titleLines);
@@ -121,10 +121,10 @@ OK.Covers.push((function() {
 
     titleY += shiftY;
 
-    crayon.style("author").font("Libre Baskerville", authorFontSize).fill(lightColor);
+    crayon.style("author").font("Libre Baskerville", authorFontSize).fill("#333333");
     var authorMeasurements = crayon.measureText(author);
 
-    crayon.style("default").fill(paleYellow).rect(margins, margins + shiftY, crayon.canvas.width - 2 * margins, titleY + titleMeasurements.height + authorMeasurements.height + titleAscent/2 - shiftY);
+    crayon.style("default").stroke(false).fill(lightColor).rect(margins, margins + shiftY, crayon.canvas.width - 2 * margins, titleY + titleMeasurements.height + authorMeasurements.height + titleAscent/2 - shiftY);
 
     crayon.style("title").text(titleLines, titleX, titleY);
     crayon.style("author").text(author, titleX, titleY + titleMeasurements.height);
