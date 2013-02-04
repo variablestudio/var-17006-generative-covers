@@ -35,8 +35,8 @@ OK.Covers.push((function() {
     var r = stepX * radius;
     var r2 = stepX * radius2;
 
-    if (shape == 0) r2 *= 0.25; //square
-    if (shape == 1) r2 *= 0.25; //ellipse
+    r2 *= 0.25; //square
+    //if (shape == 1) r2 *= 0.25; //ellipse
 
     crayon.fill(lightColor).stroke(false);
 
@@ -46,11 +46,11 @@ OK.Covers.push((function() {
         crayon.translate(x, y);
         crayon.rotate(-45);
         crayon.scale(borderScale, borderScale);
-        if (shape == 0) crayon.rect(-r, -r2, r*2, r2*2);
-        if (shape == 1) crayon.ellipse(-r, -r2, r*2, r2*2);
+        crayon.rect(-r, -r2, r*2, r2*2);
+        //if (shape == 1) crayon.ellipse(-r, -r2, r*2, r2*2);
         crayon.rotate(90);
-        if (shape == 0) crayon.rect(-r, -r2, r*2, r2*2);
-        if (shape == 1) crayon.ellipse(-r, -r2, r*2, r2*2);
+        crayon.rect(-r, -r2, r*2, r2*2);
+        //if (shape == 1) crayon.ellipse(-r, -r2, r*2, r2*2);
         crayon.restore();
       }
     }
@@ -62,11 +62,11 @@ OK.Covers.push((function() {
         crayon.save();
         crayon.translate(x, y);
         crayon.rotate(-45);
-        if (shape == 0) crayon.rect(-r, -r2, r*2, r2*2);
-        if (shape == 1) crayon.ellipse(-r, -r2, r*2, r2*2);
+        crayon.rect(-r, -r2, r*2, r2*2);
+        //crayon.ellipse(-r, -r2, r*2, r2*2);
         crayon.rotate(90);
-        if (shape == 0) crayon.rect(-r, -r2, r*2, r2*2);
-        if (shape == 1) crayon.ellipse(-r, -r2, r*2, r2*2);
+        crayon.rect(-r, -r2, r*2, r2*2);
+        //crayon.ellipse(-r, -r2, r*2, r2*2);
         crayon.restore();
       }
     }
