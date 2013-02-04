@@ -54,7 +54,8 @@ img.thumb {
 <script type="text/javascript" src="js/crayons.js"></script>
 <script type="text/javascript" src="js/ok.data.js"></script>
 <script type="text/javascript" src="js/ok.covers.minimal.js"></script>
-<script type="text/javascript" src="js/ok.covers.simplest.js"></script>
+<!--<script type="text/javascript" src="js/ok.covers.simplest.js"></script>-->
+<script type="text/javascript" src="js/ok.covers.data.js"></script>
 
 <script type="text/javascript">
 
@@ -78,7 +79,7 @@ img.thumb {
   function onBooksLoaded(loadedBooks) {
     books = books.concat(loadedBooks);
     if (++numSourcesLoaded == 2) {
-      //processBooks();
+      processBooks();
       endMeasuring("Loading books");
       makeCovers();
     }
@@ -100,6 +101,7 @@ img.thumb {
     });
     categoriesNames.forEach(function(category) {
       //console.log(JSON.stringify(category));
+      //console.log(category.name);
     })
   }
 
@@ -113,9 +115,9 @@ img.thumb {
       OK.Covers[coverAlgorithmId].makeCover(books[i]);
       i = (i + 1) % books.length;
 
-      if (i < 40) {
+      //if (i < 40) {
         setTimeout(nextCover, 1000);
-      }
+      //}
       //endMeasuring("Making cover");
     }
 
