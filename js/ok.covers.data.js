@@ -71,12 +71,7 @@ OK.Covers.push((function() {
 
     crayon.style("default").fill(categoryColor2).rect(0, 0, crayon.canvas.width * 0.05, crayon.canvas.height);
 
-
-    var coverCanvas = document.getElementById("cover");
-    var img = document.createElement("img");
-    img.src = coverCanvas.toDataURL();
-    img.className = "thumb";
-    document.body.appendChild(img);
+    OK.Covers.Utils.addCover();
   }
 
   return {

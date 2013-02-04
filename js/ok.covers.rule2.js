@@ -83,11 +83,7 @@ OK.Covers.push((function() {
     crayon.style("title").text(titleLines, titleX, titleY);
     crayon.style("author").text(author, titleX, titleY + titleMeasurements.height);
 
-    var coverCanvas = document.getElementById("cover");
-    var img = document.createElement("img");
-    img.src = coverCanvas.toDataURL();
-    img.className = "thumb";
-    document.body.appendChild(img);
+    OK.Covers.Utils.addCover();
   }
 
   return {

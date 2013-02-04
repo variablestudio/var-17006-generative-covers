@@ -102,11 +102,7 @@ OK.Covers.push((function() {
 
     crayon.clip(false);
 
-    var coverCanvas = document.getElementById("cover");
-    var img = document.createElement("img");
-    img.src = coverCanvas.toDataURL();
-    img.className = "thumb";
-    document.body.appendChild(img);
+    OK.Covers.Utils.addCover();
   }
 
   return {

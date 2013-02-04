@@ -41,3 +41,17 @@ OK.Covers.Utils.breakLines = function(crayon, str, maxWidth) {
   lines.push(currentLine);
   return lines;
 };
+
+
+OK.Covers.Utils.addCover = function() {
+  var coverCanvas = document.getElementById("cover");
+  var img = document.createElement("img");
+  img.src = coverCanvas.toDataURL();
+  img.className = "thumb";
+
+  var covers = document.getElementById("covers");
+  if (covers.childNodes.length == 0)
+    covers.appendChild(img);
+  else
+    covers.insertBefore(img, covers.childNodes[0]);
+};
