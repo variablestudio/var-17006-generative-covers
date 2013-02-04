@@ -94,6 +94,7 @@ label input[type='checkbox'], label input[type='button'], label select {
 <script type="text/javascript" src="js/ok.covers.pattern.js"></script>
 <script type="text/javascript" src="js/ok.covers.rule2.js"></script>
 <script type="text/javascript" src="js/ok.covers.blend.js"></script>
+<script type="text/javascript" src="js/ok.covers.blend2.js"></script>
 <script type="text/javascript" src="js/ok.covers.bio.js"></script>
 
 
@@ -160,6 +161,7 @@ label input[type='checkbox'], label input[type='button'], label select {
 
       if (autoAdding) {
         var coverAlgorithmId = Math.floor(Math.random() * OK.Covers.length);
+        //coverAlgorithmId = 5;
         OK.Covers[coverAlgorithmId].makeCover(books[i]);
         i = (i + 1) % books.length;
       }
@@ -216,8 +218,8 @@ label input[type='checkbox'], label input[type='button'], label select {
   <form>
     <label>Automatyczne dodawanie<input type="checkbox" checked="checked" id="autoAdd"/></label>
     <label>Algorytm<select id="algorithm"></select></label>
-    <label>Tytuł<input type="text" id="title" value="Testowy"/></label>
-    <label>Autor<input type="text" id="author" value="Nieznany"/></label>
+    <label>Tytuł<input type="text" id="title" value="Testowy tytuł do testowania algorytmów"/></label>
+    <label>Autor<input type="text" id="author" value="Włodzimież Nieznany"/></label>
     <label>Wydawca<input type="text"/ id="publisher" value="PWN"></label>
     <label>Rok<input type="text"/ id="year" value="2013"></label>
     <label>Ilość stron<input type="text"/ id="pageCount" value="42"></label>
