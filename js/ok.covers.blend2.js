@@ -23,7 +23,7 @@ OK.Covers.push((function() {
     crayon.clear();
 
     var niceBlue = "#27D1E7";
-    var paleYellow = "rgb(240, 255, 255)";
+    var paleYellow = "rgb(255, 255, 240)";
     var colorHSL = chroma.hex(niceBlue).hsl();
     var color = chroma.hsl(hue, 0.98, colorHSL[2]).hex();
     var color2 = chroma.hsl(hue2, 0.7, colorHSL[2]).hex();
@@ -47,27 +47,29 @@ OK.Covers.push((function() {
     crayon.clear();
     crayon.fill(color); //"#FF9900"
     var shape1 = Math.floor(Math.random() * 2);
-    var n = 30;
-    if (shape1 == 2) n = 1;
+    var n = 60;
+    if (shape1 == 1) n = 1;
     for(var i=0; i<n; i++) {
+      color = chroma.hsl(hue, 0.97, colorHSL[2] + Math.random()*0.2 * (1 - shape1)).hex();
+      crayon.fill(color);
       var c1 = [w*0.05 + Math.random() * w*0.9, h*0.05 + Math.random() * h*0.9, w*0.02 + Math.random() * w * 0.09];
       if (shape1 == 0) crayon.circle(c1[0], c1[1], c1[2]);
-      if (shape1 == 1) crayon.rect(c1[0], c1[1], c1[2]*2, c1[2]*2);
-      if (shape1 == 2) crayon.font("Arial", 300).text("M", c1[0], c1[1]);
+      if (shape1 == 1) crayon.font("Arial", 1000, "bold").text(book.title.substr(0,1), c1[0] - 300, c1[1] + 300);
     }
 
     var blue = Pixels.fromCanvas(crayon.canvas);
 
     crayon.clear();
     crayon.fill(color2); //"#00DDFF"
-    shape1 = Math.floor(Math.random() * 3);
-    n = 30;
-    if (shape1 == 2) n = 1;
+    shape1 = Math.floor(Math.random() * 2);
+    n = 60;
+    if (shape1 == 1) n = 1;
     for(var i=0; i<n; i++) {
-      var c1 = [w/4 + Math.random() * w/2, h/4 + h*0.2 + Math.random() * h/2, w*(0.01 + Math.random() * 0.02)];
+      color2 = color2 = chroma.hsl(hue2, 0.7, colorHSL[2] + Math.random() * 0.2 * (1 - shape1)).hex();
+      crayon.fill(color2);
+      var c1 = [w*0.05 + Math.random() * w*0.9, h*0.05 + Math.random() * h*0.9, w*0.01 + Math.random() * w * 0.04];
       if (shape1 == 0) crayon.circle(c1[0], c1[1], c1[2]);
-      if (shape1 == 1) crayon.rect(c1[0], c1[1], c1[2]*20, c1[2]*(0.2 + Math.random() * 0.5));
-      if (shape1 == 2) crayon.font("Arial", 300).text("M", c1[0], c1[1]);
+      if (shape1 == 1) crayon.font("Arial", 1000, "bold").text(book.author.substr(0,1), c1[0] - 300, c1[1] + 300);
     }
     var red = Pixels.fromCanvas(crayon.canvas);
 
@@ -104,8 +106,8 @@ OK.Covers.push((function() {
     crayon.style("author").font("Verdana", authorFontSize).fill("#333333");
     var authorMeasurements = crayon.measureText(author);
 
-    //crayon.style("title").fill("#333333").text(titleLines, titleX, titleY);
-    //crayon.style("author").fill("#333333").text(author, titleX, titleY + titleMeasurements.height);
+    crayon.style("title").fill("#333333").text(titleLines, titleX, titleY);
+    crayon.style("author").fill("#333333").text(author, titleX, titleY + titleMeasurements.height);
 
     //crayon.clip(function(context) {
     //  context.beginPath();
@@ -125,7 +127,7 @@ OK.Covers.push((function() {
   }
 
   return {
-    name : "Blend",
+    name : "Blend 2",
     makeCover : makeCover
   };
 })());
