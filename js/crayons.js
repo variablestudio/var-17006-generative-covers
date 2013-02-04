@@ -172,7 +172,16 @@ HTMLCanvasCrayon.prototype.rect = function(x, y, w, h) {
 
 HTMLCanvasCrayon.prototype.circle = function(x, y, r) {
   this.beforeDraw();
-  this.canvas.drawCircle(this.currentStyle, x, y, r);
+
+  this.context.beginPath();
+  this.context.arc(x, y, r, 0, 2 * Math.PI, false);
+  this.context.closePath();
+  if (this.currentStyle.fill) {
+    this.context.fill();
+  }
+  if (this.currentStyle.stroke) {
+    this.context.stroke();
+  }
   this.afterDraw();
   return this;
 };
