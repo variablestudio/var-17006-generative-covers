@@ -91,7 +91,7 @@ OK.Covers.push((function() {
   }
 
   return {
-    name : "Pattern",
+    name : "Rule2",
     makeCover : makeCover
   };
 })());
