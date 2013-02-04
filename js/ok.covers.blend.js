@@ -43,18 +43,18 @@ OK.Covers.push((function() {
 
     crayon.clear();
     crayon.fill("#FF9900");
-    crayon.circle(w/2, h/2, w/3);
+    crayon.circle(w/4 + Math.random() * w/2, h/4 + Math.random() * w/2, w*0.2 + Math.random() * w * 0.2);
 
     var blue = Pixels.fromCanvas(crayon.canvas);
 
     crayon.clear();
     crayon.fill("#00FF00");
-    crayon.circle(w/2, h/2 + w/12, w/4, true);
+    crayon.circle(w/4 + Math.random() * w/2, h/4 + w/12 + Math.random() * w/2, w/4, true);
     var orange = Pixels.fromCanvas(crayon.canvas);
 
     crayon.clear();
     crayon.fill("#00DDFF");
-    crayon.circle(w/2, h/2 + w*0.2, w/3, true);
+    crayon.circle(w/4 + Math.random() * w/2, h/4 + w*0.2 + Math.random() * w/2, w/3, true);
     var red = Pixels.fromCanvas(crayon.canvas);
 
     crayon.clear();
