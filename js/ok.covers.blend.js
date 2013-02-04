@@ -12,8 +12,8 @@ OK.Covers.push((function() {
     crayon.style("default");
 
     var borderScale = 1 + Math.random();
-    var hue = Math.random() * 360;
-    var hue2 = (hue + 180) % 360;
+    var hue = Math.random() * 60 - 30;
+    var hue2 = 175 + Math.random() * 50;
     var minPageCount = 10;
     var maxPageCount = 500;
     var numX = OK.Covers.Utils.remap(book.pageCount, minPageCount, maxPageCount, 2, 100, true);
@@ -25,9 +25,9 @@ OK.Covers.push((function() {
     var niceBlue = "#27D1E7";
     var paleYellow = "rgb(255, 255, 240)";
     var colorHSL = chroma.hex(niceBlue).hsl();
-    var color = chroma.hsl(hue, 0.8, colorHSL[2]).hex();
-    var color2 = chroma.hsl(hue2, 0.8, colorHSL[2]).hex();
-    var lightColor = chroma.hsl(hue, 0.8, colorHSL[2] * 1.5).hex();
+    var color = chroma.hsl(hue, 0.98, colorHSL[2]).hex();
+    var color2 = chroma.hsl(hue2, 0.7, colorHSL[2]).hex();
+    var lightColor = chroma.hsl(hue, 0.7, colorHSL[2] * 1.5).hex();
     var darkColor = chroma.hsl(hue, 0.8, colorHSL[2] * 0.5).hex();
 
     crayon.fill(paleYellow).rect(margins, margins, crayon.canvas.width - 2 * margins, crayon.canvas.height - 2 * margins);
@@ -42,34 +42,28 @@ OK.Covers.push((function() {
     var bg = Pixels.fromCanvas(crayon.canvas);
 
     crayon.clear();
-    crayon.fill("#FF9900");
-    crayon.circle(w/4 + Math.random() * w/2, h/4 + Math.random() * w/2, w*0.2 + Math.random() * w * 0.2);
+    crayon.fill(color); //"#FF9900"
+    var c1 = [w/4 + Math.random() * w/2, h/4 + Math.random() * w/2, w*0.2 + Math.random() * w * 0.2];
+    crayon.circle(c1[0], c1[1], c1[2], c1[3]);
 
     var blue = Pixels.fromCanvas(crayon.canvas);
 
     crayon.clear();
-    crayon.fill("#00FF00");
-    crayon.circle(w/4 + Math.random() * w/2, h/4 + w/12 + Math.random() * w/2, w/4, true);
-    var orange = Pixels.fromCanvas(crayon.canvas);
-
-    crayon.clear();
-    crayon.fill("#00DDFF");
-    crayon.circle(w/4 + Math.random() * w/2, h/4 + w*0.2 + Math.random() * w/2, w/3, true);
+    crayon.fill(color2); //"#00DDFF"
+    var c2 = [w/4 + Math.random() * w/2, h/4 + w*0.2 + Math.random() * w/2, w/3];
+    crayon.circle(c2[0], c2[1], c2[2], c2[3]);
     var red = Pixels.fromCanvas(crayon.canvas);
-
-    crayon.clear();
 
     var blended;
     blended = Pixels.blend(bg, red);
     blended = Pixels.blend(blended, blue);
+
     //blended = Pixels.blend(blended, orange);
 
     //Pixels.blend(Pixels.blend(bg, red), blue), orange
     //var blended = Pixels.blend(blue, red);
     //var blended = Pixels.blend(red, blue, "cmyk");
     Pixels.draw(blended, crayon.canvas);
-
-    /*
 
     var authorFontSize = crayon.canvas.height * 0.04;
     var titleFontSize = crayon.canvas.height * 0.06;
@@ -93,10 +87,20 @@ OK.Covers.push((function() {
     crayon.style("author").font("Verdana", authorFontSize).fill("#333333");
     var authorMeasurements = crayon.measureText(author);
 
-    crayon.style("title").text(titleLines, titleX, titleY);
-    crayon.style("author").text(author, titleX, titleY + titleMeasurements.height);
+    crayon.style("title").fill("#333333").text(titleLines, titleX, titleY);
+    crayon.style("author").fill("#333333").text(author, titleX, titleY + titleMeasurements.height);
 
-    */
+    crayon.clip(function(context) {
+      context.beginPath();
+      context.arc(c1[0], c1[1], c1[2], 0, 2 * Math.PI, false);
+      context.arc(c2[0], c2[1], c2[2], 0, 2 * Math.PI, false);
+      context.clip();
+    });
+
+    crayon.style("title").fill("#FFFFFF").text(titleLines, titleX, titleY);
+    crayon.style("author").fill("#FFFFFF").text(author, titleX, titleY + titleMeasurements.height);
+
+    crayon.clip(false);
 
     var coverCanvas = document.getElementById("cover");
     var img = document.createElement("img");
