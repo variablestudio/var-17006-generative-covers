@@ -48,6 +48,36 @@ img.thumb {
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   float: left;
 }
+
+form {
+  position: absolute;
+  top: 440px;
+  left: 15px;
+}
+
+label {
+  font-family: Arial;
+  font-size: 90%;
+  float: left;
+  clear: both;
+  width: 300px;
+  height: 2em;
+  color: white;
+}
+
+label input[type='text'] {
+  margin-left: 1em;
+  margin-top: -0.25em;
+  float: right;
+  width: 18em;
+  border: none;
+  padding: 0.3em 0.2em;
+}
+label input[type='checkbox'], label input[type='button'], label select {
+  margin-left: 1em;
+  margin-top: -0.25em;
+  float: right;
+}
 </style>
 <script type="text/javascript" src="js/paper.js"></script>
 <script type="text/javascript" src="js/CSVToArray.js"></script>
@@ -141,5 +171,16 @@ img.thumb {
     <canvas id="cover" width="300" height="400"></canvas>
     <div style="font-family:Libre Baskerville">&nbsp;</div>
   </div>
+  <form>
+    <label>Automatyczne dodawanie<input type="checkbox" checked="checked"/></label>
+    <label>Algorytm<select></select></label>
+    <label>Tytuł<input type="text"/></label>
+    <label>Autor<input type="text"/></label>
+    <label>Kategoria<input type="text"/></label>
+    <label>Wydawca<input type="text"/></label>
+    <label>Ilość strong<input type="text"/></label>
+    <label><input type="button" value="dodaj"/></label>
+  </form>
+  <div id="covers"></div>
 </body>
 </html>
