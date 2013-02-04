@@ -11,11 +11,16 @@ OK.Covers.push((function() {
 
     crayon.style("default");
 
+    var minPageCount = 10;
+    var maxPageCount = 500;
+
     var borderScale = 1 + Math.random();
     var hue = Math.random() * 360;
-    var numX = 2 + Math.floor(Math.random() * 10);
+    //var numX = 2 + Math.floor(Math.random() * 10);
+    var numX = OK.Covers.Utils.remap(book.pageCount, minPageCount, maxPageCount, 2, 17, true);
     var radius = (0.2 + 0.5 * Math.random());
     var radius2 = (0.1 + 0.4 * Math.random());
+    var counterLines = (Math.random() > 0.5) ? 0.1 : 0;
 
     var margins = 0;
 
@@ -43,28 +48,11 @@ OK.Covers.push((function() {
         crayon.translate(x, y);
         crayon.rotate(-45);
         crayon.scale(borderScale, borderScale);
-        if (leftOrRight) crayon.rect(-r, -r2, r*2, r2*2);
-        crayon.rotate(90);
-        if (!leftOrRight) crayon.rect(-r, -r2, r*2, r2*2);
+        if (leftOrRight) crayon.rect(-r, -r2, r*2, r2*2).rotate(90).rect(-r, -r2*counterLines, r*2, r2*2*counterLines);
+        if (!leftOrRight) crayon.rect(-r, -r2*counterLines, r*2, r2*2*counterLines).rotate(90).rect(-r, -r2, r*2, r2*2);;
         crayon.restore();
       }
     }
-
-    var step = stepX;
-    for(var i=0; i<1000; i+=step) {
-      var a = { x : 0, y : 10 + i };
-      var b = { x : 10 + i, y : 0 };
-
-      crayon.save();
-      crayon.stroke("#FFFFFF").line(a.x, a.y, b.x, b.y).stroke(false);
-      var k = Math.random();
-      crayon.fill("#FFFFFF")
-        .translate(a.x + (b.x - a.x) * k + 1, a.y + (b.y - a.y) * k + 1)
-        .rotate(-45)
-        .rect(0, 0, 10 + Math.random() * 200, 3);
-      crayon.restore();
-    }
-
 
     var author = OK.Covers.Utils.formatAuthorName(book.author);
 
