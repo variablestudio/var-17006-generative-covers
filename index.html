@@ -35,6 +35,8 @@ body {
   margin-top: -300px;
   margin-left: -225px;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+  width: 300px;
+  height: 400px;
 }
 
 canvas {
@@ -100,6 +102,8 @@ label input[type='checkbox'], label input[type='button'], label select {
   var books = [];
   var numSourcesLoaded = 0;
 
+  var autoAdding = true;
+
   var measureDate = []
   function startMeasuring() {
     measureDate.push((new Date()).getTime());
@@ -114,6 +118,8 @@ label input[type='checkbox'], label input[type='button'], label select {
     startMeasuring();
     OK.Data.fromCSV("data/okladki.csv", onBooksLoaded);
     OK.Data.fromJSON("data/books.json", onBooksLoaded);
+
+    initForm();
   }
 
   function onBooksLoaded(loadedBooks) {
@@ -151,35 +157,72 @@ label input[type='checkbox'], label input[type='button'], label select {
     var i = 0;
     function nextCover() {
       //startMeasuring();
-      var coverAlgorithmId = Math.floor(Math.random() * OK.Covers.length);
-      OK.Covers[coverAlgorithmId].makeCover(books[i]);
-      i = (i + 1) % books.length;
 
-      //if (i < 40) {
-        setTimeout(nextCover, 1000);
-      //}
-      //endMeasuring("Making cover");
+      if (autoAdding) {
+        var coverAlgorithmId = Math.floor(Math.random() * OK.Covers.length);
+        OK.Covers[coverAlgorithmId].makeCover(books[i]);
+        i = (i + 1) % books.length;
+      }
+
+      setTimeout(nextCover, 1000);
     }
 
     nextCover();
+  }
+
+  function initForm() {
+    var autoAdd = document.getElementById("autoAdd");
+    autoAdd.addEventListener("change", function() {
+      autoAdding = autoAdd.checked;
+    });
+
+    var algorithm = document.getElementById("algorithm");
+    var title = document.getElementById("title");
+    var author = document.getElementById("author");
+    var publisher = document.getElementById("publisher");
+    var year = document.getElementById("year");
+    var pageCount = document.getElementById("pageCount");
+    var category = document.getElementById("category");
+
+    for(var i=0; i<OK.Covers.length; i++) {
+      var coverAlgo = OK.Covers[i];
+      var option = document.createElement("option");
+      option.innerText = coverAlgo.name;
+      option.value = i;
+      algorithm.appendChild(option);
+    }
+
+    addBtn.addEventListener("click", function() {
+      var algoId = algorithm.options[algorithm.selectedIndex].value;
+      var book = {
+        title : title.value,
+        author : author.value,
+        publisher : publisher.value,
+        year : year.value,
+        pageCount : pageCount.value,
+        categories : [category.value]
+      }
+      OK.Covers[algoId].makeCover(book);
+    })
   }
 
 </script>
 </head>
 <body>
   <div id="canvasContainer">
-    <canvas id="cover" width="300" height="400"></canvas>
+    <canvas id="cover" width="600" height="800"></canvas>
     <div style="font-family:Libre Baskerville">&nbsp;</div>
   </div>
   <form>
-    <label>Automatyczne dodawanie<input type="checkbox" checked="checked"/></label>
-    <label>Algorytm<select></select></label>
-    <label>Tytuł<input type="text"/></label>
-    <label>Autor<input type="text"/></label>
-    <label>Kategoria<input type="text"/></label>
-    <label>Wydawca<input type="text"/></label>
-    <label>Ilość strong<input type="text"/></label>
-    <label><input type="button" value="dodaj"/></label>
+    <label>Automatyczne dodawanie<input type="checkbox" checked="checked" id="autoAdd"/></label>
+    <label>Algorytm<select id="algorithm"></select></label>
+    <label>Tytuł<input type="text" id="title" value="Testowy"/></label>
+    <label>Autor<input type="text" id="author" value="Nieznany"/></label>
+    <label>Wydawca<input type="text"/ id="publisher" value="PWN"></label>
+    <label>Rok<input type="text"/ id="year" value="2013"></label>
+    <label>Ilość stron<input type="text"/ id="pageCount" value="42"></label>
+    <label>Kategoria<input type="text" id="category" value="historia sztuki"/></label>
+    <label><input type="button" value="dodaj" id="addBtn"/></label>
   </form>
   <div id="covers"></div>
 </body>
