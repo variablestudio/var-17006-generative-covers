@@ -2,38 +2,7 @@ var OK = OK || {};
 OK.Covers = OK.Covers || [];
 
 OK.Covers.push((function() {
-  function formatAuthorName(name) {
-    var tokens = name.split(', ');
-    if (tokens.length == 2)
-      return tokens[1] + ' ' + tokens[0];
-    else
-      return tokens[0];
-  }
-
   var crayon;
-
-  function breakLines(crayon, str, maxWidth) {
-    //var width = measureTextContext.measureText(text).width;
-    var words = str.split(" ");
-    var lines = [];
-    var currentLine = "";
-    while(words.length > 0) {
-      var word = words.shift();
-      var newLine = currentLine;
-      if (newLine.length > 0) newLine += " ";
-      newLine += word;
-      var measurements = crayon.measureText(newLine);
-      if (measurements.width > maxWidth && currentLine.length > 0) {
-        lines.push(currentLine);
-        currentLine = word;
-      }
-      else {
-        currentLine = newLine;
-      }
-    }
-    lines.push(currentLine);
-    return lines;
-  };
 
   function makeCover(book) {
     if (!crayon) {
@@ -69,7 +38,7 @@ OK.Covers.push((function() {
       crayon.restore();
     }
 
-    var author = formatAuthorName(book.author);
+    var author = OK.Covers.Utils.formatAuthorName(book.author);
 
     var authorFontSize = crayon.canvas.height * 0.04;
     var titleFontSize = crayon.canvas.height * 0.06;
@@ -80,7 +49,7 @@ OK.Covers.push((function() {
 
     crayon.style("title").font("Arial", titleFontSize).paragraph("left", 0.25).fill("#000000");
 
-    var titleLines = breakLines(crayon, book.title, titleWidth);
+    var titleLines = OK.Covers.Utils.breakLines(crayon, book.title, titleWidth);
     var titleMeasurements = crayon.measureText(titleLines);
     var titleAscent = -titleMeasurements.y;
 
