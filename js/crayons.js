@@ -240,6 +240,10 @@ HTMLCanvasCrayon.prototype.line = function(x1, y1, x2, y2) {
 HTMLCanvasCrayon.prototype.text = function(str, x, y) {
   this.beforeDraw();
 
+  if (this.clipFunc) {
+    this.clipFunc(this.context);
+  }
+
   if (Object.prototype.toString.call(str) === '[object Array]') {
     var dy = y;
     if (this.currentStyle.fill) {
@@ -354,6 +358,10 @@ HTMLCanvasCrayon.prototype.measureTextLines = function(str) {
     width : maxWidth,
     height : height
   };
+};
+
+HTMLCanvasCrayon.prototype.clip = function(clipFunc) {
+  this.clipFunc = clipFunc;
 };
 
 //Based on code from http://mudcu.be/journal/2011/01/html5-typographic-metrics/ by Michael Deal
