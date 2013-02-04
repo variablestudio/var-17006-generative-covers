@@ -11,6 +11,15 @@ OK.Covers.Utils.formatAuthorName = function(name) {
     return tokens[0];
 };
 
+OK.Covers.Utils.remap = function(value, oldMin, oldMax, newMin, newMax, clamp) {
+  var newValue = newMin + (value - oldMin) / (oldMax - oldMin) * (newMax - newMin);
+  if (clamp) {
+    if (newValue < newMin) newValue = newMin;
+    if (newValue > newMax) newValue = newMax;
+  }
+  return newValue;
+};
+
 OK.Covers.Utils.breakLines = function(crayon, str, maxWidth) {
   var words = str.split(" ");
   var lines = [];
