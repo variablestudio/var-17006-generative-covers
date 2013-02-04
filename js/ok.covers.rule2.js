@@ -29,8 +29,8 @@ OK.Covers.push((function() {
     var niceBlue = "#27D1E7";
     var paleYellow = "rgb(255, 255, 255)";
     var colorHSL = chroma.hex(niceBlue).hsl();
-    var color = chroma.hsl(hue, 0.8, colorHSL[2]).hex();
-    var lightColor = chroma.hsl(hue, 0.8, colorHSL[2] * 1.8).hex();
+    var color = chroma.hsl(hue, 0.7, colorHSL[2] * 1.1).hex();
+    var lightColor = chroma.hsl(hue, 0.3, colorHSL[2] * 1.8).hex();
 
     crayon.fill(color).rect(margins, margins, crayon.canvas.width - 2 * margins, crayon.canvas.height - 2 * margins);
 
