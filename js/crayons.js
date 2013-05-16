@@ -139,6 +139,10 @@ HTMLCanvasCrayon.prototype.paragraph = function(textAlign, textLeading, paragrap
 HTMLCanvasCrayon.prototype.beforeDraw = function() {
   this.context.save();
 
+  if (this.currentStyle.clipFunc) {
+    this.currentStyle.clipFunc(this.context);
+  }
+
   if (this.currentStyle.fill) {
     this.context.fillStyle = this.currentStyle.fill;
   }
@@ -243,10 +247,6 @@ HTMLCanvasCrayon.prototype.text = function(str, x, y) {
   this.beforeDraw();
   if (x === undefined) x = 0;
   if (y === undefined) y = 0;
-
-  if (this.clipFunc) {
-    this.clipFunc(this.context);
-  }
 
   if (this.currentStyle.paragraphWidth && str.length > 0) {
     str = this.breakLines(str, this.currentStyle.paragraphWidth);
@@ -405,7 +405,7 @@ HTMLCanvasCrayon.prototype.breakLines = function(str, maxWidth) {
 };
 
 HTMLCanvasCrayon.prototype.clip = function(clipFunc) {
-  this.clipFunc = clipFunc;
+  this.currentStyle.clipFunc = clipFunc;
 };
 
 //Based on code from http://mudcu.be/journal/2011/01/html5-typographic-metrics/ by Michael Deal
