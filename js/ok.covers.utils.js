@@ -20,6 +20,21 @@ OK.Covers.Utils.remap = function(value, oldMin, oldMax, newMin, newMax, clamp) {
   return newValue;
 };
 
+OK.Covers.Utils.breakTitle = function(title) {
+  var t = title;
+  title = title.trim();
+  var len = title.length;
+  var regExp = /[\.\:\,\(]/;
+  var dot = title.match(regExp);
+  if (dot) {
+    var dotPos = title.indexOf(dot);
+    var subTitleStart = dotPos;
+    if (dot != "(") subTitleStart += 1;
+    return [ title.substr(0, dotPos), title.substr(subTitleStart).trim() ];
+  }
+  return [title, ""];
+}
+
 OK.Covers.Utils.breakLines = function(crayon, str, maxWidth) {
   var words = str.split(" ");
   var lines = [];
