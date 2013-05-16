@@ -58,7 +58,7 @@ function makeCovers() {
   function nextCover() {
     //startMeasuring();
 
-    if (autoAdding && i < 24) {
+    if (autoAdding && i < books.length - 1) {
       var coverAlgorithmId = Math.floor(Math.random() * OK.Covers.length);
       //coverAlgorithmId = 5;
       OK.Covers[coverAlgorithmId].makeCover(books[i]);
