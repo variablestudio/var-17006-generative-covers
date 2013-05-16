@@ -29,20 +29,18 @@ OK.Covers.push((function() {
 
     crayon.style("drawing");
     //crayon.save();
-    var nx = 2 + Math.floor(Math.random() * 5);
-    var ny = 1 + Math.floor(Math.random() * 5);
+    var nx = 2 + Math.floor(Math.random() * 10);
+    var ny = 1 + Math.floor(Math.random() * 3);
     var thickness = 25 + Math.random() * 25;
     for(var i=0; i<nx; i++) {
       for(var j=0; j<ny; j++) {
         var dx = crayon.canvas.width / nx;
         var dy = crayon.canvas.height / ny;
         crayon.clipRect(dx * i, dy * j, dx, crayon.canvas.height / ny);
-        dx -= 20;
-        dy -= 20;
-        //dx += (Math.random() - 0.5) * crayon.canvas.width * 0.3;;
-        var ddy = 0;//(Math.random() - 0.5) * crayon.canvas.height * 0.3;
-        crayon.stroke("#FF0000", thickness).fill(false).circle(crayon.canvas.width/2 + dx * i, crayon.canvas.height/2 + dy * j, crayon.canvas.width/2 - 25);
-        crayon.stroke("#FFFFFF", thickness).fill(false).circle(crayon.canvas.width/2 + dx * i + 50, crayon.canvas.height/2 + dy * j + ddy, crayon.canvas.width/2 - 25);
+        //crayon.stroke("#FF0000", thickness).fill(false).circle(crayon.canvas.width/2 + dx * i, crayon.canvas.height/2 + dy * j, crayon.canvas.width/2 - 25);
+        //crayon.stroke("#FFFFFF", thickness).fill(false).circle(crayon.canvas.width/2 + dx * i + 50, crayon.canvas.height/2 + dy * j + ddy, crayon.canvas.width/2 - 25);
+        crayon.stroke("#FF0000", thickness).fill(false).line(0, Math.random()*crayon.canvas.height, crayon.canvas.width, Math.random()*crayon.canvas.height);
+        crayon.stroke("#FFFFFF", thickness).fill(false).line(0, Math.random()*crayon.canvas.height, crayon.canvas.width, Math.random()*crayon.canvas.height);
       }
     }
     //crayon.restore();
