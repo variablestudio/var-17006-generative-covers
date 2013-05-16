@@ -1,6 +1,9 @@
 var OK = OK || {};
 OK.Covers = OK.Covers || [];
 
+//-unique colors per tag
+//-grouping but more diverse
+
 OK.Covers.push((function() {
   var crayon;
 
