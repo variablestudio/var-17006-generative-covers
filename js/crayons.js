@@ -86,6 +86,8 @@ function HTMLCanvasCrayon(canvas) {
   this.currentStyle = this.styles['default'];
   this.transformStack = [];
   this.savedTransformStacks = [];
+  this.translateX = 0;
+  this.translateY = 0;
 }
 
 HTMLCanvasCrayon.prototype.createStyle = function() {
@@ -282,9 +284,7 @@ HTMLCanvasCrayon.prototype.text = function(str, x, y) {
   }
 
   if (this.currentStyle.autoTranslate) {
-    this.transformStack.push(function() {
-      this.context.translate(x, offsetY);
-    }.bind(this));
+    this.translate(x, offsetY);
   }
 
   this.afterDraw();
@@ -299,9 +299,14 @@ HTMLCanvasCrayon.prototype.clear = function() {
 
 HTMLCanvasCrayon.prototype.translate = function(x, y) {
   var context = this.context;
-  this.transformStack.push(function() {
+  this.translateX += x;
+  this.translateY += y;
+  var f = function() {
     context.translate(x, y);
-  });
+  };
+  f.x = x;
+  f.y = y;
+  this.transformStack.push(f);
   return this;
 };
 
@@ -331,6 +336,12 @@ HTMLCanvasCrayon.prototype.save = function() {
 HTMLCanvasCrayon.prototype.restore = function() {
   if (this.savedTransformStacks.length > 0) {
     this.transformStack = this.savedTransformStacks.pop();
+    this.translateX = 0;
+    this.translateY = 0;
+    this.transformStack.forEach(function(f) {
+      this.translateX += f.x;
+      this.translateY += f.y;
+    }.bind(this))
   }
   return this;
 };
