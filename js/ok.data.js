@@ -33,6 +33,17 @@ OK.Data.fromCSV = function(path, callback) {
       };
     });
 
+    var totalPageCount = 0;
+    var minPageCount = 100000;
+    var maxPageCount = 0;
+    books.forEach(function(book) {
+      totalPageCount += book.pageCount;
+      minPageCount = Math.min(minPageCount, book.pageCount);
+      maxPageCount = Math.max(maxPageCount, book.pageCount);
+    });
+    var avgPageCount = totalPageCount / books.length;
+    console.log("Ok.Data avgPageCount", avgPageCount, "minPageCount", minPageCount, "maxPageCount", maxPageCount);
+
     callback(books);
   });
 };
