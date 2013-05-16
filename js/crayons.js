@@ -128,9 +128,11 @@ HTMLCanvasCrayon.prototype.font = function(fontFamily, fontSize, fontWeight) {
   return this;
 };
 
-HTMLCanvasCrayon.prototype.paragraph = function(textAlign, textLeading) {
+HTMLCanvasCrayon.prototype.paragraph = function(textAlign, textLeading, paragraphWidth, autoTranslate) {
   this.currentStyle.textAlign = textAlign;
   this.currentStyle.textLeading = textLeading;
+  this.currentStyle.paragraphWidth = paragraphWidth;
+  this.currentStyle.autoTranslate = autoTranslate ? true : false;
   return this;
 };
 
@@ -239,10 +241,18 @@ HTMLCanvasCrayon.prototype.line = function(x1, y1, x2, y2) {
 
 HTMLCanvasCrayon.prototype.text = function(str, x, y) {
   this.beforeDraw();
+  if (x === undefined) x = 0;
+  if (y === undefined) y = 0;
 
   if (this.clipFunc) {
     this.clipFunc(this.context);
   }
+
+  if (this.currentStyle.paragraphWidth && str.length > 0) {
+    str = this.breakLines(str, this.currentStyle.paragraphWidth);
+  }
+
+  var offsetY = 0;
 
   if (Object.prototype.toString.call(str) === '[object Array]') {
     var dy = y;
@@ -251,18 +261,30 @@ HTMLCanvasCrayon.prototype.text = function(str, x, y) {
         this.context.fillText(line, x, dy);
         dy += this.currentStyle.fontSize * (1.0 + this.currentStyle.textLeading);
       }.bind(this));
+      offsetY = dy;
     }
     if (this.currentStyle.stroke) {
-      this.context.strokeText(str, x, y);
+      str.forEach(function(line) {
+        this.context.strokeText(line, x, dy);
+        dy += this.currentStyle.fontSize * (1.0 + this.currentStyle.textLeading);
+      }.bind(this));
+      offsetY = dy - y;
     }
   }
-  else {
+  else if (str.length > 0) {
+    offsetY += this.currentStyle.fontSize * (1.0 + this.currentStyle.textLeading);
     if (this.currentStyle.fill) {
       this.context.fillText(str, x, y);
     }
     if (this.currentStyle.stroke) {
       this.context.strokeText(str, x, y);
     }
+  }
+
+  if (this.currentStyle.autoTranslate) {
+    this.transformStack.push(function() {
+      this.context.translate(x, offsetY);
+    }.bind(this));
   }
 
   this.afterDraw();
@@ -358,6 +380,28 @@ HTMLCanvasCrayon.prototype.measureTextLines = function(str) {
     width : maxWidth,
     height : height
   };
+};
+
+HTMLCanvasCrayon.prototype.breakLines = function(str, maxWidth) {
+  var words = str.split(" ");
+  var lines = [];
+  var currentLine = "";
+  while(words.length > 0) {
+    var word = words.shift();
+    var newLine = currentLine;
+    if (newLine.length > 0) newLine += " ";
+    newLine += word;
+    var measurements = this.measureText(newLine);
+    if (measurements.width > maxWidth && currentLine.length > 0) {
+      lines.push(currentLine);
+      currentLine = word;
+    }
+    else {
+      currentLine = newLine;
+    }
+  }
+  lines.push(currentLine);
+  return lines;
 };
 
 HTMLCanvasCrayon.prototype.clip = function(clipFunc) {
