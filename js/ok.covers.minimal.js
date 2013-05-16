@@ -23,10 +23,10 @@ OK.Covers.push((function() {
 
     crayon.fill(niceBlue).rect(margins, margins, crayon.canvas.width - 2 * margins, crayon.canvas.height - 2 * margins);
 
-    var step = 10 + Math.random() * 20;
-    for(var i=0; i<1000; i+=step) {
-      var a = { x : 0, y : 10 + i };
-      var b = { x : 10 + i, y : 0 };
+    var step = crayon.canvas.width/30 + crayon.canvas.width/15 * Math.random();
+    for(var i=0; i<2000; i+=step) {
+      var a = { x : 0, y : crayon.canvas.width/30 + i };
+      var b = { x : crayon.canvas.width/30 + i, y : 0 };
 
       crayon.save();
       crayon.stroke("#FFFFFF").line(a.x, a.y, b.x, b.y).stroke(false);
@@ -34,7 +34,7 @@ OK.Covers.push((function() {
       crayon.fill("#FFFFFF")
         .translate(a.x + (b.x - a.x) * k + 1, a.y + (b.y - a.y) * k + 1)
         .rotate(-45)
-        .rect(0, 0, 10 + Math.random() * 200, 3);
+        .rect(0, 0, crayon.canvas.width/30 + Math.random() * 400, crayon.canvas.width/100);
       crayon.restore();
     }
 
