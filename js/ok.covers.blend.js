@@ -44,14 +44,14 @@ OK.Covers.push((function() {
     crayon.clear();
     crayon.fill(color); //"#FF9900"
     var c1 = [w/4 + Math.random() * w/2, h/4 + Math.random() * w/2, w*0.2 + Math.random() * w * 0.2];
-    crayon.circle(c1[0], c1[1], c1[2], c1[3]);
+    crayon.circle(c1[0], c1[1], c1[2]);
 
     var blue = Pixels.fromCanvas(crayon.canvas);
 
     crayon.clear();
     crayon.fill(color2); //"#00DDFF"
     var c2 = [w/4 + Math.random() * w/2, h/4 + w*0.2 + Math.random() * w/2, w/3];
-    crayon.circle(c2[0], c2[1], c2[2], c2[3]);
+    crayon.circle(c2[0], c2[1], c2[2]);
     var red = Pixels.fromCanvas(crayon.canvas);
 
     var blended;
@@ -90,16 +90,26 @@ OK.Covers.push((function() {
     crayon.style("title").fill("#333333").text(titleLines, titleX, titleY);
     crayon.style("author").fill("#333333").text(author, titleX, titleY + titleMeasurements.height);
 
+
+
+    crayon.style("title").fill("#FFFFFF")
     crayon.clip(function(context) {
       context.beginPath();
       context.arc(c1[0], c1[1], c1[2], 0, 2 * Math.PI, false);
       context.arc(c2[0], c2[1], c2[2], 0, 2 * Math.PI, false);
       context.clip();
     });
+    crayon.text(titleLines, titleX, titleY);
+    crayon.clip(false);
 
-    crayon.style("title").fill("#FFFFFF").text(titleLines, titleX, titleY);
-    crayon.style("author").fill("#FFFFFF").text(author, titleX, titleY + titleMeasurements.height);
-
+    crayon.style("author").fill("#FFFFFF");
+    crayon.clip(function(context) {
+      context.beginPath();
+      context.arc(c1[0], c1[1], c1[2], 0, 2 * Math.PI, false);
+      context.arc(c2[0], c2[1], c2[2], 0, 2 * Math.PI, false);
+      context.clip();
+    })
+    crayon.text(author, titleX, titleY + titleMeasurements.height);
     crayon.clip(false);
 
     OK.Covers.Utils.addCover();
