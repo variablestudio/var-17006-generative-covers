@@ -408,6 +408,14 @@ HTMLCanvasCrayon.prototype.clip = function(clipFunc) {
   this.currentStyle.clipFunc = clipFunc;
 };
 
+HTMLCanvasCrayon.prototype.clipRect = function(x, y, w, h) {
+  this.clip(function(context) {
+    context.beginPath();
+    context.rect(x, y, w, h);
+    context.clip();
+  });
+};
+
 //Based on code from http://mudcu.be/journal/2011/01/html5-typographic-metrics/ by Michael Deal
 HTMLCanvasCrayon.prototype.getFontMetrics = function(fontFamily, fontSize) {
   var container;
