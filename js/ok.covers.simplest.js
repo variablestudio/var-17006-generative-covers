@@ -20,22 +20,17 @@ OK.Covers.push((function() {
     var titleFontSize = crayon.canvas.height * 0.06;
 
     var titleX = crayon.canvas.width * 0.08;
-    var titleY = crayon.canvas.width * 0.08;
+    var titleY = crayon.canvas.width * 0.08 + authorFontSize;
     var titleWidth = crayon.canvas.width * 0.8;
 
-    crayon.style("title").font("Arial", titleFontSize, "bold").paragraph("left", 0.25).fill("#FFFFFF");
+    var titleSections = OK.Covers.Utils.breakTitle(book.title);
+    var title = titleSections[0];
+    var subTitle = titleSections[1];
 
-    var titleLines = OK.Covers.Utils.breakLines(crayon, book.title.toUpperCase(), titleWidth);
-    var titleMeasurements = crayon.measureText(titleLines);
-    var titleAscent = -titleMeasurements.y;
-
-    titleY += titleAscent;
-
-    crayon.style("author").font("Arial", authorFontSize).fill("#222222");
-    var authorMeasurements = crayon.measureText(author);
-
-    crayon.style("title").text(titleLines, titleX, titleY);
-    crayon.style("author").text(author, titleX, titleY + titleMeasurements.height);
+    crayon.translate(titleX, titleY);
+    crayon.font("Arial", titleFontSize, "bold").fill("#FFFFFF").paragraph("left", 0.25, titleWidth, true).text(title.toUpperCase());
+    crayon.font("Arial", titleFontSize*0.85, "normal").fill("#FFFFFF").paragraph("left", 0.25, titleWidth, true).text(subTitle.toUpperCase(), 0, titleFontSize/4);
+    crayon.font("Arial", authorFontSize).fill("#222222").paragraph("left", 0.25, titleWidth, true).text(author, 0, authorFontSize/2);
 
     OK.Covers.Utils.addCover();
   }
