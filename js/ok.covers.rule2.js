@@ -65,7 +65,7 @@ OK.Covers.push((function() {
     var titleY = crayon.canvas.width * 0.08;
     var titleWidth = crayon.canvas.width * 0.8;
 
-    crayon.style("title").font("Verdana", titleFontSize, "bold").paragraph("left", 0.25).fill("#333333");
+    crayon.style("title").font("Times", titleFontSize).paragraph("left", 0.25).fill("#333333");
 
     var titleLines = OK.Covers.Utils.breakLines(crayon, book.title, titleWidth);
     var titleMeasurements = crayon.measureText(titleLines);
@@ -75,7 +75,7 @@ OK.Covers.push((function() {
 
     titleY += shiftY;
 
-    crayon.style("author").font("Verdana", authorFontSize).fill("#333333");
+    crayon.style("author").font("Gill Sans", authorFontSize).fill("#333333");
     var authorMeasurements = crayon.measureText(author);
 
     crayon.style("default").fill(paleYellow).rect(margins, margins + shiftY, crayon.canvas.width - 2 * margins, titleY + titleMeasurements.height + authorMeasurements.height + titleAscent/2 - shiftY);
