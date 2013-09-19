@@ -2,9 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Otwórz ksiązkę</title>
-<link href='http://fonts.googleapis.com/css?family=Libre+Baskerville:400,400italic' rel='stylesheet' type='text/css'>
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    
+<title>Generative Covers for bon.edu.pl</title>
 <link href='css/style.css' rel='stylesheet' type='text/css' />
+<link href='fonts/include.css' rel='stylesheet' type='text/css' />
+
 <script type="text/javascript" src="js/paper.js"></script>
 <script type="text/javascript" src="js/CSVToArray.js"></script>
 <script type="text/javascript" src="js/chroma.js"></script>
@@ -12,34 +15,50 @@
 <script type="text/javascript" src="js/pixels.js"></script>
 <script type="text/javascript" src="js/ok.data.js"></script>
 <script type="text/javascript" src="js/ok.covers.utils.js"></script>
-<!--<script type="text/javascript" src="js/ok.covers.simplest.js"></script>-->
-<script type="text/javascript" src="js/ok.covers.minimal.js"></script>
-<script type="text/javascript" src="js/ok.covers.data.js"></script>
-<script type="text/javascript" src="js/ok.covers.pattern.js"></script>
-<script type="text/javascript" src="js/ok.covers.rule2.js"></script>
-<script type="text/javascript" src="js/ok.covers.blend.js"></script>
-<script type="text/javascript" src="js/ok.covers.blend2.js"></script>
-<script type="text/javascript" src="js/ok.covers.bio.js"></script>
-
-
+<script type="text/javascript" src="js/ok.covers.typography.js"></script>
+    
+<!--<script type="text/javascript" src="js/ok.covers.simplest.js"></script>-->  
+<!--<script type="text/javascript" src="js/ok.covers.divided.js"></script>-->
+<!--<script type="text/javascript" src="js/ok.covers.mosaic.js"></script>-->
+<script type="text/javascript" src="js/ok.covers.goldentype.js"></script>
+    
 <script type="text/javascript" src="js/app.js"></script>
+
+    
 </head>
+
 <body>
   <div id="canvasContainer">
     <canvas id="cover" width="600" height="800"></canvas>
     <div style="font-family:Libre Baskerville">&nbsp;</div>
   </div>
   <form>
-    <label>Automatyczne dodawanie<input type="checkbox" checked="checked" id="autoAdd"/></label>
-    <label>Algorytm<select id="algorithm"></select></label>
-    <label>Tytuł<input type="text" id="title" value="Testowy tytuł do testowania algorytmów"/></label>
-    <label>Autor<input type="text" id="author" value="Włodzimież Nieznany"/></label>
-    <label>Wydawca<input type="text"/ id="publisher" value="PWN"></label>
-    <label>Rok<input type="text"/ id="year" value="2013"></label>
-    <label>Ilość stron<input type="text"/ id="pageCount" value="42"></label>
-    <label>Kategoria<input type="text" id="category" value="historia sztuki"/></label>
-    <label><input type="button" value="dodaj" id="addBtn"/></label>
+    <label>Batch Generation<input type="checkbox" checked="checked" id="autoAdd"/></label>
+    <label>Algorithm<select id="algorithm">
+    <option value="0">lines</option>
+    <option value="1">simple</option>
+    <option value="2">patterns</option>
+    <option value="3">circles</option>
+    </select></label>
+    <label>Title<input type="text" id="title" value="Studia nad rodziną chłopską
+w Koronie w XVII-XVIII w."/></label>
+    <label>Author<input type="text" id="author" value="Wojsław Molè"/></label>
+    <label>Publisher<input type="text"/ id="publisher" value="PWN"></label>
+    <label>Year<input type="text"/ id="year" value="2013"></label>
+    <label># pages<input type="text"/ id="pageCount" value="42"></label>
+    <label>Category<input type="text" id="category" value="historia sztuki"/></label>
+    <label><input type="button" value="generate more" id="addBtn"/></label>
+      
+    <p class="caption">References:
+    <br><br>
+    <img src="assets/ref_01.jpg" width="194" height="263">
+      <img src="assets/ref_02.jpg" width="194" height="263">
+       <img src="assets/ref_03.jpg" width="194" height="263">
+        
+       <br><br><span class="grey">#E6E6E6 GREY</span><br><span class="orange">#FF9000 ORANGE</span>
+        </p>
   </form>
+  
   <div id="covers"></div>
 </body>
 </html>
