@@ -12,9 +12,9 @@ OK.Covers.push((function() {
     crayon.clear();
     crayon.style("default");
 
-    crayon.fill("#27D1E7").rect(0, 0, crayon.canvas.width, crayon.canvas.height);
+    crayon.fill("#D6D6D6").rect(0, 0, crayon.canvas.width, crayon.canvas.height);
 
-    var author = OK.Covers.Utils.formatAuthorName(book.author.toUpperCase());
+    var author = OK.Covers.Typography.formatAuthorName(book.author);
 
     var authorFontSize = crayon.canvas.height * 0.04;
     var titleFontSize = crayon.canvas.height * 0.06;
@@ -28,9 +28,12 @@ OK.Covers.push((function() {
     var subTitle = titleSections[1];
 
     crayon.translate(titleX, titleY);
-    crayon.font("Arial", titleFontSize, "bold").fill("#FFFFFF").paragraph("left", 0.25, titleWidth, true).text(title.toUpperCase());
-    crayon.font("Arial", titleFontSize*0.85, "normal").fill("#FFFFFF").paragraph("left", 0.25, titleWidth, true).text(subTitle.toUpperCase(), 0, titleFontSize/4);
-    crayon.font("Arial", authorFontSize).fill("#222222").paragraph("left", 0.25, titleWidth, true).text(author, 0, authorFontSize/2);
+    title = OK.Covers.Typography.addLigatures(title, "Andada");
+    crayon.font("Andada", titleFontSize, "bold", 0).fill("#000000").paragraph("left", 0.25, titleWidth, true).text(title);
+    crayon.font("Andada", titleFontSize*0.85, "normal", 0).fill("#000000").paragraph("left", 0.25, titleWidth, true).text(subTitle, 0, titleFontSize/4);
+    crayon.font("Arial", authorFontSize, author[1][1], 0).fill("#FF9000").paragraph("left", 0.25, titleWidth, false).text(author[1][0], 0, authorFontSize/2);
+    //0 + name.pixelLength of author[1][0] + " "
+    crayon.font("Arial", authorFontSize, author[0][1], 0).fill("#FF9000").paragraph("left", -0.25, titleWidth, true).text(author[0][0], 0 + crayon.measureText(author[1][0] + " ").width, authorFontSize/2);
 
     OK.Covers.Utils.addCover();
   }
