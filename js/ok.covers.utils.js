@@ -3,6 +3,13 @@ OK.Covers = OK.Covers || [];
 
 OK.Covers.Utils = {};
 
+//FORMAT AUTHOR'S NAME
+//need to be expanded with seven options
+//originally splits name/surname from CVS "," or return unchanged if from JSON
+//as I think the choice should be done here, not in templates... or?
+//some templates could not be suited for particular rules.
+//The main question could be external function called from another... like OK.Covers.Parsers.formatAuthor from OK.Covers.Minimal.js
+
 OK.Covers.Utils.formatAuthorName = function(name) {
   var tokens = name.split(', ');
   if (tokens.length == 2)
@@ -35,6 +42,8 @@ OK.Covers.Utils.breakTitle = function(title) {
   return [title, ""];
 }
 
+
+//need to be updated with kening value (multiplier?)
 OK.Covers.Utils.breakLines = function(crayon, str, maxWidth) {
   var words = str.split(" ");
   var lines = [];
