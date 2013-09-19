@@ -1,0 +1,95 @@
+@font-face {
+    font-family: 'oxygenbold';
+    src: url('fonts/oxygen/oxygen-bold-webfont.eot');
+    src: url('fonts/oxygen/oxygen-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/oxygen/oxygen-bold-webfont.woff') format('woff'),
+         url('fonts/oxygen/oxygen-bold-webfont.ttf') format('truetype'),
+         url('fonts/oxygen/oxygen-bold-webfont.svg#oxygenbold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'oxygenlight';
+    src: url('fonts/oxygen/oxygen-light-webfont.eot');
+    src: url('fonts/oxygen/oxygen-light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/oxygen/oxygen-light-webfont.woff') format('woff'),
+         url('fonts/oxygen/oxygen-light-webfont.ttf') format('truetype'),
+         url('fonts/oxygen/oxygen-light-webfont.svg#oxygenlight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'oxygenregular';
+    src: url('fonts/oxygen/oxygen-regular-webfont.eot');
+    src: url('fonts/oxygen/oxygen-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/oxygen/oxygen-regular-webfont.woff') format('woff'),
+         url('fonts/oxygen/oxygen-regular-webfont.ttf') format('truetype'),
+         url('fonts/oxygen/oxygen-regular-webfont.svg#oxygenregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'ptsansbold';
+    src: url('fonts/ptsans/pt_sans-web-bold-webfont.eot');
+    src: url('fonts/ptsans/pt_sans-web-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/ptsans/pt_sans-web-bold-webfont.woff') format('woff'),
+         url('fonts/ptsans/pt_sans-web-bold-webfont.ttf') format('truetype'),
+         url('fonts/ptsans/pt_sans-web-bold-webfont.svg#pt_sansbold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'ptsansregular';
+    src: url('fonts/ptsans/pt_sans-web-regular-webfont.eot');
+    src: url('fonts/ptsans/pt_sans-web-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/ptsans/pt_sans-web-regular-webfont.woff') format('woff'),
+         url('fonts/ptsans/pt_sans-web-regular-webfont.ttf') format('truetype'),
+         url('fonts/ptsans/pt_sans-web-regular-webfont.svg#pt_sansregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'ptsansbold_italic';
+    src: url('fonts/ptsans/pt_sans-web-bolditalic-webfont.eot');
+    src: url('fonts/ptsans/pt_sans-web-bolditalic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/ptsans/pt_sans-web-bolditalic-webfont.woff') format('woff'),
+         url('fonts/ptsans/pt_sans-web-bolditalic-webfont.ttf') format('truetype'),
+         url('fonts/ptsans/pt_sans-web-bolditalic-webfont.svg#pt_sansbold_italic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'ptsansitalic';
+    src: url('fonts/ptsans/pt_sans-web-italic-webfont.eot');
+    src: url('fonts/ptsans/pt_sans-web-italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/ptsans/pt_sans-web-italic-webfont.woff') format('woff'),
+         url('fonts/ptsans/pt_sans-web-italic-webfont.ttf') format('truetype'),
+         url('fonts/ptsans/pt_sans-web-italic-webfont.svg#pt_sansitalic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
