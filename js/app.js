@@ -1,8 +1,8 @@
 var books = [];
 var numSourcesLoaded = 0;
 
-var autoAdding = true;
-var autoAddingInterval = 10;
+var autoAdding = false;
+var autoAddingInterval = 100;
 
 var measureDate = []
 function startMeasuring() {
@@ -23,6 +23,7 @@ window.onload = function() {
 }
 
 function onBooksLoaded(loadedBooks) {
+  console.log('onBooksLoaded');
   books = books.concat(loadedBooks);
   if (++numSourcesLoaded == 2) {
     processBooks();
@@ -45,8 +46,10 @@ function processBooks() {
   categoriesNames.sort(function(a, b) {
     return a.count - b.count;
   });
+  //console.log(categoriesNames);
   categoriesNames.forEach(function(category) {
     //console.log(JSON.stringify(category));
+    console.log(category.name, category.count, 'bla', 1, category);
     //console.log(category.name);
   })
 }
@@ -58,7 +61,7 @@ function makeCovers() {
   function nextCover() {
     //startMeasuring();
 
-    if (autoAdding && i < books.length - 1) {
+    if (autoAdding && i < 40) {
       var coverAlgorithmId = Math.floor(Math.random() * OK.Covers.length);
       //coverAlgorithmId = 5;
       OK.Covers[coverAlgorithmId].makeCover(books[i]);
