@@ -1,7 +1,7 @@
 var books = [];
 var numSourcesLoaded = 0;
 
-var autoAdding = false;
+var autoAdding = true;
 var autoAddingInterval = 100;
 
 var measureDate = []
@@ -23,7 +23,6 @@ window.onload = function() {
 }
 
 function onBooksLoaded(loadedBooks) {
-  console.log('onBooksLoaded');
   books = books.concat(loadedBooks);
   if (++numSourcesLoaded == 2) {
     processBooks();
@@ -46,10 +45,8 @@ function processBooks() {
   categoriesNames.sort(function(a, b) {
     return a.count - b.count;
   });
-  //console.log(categoriesNames);
   categoriesNames.forEach(function(category) {
     //console.log(JSON.stringify(category));
-    console.log(category.name, category.count, 'bla', 1, category);
     //console.log(category.name);
   })
 }
