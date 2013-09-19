@@ -19,7 +19,7 @@ OK.Covers.push((function() {
     var paleYellow = "rgb(255, 255, 240)";
 
     var colorHSL = chroma.hex(niceBlue).hsl();
-    niceBlue = chroma.hsl(Math.random() * 255, 0.8, colorHSL[2]).hex();
+    niceBlue = chroma.hsl(Math.random() * 255, 0.68, colorHSL[2]).hex();
 
     crayon.fill(niceBlue).rect(margins, margins, crayon.canvas.width - 2 * margins, crayon.canvas.height - 2 * margins);
 
