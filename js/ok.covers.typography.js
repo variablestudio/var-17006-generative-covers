@@ -5,7 +5,9 @@ OK.Covers.Typography = {};
 
 OK.Covers.Typography.formatAuthorName = function(name) {
   
-  var author_out = new Array(["name", "normal"], ["surname", "normal"]);
+  var author_out = new Object();
+  //var author_out = new Array(["name", "normal"], ["surname", "normal"]);
+  
   //console.log("current name: " + name);
   name = name.replace("  "," ");    
   var tokens = name.split(', ');
@@ -17,53 +19,65 @@ OK.Covers.Typography.formatAuthorName = function(name) {
   //tokens[0] = tokens[0].trim();
   //tokens[1] = tokens[1].trim();
     
+  //selection of different variations with bold/italic and upperCase options
+    
   switch(option)
   {
           
   case 0:
-  author_out[0][0] = tokens[0];
-  author_out[1][0] = tokens[1];
+  author_out.surname = tokens[0];
+  //author_out.surnameStyle = "normal";
+  author_out.name = tokens[1];
+  //author_out.nameStyle = "normal";
   break;
 
   case 1:
-  author_out[0][0] = tokens[0].toUpperCase();
-  author_out[1][0] = tokens[1];
+  author_out.surname = tokens[0].toUpperCase();
+  //author_out.surnameStyle = "normal";
+  author_out.name = tokens[1];
+  //author_out.nameStyle = "normal";
   break;
         
   case 2:
-  author_out[0][0] = tokens[0].toUpperCase();
-  author_out[1][0] = tokens[1].toUpperCase();
+  author_out.surname = tokens[0].toUpperCase();
+  //author_out.surnameStyle = "normal";
+  author_out.name = tokens[1].toUpperCase();
+  //author_out.nameStyle = "normal";
   break;
   
   case 3:
-  author_out[0][0] = tokens[0].toUpperCase();
-  author_out[0][1] = "bold";
-  author_out[1][0] = tokens[1];
+  author_out.surname = tokens[0].toUpperCase();
+  author_out.surnameStyle = "bold";
+  author_out.name = tokens[1]; 
+  //author_out.nameStyle = "normal";
   break;
   
   case 4:
-  author_out[0][0] = tokens[0].toUpperCase();
-  author_out[1][0] = tokens[1];
-  author_out[1][1] = "italic";
+  author_out.surname = tokens[0].toUpperCase();
+  //author_out.surnameStyle = "normal";
+  author_out.name = tokens[1];
+  author_out.nameStyle = "italic";
   break;
          
   case 5:
-  author_out[0][0] = tokens[0].toUpperCase();
-  author_out[0][1] = "bold";
-  author_out[1][0] = tokens[1];
-  author_out[1][1] = "italic"; 
+  author_out.surname = tokens[0].toUpperCase();
+  author_out.surnameStyle = "bold";
+  author_out.name = tokens[1];
+  author_out.nameStyle = "italic"; 
   break;
   
   case 6:
-  author_out[0][0] = tokens[0].toUpperCase();
-  author_out[0][1] = "lighter";
-  author_out[1][0] = tokens[1];
-  author_out[1][1] = "bold"; 
+  author_out.surname = tokens[0].toUpperCase();
+  author_out.surnameStyle = "lighter";
+  author_out.name = tokens[1];
+  author_out.nameStyle = "bold"; 
   break;
           
   default:
-  author_out[0][0] = tokens[0];
-  author_out[1][0] = tokens[1];
+  author_out.surname = tokens[0];
+  //author_out.surnameStyle = "normal";
+  author_out.name = tokens[1];
+  //author_out.nameStyle = "normal";
           
   }
   return author_out;
@@ -77,31 +91,353 @@ OK.Covers.Typography.addLigatures = function(source_str, fontname) {
   //Polish quatation marks #x201E/#x201D outer, #xBB/#xAB inner
   source_str = source_str.replace(/\"/, String.fromCharCode(parseInt('201E', 16))); 
   source_str = source_str.replace(/\"/, String.fromCharCode(parseInt('201D', 16)));
-  
+
+
+  console.log("font to check: " + fontname);
+
+  output_str = source_str;
     
   switch(fontname)
   {
-        
-   case "Varela":
+          
+   case "Anaheim":
 
-   output_str = source_str.replace(/ff/g, String.fromCharCode(parseInt('fb00', 16)));
-   output_str = output_str.replace(/fi/g, String.fromCharCode(parseInt('fb01', 16)));
-   output_str = output_str.replace(/fl/g, String.fromCharCode(parseInt('fb02', 16)));
    output_str = output_str.replace(/ffi/g, String.fromCharCode(parseInt('fb03', 16)));
    output_str = output_str.replace(/ffl/g, String.fromCharCode(parseInt('fb04', 16))); 
-   output_str = output_str.replace(/st/g, String.fromCharCode(parseInt('fb06', 16)));
+   output_str = output_str.replace(/ff/g, String.fromCharCode(parseInt('fb00', 16)));
+   output_str = output_str.replace(/fi/g, String.fromCharCode(parseInt('fb01', 16)));
+   output_str = output_str.replace(/fl/g, String.fromCharCode(parseInt('fb02', 16)));
    break;
-          
+      
    case "Andada":
 
-   output_str = source_str.replace(/fi/g, String.fromCharCode(parseInt('fb01', 16)));
+   output_str = output_str.replace(/fi/g, String.fromCharCode(parseInt('fb01', 16)));
    output_str = output_str.replace(/fl/g, String.fromCharCode(parseInt('fb02', 16)));
+   break;
+      
+   case "BenchNine":
 
+   output_str = output_str.replace(/ffi/g, String.fromCharCode(parseInt('fb03', 16)));
+   output_str = output_str.replace(/ff/g, String.fromCharCode(parseInt('FB00', 16)));
+   output_str = output_str.replace(/fi/g, String.fromCharCode(parseInt('fb01', 16)));
+   output_str = output_str.replace(/fl/g, String.fromCharCode(parseInt('fb02', 16)));
+   break;
+          
+   case "FrancoisOne":
+
+   output_str = output_str.replace(/ffi/g, String.fromCharCode(parseInt('fb03', 16)));
+   output_str = output_str.replace(/ffl/g, String.fromCharCode(parseInt('fb04', 16))); 
+   output_str = output_str.replace(/fi/g, String.fromCharCode(parseInt('fb01', 16)));
+   output_str = output_str.replace(/fl/g, String.fromCharCode(parseInt('fb02', 16)));
+   break;
+   
+   case "Merriweather":
+
+   output_str = output_str.replace(/ffi/g, String.fromCharCode(parseInt('fb03', 16)));
+   output_str = output_str.replace(/ffl/g, String.fromCharCode(parseInt('fb04', 16)));
+   output_str = output_str.replace(/ff/g, String.fromCharCode(parseInt('fb00', 16)));
+   output_str = output_str.replace(/fi/g, String.fromCharCode(parseInt('fb01', 16)));
+   output_str = output_str.replace(/fl/g, String.fromCharCode(parseInt('fb02', 16))); 
+   break;
+
+   case "MerriweatherSans":
+
+   output_str = output_str.replace(/ffi/g, String.fromCharCode(parseInt('fb03', 16)));
+   output_str = output_str.replace(/ffl/g, String.fromCharCode(parseInt('fb04', 16))); 
+   output_str = output_str.replace(/ff/g, String.fromCharCode(parseInt('fb00', 16)));
+   output_str = output_str.replace(/fi/g, String.fromCharCode(parseInt('fb01', 16)));
+   output_str = output_str.replace(/fl/g, String.fromCharCode(parseInt('fb02', 16)));
+   break;
+          
+   case "Oswald":
+
+   output_str = output_str.replace(/fi/g, String.fromCharCode(parseInt('fb01', 16)));
+   output_str = output_str.replace(/fl/g, String.fromCharCode(parseInt('fb02', 16)));
+   break;
+          
+          
+   case "PTSans":
+
+   output_str = output_str.replace(/fi/g, String.fromCharCode(parseInt('fb01', 16)));
+   output_str = output_str.replace(/fl/g, String.fromCharCode(parseInt('fb02', 16))); 
+   break;
+          
+   case "PTSerif":
+
+   output_str = output_str.replace(/fi/g, String.fromCharCode(parseInt('fb01', 16)));
+   output_str = output_str.replace(/fl/g, String.fromCharCode(parseInt('fb02', 16)));
+   break;
+          
+   case "RobotoSlab":
+
+   output_str = output_str.replace(/ffi/g, String.fromCharCode(parseInt('fb03', 16)));
+   output_str = output_str.replace(/ffl/g, String.fromCharCode(parseInt('fb04', 16))); 
+   output_str = output_str.replace(/fi/g, String.fromCharCode(parseInt('fb01', 16)));
+   output_str = output_str.replace(/fl/g, String.fromCharCode(parseInt('fb02', 16)));
+   break;
+   
+   case "SourceCode":
+
+   output_str = output_str.replace(/ffi/g, String.fromCharCode(parseInt('fb02', 16)));
+   output_str = output_str.replace(/fl/g, String.fromCharCode(parseInt('fb01', 16)));
+   break;
+          
+   case "SourceSans":
+
+   output_str = output_str.replace(/ffi/g, String.fromCharCode(parseInt('fb02', 16)));
+   output_str = output_str.replace(/fi/g, String.fromCharCode(parseInt('fb00', 16)));
+   output_str = output_str.replace(/fl/g, String.fromCharCode(parseInt('fb01', 16)));
+   break; 
+   
+   case "UbuntuCondensed":
+
+   output_str = output_str.replace(/ffi/g, String.fromCharCode(parseInt('fb03', 16)));
+   output_str = output_str.replace(/ffl/g, String.fromCharCode(parseInt('fb04', 16))); 
+   //output_str = output_str.replace(/ff/g, String.fromCharCode(parseInt('fb00', 16)));
+   output_str = output_str.replace(/fi/g, String.fromCharCode(parseInt('fb01', 16)));
+   output_str = output_str.replace(/fl/g, String.fromCharCode(parseInt('fb02', 16)));
    break;
           
    default:
    output_str = source_str;          
-  }
+   }
   
   return output_str;
 };
+
+OK.Covers.Typography.breakTitle = function(title) {
+  var t = title;
+  title = title.trim();
+  var len = title.length;
+    
+  //Full stop (.) is dangerous as dividing titlte to headline and subtitle. Because there 
+  //could be name in titles like C. W. Mills
+  //Clasically only semi-columns (:) are used to build hierarchy in titling.
+  var regExp = /[\:]/;
+  var dot = title.match(regExp);
+  if (dot) {
+    var dotPos = title.indexOf(dot);
+    var subTitleStart = dotPos;
+    if (dot != "(") subTitleStart += 1;
+    //uppercase headtitle
+    return [ title.substr(0, dotPos).toUpperCase(), title.substr(subTitleStart).trim() ];
+  }
+
+  return [title, ""];
+}
+
+//Should be slightly updated by angle_ratio and centered leaders
+//url link...
+
+OK.Covers.Typography.breakLines = function(crayon, str, maxWidth) {
+  var words = str.split(" ");
+  var lines = [];
+  var currentLine = "";
+  while(words.length > 0) {
+    var word = words.shift();
+    var newLine = currentLine;
+    if (newLine.length > 0) newLine += " ";
+    newLine += word;
+    var measurements = crayon.measureText(newLine);
+    if (measurements.width > maxWidth && currentLine.length > 0) {
+      lines.push(currentLine);
+      currentLine = word;
+    }
+    else {
+      currentLine = newLine;
+    }
+  }
+  lines.push(currentLine);
+  return lines;
+};
+
+OK.Covers.Typography.longestWord = function(text) {
+  
+  var longest = 0;
+
+  tokens = text.split(" ");
+  
+    tokens.forEach(
+    function addNumber(value) { if(value.length > longest ) { longest = value.length; }  }
+);
+  
+  return longest;
+}; 
+
+
+
+OK.Covers.Typography.pairSelector = function(layout, title)
+{
+var out_fonts = new Array(8);
+var title_stats = title.length;
+switch(layout)
+{
+case "Simplest":
+var available_pairs = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8);
+out_fonts = OK.Covers.Typography.TypePairs(available_pairs, title_stats);
+break;
+
+case "Pseudo":
+var available_pairs = new Array(7, 7, 7);
+out_fonts = OK.Covers.Typography.TypePairs(available_pairs, title_stats);
+break;
+        
+case "Circular Chaos":
+var available_pairs = new Array(7, 7, 7);
+out_fonts = OK.Covers.Typography.TypePairs(available_pairs, title_stats);
+break;
+
+case "Circular Chaos II":
+var available_pairs = new Array(7, 7, 7);
+out_fonts = OK.Covers.Typography.TypePairs(available_pairs, title_stats);
+break;
+
+case "Cube":
+var available_pairs = new Array(7, 7, 7);
+out_fonts = OK.Covers.Typography.TypePairs(available_pairs, title_stats);
+break;
+        
+}
+    
+return out_fonts;
+}
+
+OK.Covers.Typography.TypePairs = function(pairs, title_stats) {
+  
+  //Title Font | Author Font | Title Length | Parent Layout (optional)
+    
+  //WIDER AND BOLD
+  //Francois One (ligatures) | Bench Nine | Short & Medium
+  //Roboto Slab | Source Sans | Short 
+  //Andada | BenchNine Light | Short 
+  
+  //MIDDLE RANGE
+  //PT Sans Regular | PT Serif Regular/Bold/Italic | Short & Medium
+  //Anaheim Regular | PT Serif Regular/Bold/Italic | Short & Medium
+  //Source Code | Oswald | Short & Medium | Fractal Tree
+  //Merriweather Sans / Merriweather Serif | Medium
+    
+  //NARROW - GOOD FOR LONG TITLES
+  //BenchNine Light | Ubuntu Condensed | Short/Medium/Wide
+  //Ubuntu Condensed | Oswald Light/Regular/ no Italic
+    
+  //Array for two types: [0] name, size(scale) and weight/style
+  //var fonts = new Array(8);
+  fonts = new Object()
+
+  //narrow pairs array by title length
+  console.log("title length: " + title_stats);
+    
+  //if(title_stats > 72) { pairs = pairs.splice(7,2); console.log("deleted " + pairs); }    
+    
+  //random selector out of all pre-defined pair for current layout
+  var pickMe = Math.round(Math.random()*(pairs.length-1));
+  console.log("pickMe: " + pickMe + " case: " + pairs[pickMe]);
+  fonts[8] = pairs[pickMe];    
+  
+  switch(pairs[pickMe])
+  {
+  
+  case 0:
+  fonts.titleFamily = "FrancoisOne";
+  fonts.titleFont = "";
+  fonts.titleStyle = "normal";
+  fonts.titleLine = -0.1;
+  fonts.authorFamily = "BenchNine"; 
+  fonts.authorFont = "";
+  fonts.authorStyle = "lighter";
+  fonts.PairRatio = 0.8;
+  break;
+          
+  case 1:
+  fonts.titleFamily = "RobotoSlab";
+  fonts.titleFont = "";
+  fonts.titleStyle = "normal";
+  fonts.titleLine = 0;
+  fonts.authorFamily = "SourceSans"; 
+  fonts.authorFont = "";
+  fonts.authorStyle = "normal";
+  fonts.PairRatio = 0.72;
+  break;
+  
+  case 2:
+  fonts.titleFamily = "Andada";
+  fonts.titleFont = "";
+  fonts.titleStyle = "normal";
+  fonts.titleLine = 0;
+  fonts.authorFamily = "BenchNine"; 
+  fonts.authorFont = "";
+  fonts.authorStyle = "lighter";
+  fonts.PairRatio = 0.5;
+  break;
+  
+  case 3:
+  fonts.titleFamily = "PTSans";
+  fonts.titleFont = "";
+  fonts.titleStyle = "normal";
+  fonts.titleLine = 0;
+  fonts.authorFamily = "PTSerif"; 
+  fonts.authorFont = "";
+  fonts.authorStyle = "normal";
+  fonts.PairRatio = 0.72;
+  break;
+   
+  case 4:
+  fonts.titleFamily = "Anaheim";
+  fonts.titleFont = "";
+  fonts.titleStyle = "normal";
+  fonts.titleLine = 0;
+  fonts.authorFamily = "PTSerif"; 
+  fonts.authorFont = "";
+  fonts.authorStyle = "normal";
+  fonts.PairRatio = 0.56;
+  break;
+          
+  case 5:
+  fonts.titleFamily = "SourceCode";
+  fonts.titleFont = "";
+  fonts.titleStyle = "normal";
+  fonts.titleLine = -0.1;
+  fonts.authorFamily = "Oswald"; 
+  fonts.authorFont = "";
+  fonts.authorStyle = "normal";
+  fonts.PairRatio = 0.8;
+  break;
+          
+  case 6:
+  fonts.titleFamily = "MerriweatherSans";
+  fonts.titleFont = "";
+  fonts.titleStyle = "normal";
+  fonts.titleLine = 0;
+  fonts.authorFamily = "Merriweather"; 
+  fonts.authorFont = "";
+  fonts.authorStyle = "normal";
+  fonts.PairRatio = 0.8;
+  break;
+          
+  case 7:
+  fonts.titleFamily = "BenchNine";
+  fonts.titleFont = "";
+  fonts.titleStyle = "lighter";
+  fonts.titleLine = 0;
+  fonts.authorFamily = "UbuntuCondensed"; 
+  fonts.authorFont = "";
+  fonts.authorStyle = "normal";
+  fonts.PairRatio = 0.45;
+  break;
+          
+  case 8:
+  fonts.titleFamily = "UbuntuCondensed";
+  fonts.titleFont = "";
+  fonts.titleStyle = "normal";
+  fonts.titleLine = -0.1;
+  fonts.authorFamily = "Oswald"; 
+  fonts.authorFont = "";
+  fonts.authorStyle = "normal";
+  fonts.PairRatio = 0.75;
+  break;
+         
+  }
+  
+  return fonts;
+};    
