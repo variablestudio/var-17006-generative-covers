@@ -27,45 +27,7 @@ OK.Covers.Utils.remap = function(value, oldMin, oldMax, newMin, newMax, clamp) {
   return newValue;
 };
 
-OK.Covers.Utils.breakTitle = function(title) {
-  var t = title;
-  title = title.trim();
-  var len = title.length;
-  var regExp = /[\.\:\,\(]/;
-  var dot = title.match(regExp);
-  if (dot) {
-    var dotPos = title.indexOf(dot);
-    var subTitleStart = dotPos;
-    if (dot != "(") subTitleStart += 1;
-    return [ title.substr(0, dotPos), title.substr(subTitleStart).trim() ];
-  }
-  return [title, ""];
-}
-
-
-//need to be updated with kening value (multiplier?)
-OK.Covers.Utils.breakLines = function(crayon, str, maxWidth) {
-  var words = str.split(" ");
-  var lines = [];
-  var currentLine = "";
-  while(words.length > 0) {
-    var word = words.shift();
-    var newLine = currentLine;
-    if (newLine.length > 0) newLine += " ";
-    newLine += word;
-    var measurements = crayon.measureText(newLine);
-    if (measurements.width > maxWidth && currentLine.length > 0) {
-      lines.push(currentLine);
-      currentLine = word;
-    }
-    else {
-      currentLine = newLine;
-    }
-  }
-  lines.push(currentLine);
-  return lines;
-};
-
+// BreakingLines and BreakingTitle are moved to typography.
 
 OK.Covers.Utils.addCover = function(prepend) {
   var coverCanvas = document.getElementById("cover");
