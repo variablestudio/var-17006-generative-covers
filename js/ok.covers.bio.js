@@ -121,40 +121,63 @@ OK.Covers.push((function() {
     var stack = [];
 
 
+    golden_width = Math.round(crayon.canvas.width/1.61803398875);
+    golden_height = Math.round(crayon.canvas.height/1.61803398875);
+    golden_x = crayon.canvas.width - golden_width;
+    golden_y = crayon.canvas.height - golden_height;
+      
+      
     var author = OK.Covers.Utils.formatAuthorName(book.author);
 
     var authorFontSize = crayon.canvas.height * 0.02;
-    var titleFontSize = crayon.canvas.height * 0.03;
+    var titleFontSize = crayon.canvas.height * 0.04;
 
     var shiftY = 20;
 
     var titleX = crayon.canvas.width * 0.06;
-    var titleY = crayon.canvas.width * 0.06;
-    var titleWidth = crayon.canvas.width * 0.8;
-
-    crayon.style("title").font("Libre Baskerville", titleFontSize, "bold").paragraph("left", 0.25).fill("#333333");
+    var titleY = crayon.canvas.height*0.33 + crayon.canvas.width * 0.08;
+    var titleWidth = crayon.canvas.width * 0.8; 
 
     var titleLines = OK.Covers.Utils.breakLines(crayon, book.title.toUpperCase(), titleWidth);
     var titleMeasurements = crayon.measureText(titleLines);
     var titleAscent = -titleMeasurements.y;
 
-    titleY += titleAscent;
+    
 
-    titleY += shiftY;
-
-    crayon.style("author").font("Libre Baskerville", authorFontSize).fill("#333333");
+    var titleSections = OK.Covers.Utils.breakTitle(book.title);
+    var title = titleSections[0];
+    var subTitle = titleSections[1];
+      
+    //crayon.style("author").font("Libre Baskerville", authorFontSize).fill("#333333");
     var authorMeasurements = crayon.measureText(author);
 
-    crayon.style("default").stroke(false).fill(lightColor).rect(margins, margins + shiftY, crayon.canvas.width - 2 * margins, titleY + titleMeasurements.height + authorMeasurements.height + titleAscent/2 - shiftY);
+    crayon.style("default").stroke(false).fill(lightColor).rect(0, crayon.canvas.height*0.33, crayon.canvas.width , crayon.canvas.height*0.33);
+    crayon.style("default").stroke(false).fill(lightColor).rect(golden_x, golden_width, crayon.canvas.width - golden_x, crayon.canvas.height);
+      
 
-    crayon.style("title").text(titleLines, titleX, titleY);
-    crayon.style("author").text(author, titleX, titleY + titleMeasurements.height);
-
+    
+    //crayon.style("title").text(titleLines, titleX, titleY);
+    //crayon.style("author").text(author, titleX, titleY + titleMeasurements.height);
+    crayon.save();
+    crayon.translate(titleX, titleY);   
+    crayon.font("Anaheim", titleFontSize, "bold", 0).fill("#000000").paragraph("right", 0.25, titleWidth, true).text(title.toUpperCase());
+    crayon.font("Anaheim", titleFontSize*0.85, "normal", 0).fill("#000000").paragraph("left", 0.25, titleWidth, true).text(subTitle, 0, titleFontSize/4);
+      
+     crayon.restore();
+    //crayon.font("Arial", authorFontSize, author[1][1], 0).fill("#FF9000").paragraph("left", 0.25, titleWidth, false).text(author[1][0], 0, authorFontSize/2);
+    //0 + name.pixelLength of author[1][0] + " "
+    //crayon.font("Arial", authorFontSize, author[0][1], 0).fill("#FF9000").paragraph("left", -0.25, titleWidth, true).text(author[0][0], 0 + crayon.measureText(author[1][0] + " ").width, authorFontSize/2);  
+      
+       crayon.style("#000000").stroke(true).line(0, crayon.canvas.height*0.33, crayon.canvas.width , crayon.canvas.height*0.33);
+       crayon.style("#000000").stroke(true).line(0, crayon.canvas.height*0.66, crayon.canvas.width , crayon.canvas.height*0.66);
+           crayon.style("#000000").stroke(true).line(golden_x, crayon.canvas.height*0.66, golden_x, crayon.canvas.height );
+      
+      
     OK.Covers.Utils.addCover();
   }
 
   return {
-    name : "Bio",
+    name : "Bio II",
     makeCover : makeCover
   };
 })());
