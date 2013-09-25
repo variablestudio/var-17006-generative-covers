@@ -1,3 +1,7 @@
+//LAYOUT RULES
+//
+
+
 var OK = OK || {};
 OK.Covers = OK.Covers || [];
 
@@ -29,7 +33,7 @@ function renderMatrix(bm_data) {
     for (y = 0; y < 3; y++) {
         for (x = 0; x < 3; x++) {
             var side_width = crayon.canvas.width * 0.55;
-            var side_width = crayon.canvas.width * 0.55;
+            //var side_width = crayon.canvas.width * 0.55;
             crayon.context.putImageData(bm_data[Math.round(Math.random() * 15)], 52 + x * side_width / 2 * 1.02, 250 + y * side_width / 2 * 1.02);
         }
     }
@@ -93,23 +97,34 @@ function drawLetters(letters, x, y, side) {
       
     //console.log(letters);
       
-    var authorFontSize = crayon.canvas.height * 0.04;
-    var titleFontSize = crayon.canvas.height * 0.038;
+    var authorFontSize = crayon.canvas.height * 0.03;
+    var titleFontSize = crayon.canvas.height * 0.05;
 
     var titleX = crayon.canvas.width * 0.08;
-    var titleY = crayon.canvas.width * 0.08 + authorFontSize;
+    var titleY = crayon.canvas.width * 0.1;
     var titleWidth = crayon.canvas.width * 0.4;
 
+    
+    var longest = OK.Covers.Typography.longestWord(book.title);
+      
     var titleSections = OK.Covers.Utils.breakTitle(book.title);
     var title = titleSections[0];
     var subTitle = titleSections[1];
 
+    crayon.context.textAlign = "left";
     crayon.translate(titleX, titleY);
-    crayon.font("Arial", titleFontSize, "bold").fill("#000000").paragraph("left", 0.1, titleWidth, true).text(title);
-    crayon.font("Arial", titleFontSize*0.85, "normal").fill("#000000").paragraph("left", 0.1, titleWidth, true).text(subTitle, 0, titleFontSize/4);
-    //crayon.font("Arial", authorFontSize, author[1][1]).fill("#313131").paragraph("left", 0.25, titleWidth, false).text(author[1][0], 0, authorFontSize/2);
+    crayon.font("BenchNineLight", titleFontSize, "normal").fill("#000000").paragraph("left", -0.2, titleWidth, true).text(title);
+    crayon.font("BenchNineLight", titleFontSize*0.85, "normal").fill("#000000").paragraph("left", -0.2, titleWidth, true).text(subTitle, 0, titleFontSize/4);
+    //crayon.font("UbuntuCondensed", authorFontSize, author[1][1]).fill("#313131").paragraph("left", 0.25, titleWidth, false).text(author[1][0], 0, authorFontSize/2);
     //0 + name.pixelLength of author[1][0] + " "
-    //crayon.font("Arial", authorFontSize, author[0][1]).fill("#313131").paragraph("left", -0.25, titleWidth, true).text(author[0][0], 0, authorFontSize/2);
+    crayon.context.font=authorFontSize + "px UbuntuCondensed";
+    var tmp = crayon.context.measureText(author[0][0] + "").width;
+    var tmp1 = crayon.context.measureText(author[1][0] + "" + author[0][0]).width;
+    crayon.context.textAlign = "right";
+    crayon.context.fillText(author[1][0], crayon.canvas.width - 50 - tmp1, 54);
+    crayon.context.fillText(author[0][0], crayon.canvas.width - 50, 54);
+    //crayon.translate(tmp, 0);
+    //crayon.font("UbuntuCondensed", authorFontSize, author[0][1]).fill("#313131").paragraph("left", -0.25, titleWidth, true).text(author[0][0], 0, authorFontSize/2);
 
     OK.Covers.Utils.addCover();
   }
