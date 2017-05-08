@@ -1,0 +1,19 @@
+{
+  "name": "generative-covers",
+  "version": "2.0.0",
+  "description": "Generative Book Covers for Biblioteka Otwartej Nauki http://bon.edu.pl",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vorg/bon-generative-covers.git"
+  },
+  "author": "Marcin Ignac <marcin.ignac@gmail.com> (http://marcinignac.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vorg/bon-generative-covers/issues"
+  },
+  "homepage": "https://github.com/vorg/bon-generative-covers#readme"
+}
