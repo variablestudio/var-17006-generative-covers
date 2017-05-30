@@ -1,3 +1,5 @@
 .DS_Store
 stuff
 data/covers
+node_modules
+.tern-port

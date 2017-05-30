@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/vorg/bon-generative-covers/issues"
   },
-  "homepage": "https://github.com/vorg/bon-generative-covers#readme"
+  "homepage": "https://github.com/vorg/bon-generative-covers#readme",
+  "dependencies": {
+    "is-browser": "^2.0.1",
+    "plask-wrap": "^1.0.1"
+  }
 }
