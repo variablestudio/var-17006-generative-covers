@@ -1,5 +1,10 @@
+const random = require('pex-random')
+
 const covers = [
-  require('./lib/covers/data')
+  // require('./lib/covers/data'),
+  // require('./lib/covers/divided'),
+  // require('./lib/covers/divided3')
+  require('./lib/covers/kaleidoscope')
 ]
 
 const books = require('./data/books.json')
@@ -24,7 +29,9 @@ coversContainer.id = 'covers'
 document.body.appendChild(coversContainer)
 
 console.log('covers', covers.length)
+random.seed(0)
 for (let i = 0; i < 10; i++) {
   const book = books[i]
-  covers[covers.length - 1].makeCover(book)
+  let cover = random.element(covers)
+  cover.makeCover(book)
 }

@@ -1,5 +1,7 @@
 .DS_Store
 stuff
 data/covers
+js/auto/
+js/done/
 node_modules
 .tern-port
