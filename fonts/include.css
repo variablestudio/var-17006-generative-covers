@@ -61,13 +61,13 @@
 }
 
 @font-face {
-    font-family: 'OpenSansExtra';
+    font-family: 'OpenSansExtraBold';
     src: url('opensansextra/opensans-extrabold-webfont.eot');
     src: url('opensansextra/opensans-extrabold-webfont.eot?#iefix') format('embedded-opentype'),
          url('opensansextra/opensans-extrabold-webfont.woff') format('woff'),
          url('opensansextra/opensans-extrabold-webfont.ttf') format('truetype'),
          url('opensansextra/opensans-extrabold-webfont.svg#open_sansextrabold') format('svg');
-    font-weight: bold;
+    font-weight: normal;
     font-style: normal;
 
 }
@@ -105,7 +105,7 @@
          url('ptserif/pt_serif-web-bold-webfont.woff') format('woff'),
          url('ptserif/pt_serif-web-bold-webfont.ttf') format('truetype'),
          url('ptserif/pt_serif-web-bold-webfont.svg#pt_serifbold') format('svg');
-    font-weight: bold;
+    font-weight: normal;
     font-style: normal;
 
 }
@@ -118,7 +118,7 @@
          url('ptserif/pt_serif-web-italic-webfont.ttf') format('truetype'),
          url('ptserif/pt_serif-web-italic-webfont.svg#pt_serifitalic') format('svg');
     font-weight: normal;
-    font-style: italic;
+    font-style: normal;
 
 }
 
@@ -141,7 +141,7 @@
          url('ptsans/pt_sans-web-bold-webfont.woff') format('woff'),
          url('ptsans/pt_sans-web-bold-webfont.ttf') format('truetype'),
          url('ptsans/pt_sans-web-bold-webfont.svg#pt_sansbold') format('svg');
-    font-weight: bold;
+    font-weight: normal;
     font-style: normal;
 
 }
@@ -177,7 +177,7 @@
          url('oswald/oswald-bold-webfont.woff') format('woff'),
          url('oswald/oswald-bold-webfont.ttf') format('truetype'),
          url('oswald/oswald-bold-webfont.svg#oswaldbold') format('svg');
-    font-weight: bold;
+    font-weight: normal;
     font-style: normal;
 
 }
@@ -229,7 +229,7 @@
          url('cousine/cousine-italic-webfont.ttf') format('truetype'),
          url('cousine/cousine-italic-webfont.svg#cousineitalic') format('svg');
     font-weight: normal;
-    font-style: italic;
+    font-style: normal;
 
 }
 
@@ -240,7 +240,7 @@
          url('cousine/cousine-bold-webfont.woff') format('woff'),
          url('cousine-bold-webfont.ttf') format('truetype'),
          url('cousine/cousine-bold-webfont.svg#cousinebold') format('svg');
-    font-weight: bold;
+    font-weight: normal;
     font-style: normal;
 
 }
@@ -264,7 +264,7 @@
          url('merriweathersans/merriweathersans-bold-webfont.woff') format('woff'),
          url('merriweathersans/merriweathersans-bold-webfont.ttf') format('truetype'),
          url('merriweathersans/merriweathersans-bold-webfont.svg#merriweather_sansbold') format('svg');
-    font-weight: bold;
+    font-weight: normal;
     font-style: normal;
 
 }
@@ -302,7 +302,7 @@
          url('robotoslab/robotoslab-bold-webfont.woff') format('woff'),
          url('robotoslab/robotoslab-bold-webfont.ttf') format('truetype'),
          url('robotoslab/robotoslab-bold-webfont.svg#roboto_slabbold') format('svg');
-    font-weight: bold;
+    font-weight: normal;
     font-style: normal;
 
 }
@@ -378,7 +378,7 @@
          url('sourcecode/sourcecodepro-bold-webfont.woff') format('woff'),
          url('sourcecode/sourcecodepro-bold-webfont.ttf') format('truetype'),
          url('sourcecode/sourcecodepro-bold-webfont.svg#source_code_probold') format('svg');
-    font-weight: bold;
+    font-weight: normal;
     font-style: normal;
 
 }

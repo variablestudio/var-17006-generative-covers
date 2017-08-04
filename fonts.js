@@ -4,7 +4,7 @@ const fonts = [
   'BenchNineLight', 'Anaheim', 'Andada', 'ArchivoNarrow', 'ArchivoNarrowBold',
   'ArchivoNarrowItalic', 'Cousine', 'CousineBold', 'CousineItalic',
   'Enriqueta', 'FrancoisOne', 'MerriweatherSans', 'MerriweatherSansBold', 'MerriweatherSansLight',
-  'OpenSansExtra', 'OpenSansSemi', 'Oswald', 'OswaldBold', 'OswaldLight', 'PTSans', 'PTSansBold',
+  'OpenSansExtraBold', 'OpenSansSemi', 'Oswald', 'OswaldBold', 'OswaldLight', 'PTSans', 'PTSansBold',
   'PTSerif', 'PTSerifBold', 'PTSerifItalic', 'RobotoSlab', 'RobotoSlabBold', 'RobotoSlabThin',
   'SourceCode', 'SourceCodeBold', 'SourceCodeLight', 'SourceSans', 'SourceSansBold', 'SourceSansLight',
   'UbuntuCondensed', 'Varela'
