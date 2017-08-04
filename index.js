@@ -4,11 +4,11 @@ const fonts = require('./fonts.js')
 const covers = [
   // require('./lib/covers/data'),
   require('./lib/covers/divided'),
-  // require('./lib/covers/divided3'),
-  // require('./lib/covers/broken-kaleidoscope'),
-  // require('./lib/covers/broken-hexagons'),
-  // require('./lib/covers/layouts/swissquad'),
-  // require('./lib/covers/layouts/moleskine'),
+  // require('./lib/covers/divided3'), //severe overlap issues
+  // require('./lib/covers/broken-kaleidoscope'), //broken
+  // require('./lib/covers/broken-hexagons'),//broken, text outside of text bg
+  // require('./lib/covers/layouts/swissquad'), //broken, unreadable text, no bg
+  // require('./lib/covers/layouts/moleskine'), //broken, text outside of text bg
   // require('./lib/covers/layouts/pseudo'),
   // require('./lib/covers/layouts/simplest'),
   // require('./lib/covers/layouts/cube')
@@ -37,7 +37,7 @@ document.body.appendChild(coversContainer)
 
 console.log('covers', covers.length)
 random.seed(0)
-const numCovers = 10
+const numCovers = 20
 
 window.onload = function () {
   fonts.load((err, fonts) => {
