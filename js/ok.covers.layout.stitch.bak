@@ -1,19 +1,21 @@
-var OK = OK || {};
-OK.Covers = OK.Covers || [];
+const Crayon = require('../crayons')
+const typo = require('../typography')
+const utils = require('../utils')
 
-OK.Covers.push((function () {
+
+
     var crayon;
     
     function makeCover(book) {
        
-            crayon = new Crayon(document.getElementById("cover"));
+            crayon = new Crayon(document.getElementById('cover'));
        
 
         crayon.clear();
-        crayon.style("default");
+        crayon.style('default');
 
-        crayon.fill("#deded2").rect(0, 0, crayon.canvas.width, crayon.canvas.height);
-        //crayon.fill("#DDDDDD").rect(25, 25, 550, 750);
+        crayon.fill('#deded2').rect(0, 0, crayon.canvas.width, crayon.canvas.height);
+        //crayon.fill('#DDDDDD').rect(25, 25, 550, 750);
 
         crayon.context.save();
         
@@ -29,7 +31,7 @@ OK.Covers.push((function () {
         var color = 50;
         var hue = Math.random()*360;
         
-        crayon.context.strokeStyle = "#FFFFFF";
+        crayon.context.strokeStyle = '#FFFFFF';
         crayon.context.lineWidth = 1;
         crayon.context.beginPath();
         for(p = 0; p < 1024; p++)
@@ -43,16 +45,16 @@ OK.Covers.push((function () {
         crayon.context.quadraticCurveTo(x -6 + Math.random()*12, y -6 + Math.random()*12, x - 6 + Math.random()*12, y -6+ Math.random()*12);
         }
         
-        crayon.context.strokeStyle = "#FFFFFF";
+        crayon.context.strokeStyle = '#FFFFFF';
         crayon.context.lineWidth = 1;
         crayon.context.stroke();
-        //console.log("datas: " + x1 + " " + y1 + " " + x2 + " " + y2);
+        //console.log('datas: ' + x1 + ' ' + y1 + ' ' + x2 + ' ' + y2);
         //crayon.context.restore();
         crayon.context.closePath();
         
         crayon.context.beginPath();
         crayon.context.lineWidth = 2;
-        var colors = new Array("#A30B0B", "#9119A7", "#2A2525", "#FFFFFF", "#00208B", "#3A7254"); 
+        var colors = new Array('#A30B0B', '#9119A7', '#2A2525', '#FFFFFF', '#00208B', '#3A7254'); 
         crayon.context.strokeStyle = colors[Math.round(Math.random()*5)];
         var stitch_width = 80 + Math.random()*80;
         crayon.context.moveTo(stitch_width,0);
@@ -157,16 +159,16 @@ OK.Covers.push((function () {
         crayon.context.closePath();
         crayon.context.stroke();
         
-        crayon.context.strokeStyle = "#FFFFFF";
+        crayon.context.strokeStyle = '#FFFFFF';
         crayon.context.lineWidth = 1;
         
-        var fonts = OK.Covers.Typography.pairSelector(this.name, book.title);
-        var author = OK.Covers.Typography.formatAuthorName(book.author);
+        var fonts = typo.pairSelector(this.name, book.title);
+        var author = typo.formatAuthorName(book.author);
         
         var titleFontSize = crayon.canvas.height * 0.08;
         var authorFontSize = titleFontSize * fonts.PairRatio;
         
-        if (OK.Covers.Typography.longestWord(book.title) > 10) { titleFontSize = titleFontSize * OK.Covers.Utils.remap(OK.Covers.Typography.longestWord(book.title) - 10, 0, 10, 0.75, 0.5); }
+        if (OK.Covers.Typography.longestWord(book.title) > 10) { titleFontSize = titleFontSize * utils.remap(OK.Covers.Typography.longestWord(book.title) - 10, 0, 10, 0.75, 0.5); }
     else {
     titleFontSize = titleFontSize + 100/book.title.length;
     }
@@ -186,28 +188,27 @@ OK.Covers.push((function () {
         
         var titleWidth = crayon.canvas.width * 0.5;
 
-        var titleSections = OK.Covers.Typography.breakTitle(book.title);
+        var titleSections = typo.breakTitle(book.title);
         var title = titleSections[0];
         var subTitle = titleSections[1];
 
-        title = OK.Covers.Typography.addLigatures(title, fonts.titleFamily);
+        title = typo.addLigatures(title, fonts.titleFamily);
         
         crayon.translate(titleX, titleY);
         
-         crayon.font(fonts.titleFamily+fonts.titleFont, titleFontSize, fonts.titleStyle, 0).fill("#000000").paragraph("left", fonts.titleLine, titleWidth, true).text(title);
-        crayon.font(fonts.titleFamily+fonts.titleFont, titleFontSize * 0.75, fonts.titleStyle, 0).fill("#000000").paragraph("left", fonts.titleLine, titleWidth, true).text(subTitle, 0, titleFontSize / 4);
+         crayon.font(fonts.titleFamily+fonts.titleFont, titleFontSize, fonts.titleStyle, 0).fill('#000000').paragraph('left', fonts.titleLine, titleWidth, true).text(title);
+        crayon.font(fonts.titleFamily+fonts.titleFont, titleFontSize * 0.75, fonts.titleStyle, 0).fill('#000000').paragraph('left', fonts.titleLine, titleWidth, true).text(subTitle, 0, titleFontSize / 4);
         
         
         
-        OK.Covers.Utils.addCover();
+        utils.addCover();
         crayon.context.closePath();
-        //crayon.fill("#d9d5c3").rect(0, 0, crayon.canvas.width, crayon.canvas.height);
+        //crayon.fill('#d9d5c3').rect(0, 0, crayon.canvas.width, crayon.canvas.height);
         
     }
 
-    return {
-        enabled: false,
-        name: "Stitch",
+    module.exports = {
+        
+        name: 'Stitch',
         makeCover: makeCover
     };
-})());

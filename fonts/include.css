@@ -138,7 +138,7 @@
     font-family: 'PTSansBold';
     src: url('ptsans/pt_sans-web-bold-webfont.eot');
     src: url('ptsans/pt_sans-web-bold-webfont.eot?#iefix') format('embedded-opentype'),
-         url('ptsans/ptsans/pt_sans-web-bold-webfont.woff') format('woff'),
+         url('ptsans/pt_sans-web-bold-webfont.woff') format('woff'),
          url('ptsans/pt_sans-web-bold-webfont.ttf') format('truetype'),
          url('ptsans/pt_sans-web-bold-webfont.svg#pt_sansbold') format('svg');
     font-weight: bold;
@@ -406,5 +406,26 @@
          url('sourcecode/sourcecodepro-regular-webfont.svg#source_code_proregular') format('svg');
     font-weight: normal;
     font-style: normal;
+}
 
+@font-face {
+    font-family: 'Enriqueta';
+    src: url('enriqueta/enriqueta-regular-webfont.eot');
+    src: url('enriqueta/enriqueta-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('enriqueta/enriqueta-regular-webfont.woff') format('woff'),
+         url('enriqueta/enriqueta-regular-webfont.ttf') format('truetype'),
+         url('enriqueta/enriqueta-regular-webfont.svg#source_code_proregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'BenchNineLight';
+    src: url('benchninelight/benchnine-light-webfont.eot');
+    src: url('benchninelight/benchnine-light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('benchninelight/benchnine-light-webfont.woff') format('woff'),
+         url('benchninelight/benchnine-light-webfont.ttf') format('truetype'),
+         url('benchninelight/benchnine-light-webfont.svg#source_code_proregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
 }

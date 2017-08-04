@@ -4,7 +4,7 @@
   "description": "Generative Book Covers for Biblioteka Otwartej Nauki http://bon.edu.pl",
   "main": "index.js",
   "scripts": {
-    "start": "budo index.js --open --live"
+    "start": "budo index.js:bundle.js --open --live"
   },
   "repository": {
     "type": "git",
@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/vorg/bon-generative-covers#readme",
   "dependencies": {
+    "chroma-js": "^1.3.4",
+    "fontfaceobserver": "^2.0.13",
     "is-browser": "^2.0.1",
     "pex-random": "^1.0.1",
     "plask-wrap": "^1.0.1"
