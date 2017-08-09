@@ -112,6 +112,16 @@ window.onload = function () {
       const book = books[i % books.length]
       //let cover = random.element(covers)
       const cover = covers[Math.floor(i / 6)]
+      if (i % 6 == 0) {
+        var header = document.createElement('h2')
+        header.innerText = cover.name
+        header.style.clear = 'both'
+        header.style.margin = '0'
+        header.style.padding = '1em 0 0 0.5em'
+        header.style.fontFamily = 'Verdana'
+        header.style.color = '#FFF'
+        document.getElementById('covers').appendChild(header)
+      }
       cover.makeCover(book)
       i++
       if (i < numCovers) {
