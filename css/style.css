@@ -40,8 +40,8 @@ canvas {
 }
 
 img.thumb {
-  width: 108px;
-  height: 142px;
+  width: calc(2*108px);
+  height: calc(2*142px);
   /*width: 212px;*/
   /*height: 284px;*/
   margin: 0.5em;
