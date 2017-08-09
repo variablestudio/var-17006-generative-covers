@@ -59,7 +59,7 @@ const covers = [
 
   // Hmm
   require('./lib/covers/kaleidoscope.js'),
-  require('./lib/covers/layouts/todo-cube.js'), //TODO: no text?
+  require('./lib/covers/layouts/cube.js'), //TODO: no text?
   require('./lib/covers/hexagons.js'), //text is out
 ]
 
