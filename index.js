@@ -6,87 +6,61 @@ require('./lib/canvas.ext')
 // const chroma = require('chroma-js')
 const covers = [
   require('./lib/covers/layouts/simplest.js'),
-  //
+
   require('./lib/covers/layouts/pseudo.js'),
-  //
-  // require('./lib/covers/layout.hip.js'),
-  //
-  // require('./lib/covers/layout.penguin.js'),
-  //
+
+  require('./lib/covers/layout.hip.js'),
+
+  require('./lib/covers/layout.penguin.js'),
+
   require('./lib/covers/layouts/moleskine.js'),
-  //
-  // require('./lib/covers/layout.header.js'),
-  //
-  // require('./lib/covers/layout.footer.js'),
-  //
-  // require('./lib/covers/layout.semiopaque.js'),
-  // require('./lib/covers/layout.semiopaque.circularchaos2.js'),
-  //
-  // require('./lib/covers/layout.goldenlabel.js'), //TODO: text is too big, font missing
-  //
-  // require('./lib/covers/layout.rightlabel.js'), //TODO: patterns missing and fonts
-  // require('./lib/covers/layout.hugetype.js'), //TODO: blendOnto is missing
-  //
-  // require('./lib/covers/layout.goldentype.js'), //TODO: blendOnto is not a function, text out
-  //
+
+  require('./lib/covers/layout.header.js'),
+
+  require('./lib/covers/layout.footer.js'),
+
+  require('./lib/covers/layout.semiopaque.js'),
+  require('./lib/covers/layout.semiopaque.circularchaos2.js'),
+
+  require('./lib/covers/layout.goldenlabel.js'), //TODO: text is too big, font missing
+
+  require('./lib/covers/layout.rightlabel.js'), //TODO: patterns missing and fonts
+  require('./lib/covers/layout.hugetype.js'), //TODO: blendOnto is missing
+
+  require('./lib/covers/layout.goldentype.js'), //TODO: blendOnto is not a function, text out
+
   require('./lib/covers/layouts/swissquad.js'),
-  // require('./lib/covers/divided3.js'), // kind of swissquad
-  //
-  // require('./lib/covers/divided.js'),
-  //
-  // require('./lib/covers/mosaic.js'), //TODO: font missing
-  //
+  require('./lib/covers/divided3.js'), // kind of swissquad
+
+  require('./lib/covers/divided.js'),
+
+  require('./lib/covers/mosaic.js'), //TODO: font missing
+
   require('./lib/covers/layouts/margined.js'),
-  //
+
   require('./lib/covers/layouts/cornered.js'),
-  // require('./lib/covers/divided2.js'), // kind of cornered
-  // require('./lib/covers/goldencorner.js'),// kind of cornered
-  // require('./lib/covers/layout.hugetype2.js'),//TODO: blendOnto is missing
-  //
-  // require('./lib/covers/layout.goldentree.js'), //TODO: patterns missin
-  //
-  // require('./lib/covers/fourth.js'),
-  //
-  // // Nice but not from matrix
-  // require('./lib/covers/layout.charts.js'),  //TODO: text sticks out
-  // require('./lib/covers/layout.stitch.js'), //TODO fonts missing, nice
-  // require('./lib/covers/layout.bonedupl.js'),  //TODO: limit available fonts
-  // require('./lib/covers/data.js'),
-  // require('./lib/covers/layout.mapper.js'), // cool triangles
-  // require('./lib/covers/layout.grids.js'), // cool, no text though?
-  // require('./lib/covers/layout.wavecircles.js'), //TODO: text missing, cool patterns
-  // require('./lib/covers/ok.covers.rule2.js'), // cool
+  require('./lib/covers/divided2.js'), // kind of cornered
+  require('./lib/covers/goldencorner.js'),// kind of cornered
+  require('./lib/covers/layout.hugetype2.js'),//TODO: blendOnto is missing
 
-  // // Hmm
-  // require('./lib/covers/kaleidoscope.js'),
-  // require('./lib/covers/layout.layered-cube.js'), //TODO: no text?
-  // require('./lib/covers/hexagons.js'), //text is out
+  require('./lib/covers/layout.goldentree.js'), //TODO: patterns missin
 
-  // Todo -------
+  require('./lib/covers/fourth.js'),
 
-  // require('./lib/covers/soso-blend.js'),
-  // require('./lib/covers/soso-blend2.js'),
-  // require('./lib/covers/soso-circularchaos.js'),
-  // require('./lib/covers/soso-hip.js'),
-  // require('./lib/covers/todo-cornered.js'), //TODO: missing font
-  // require('./lib/covers/todo-goldenlabel.old.js'),
-  // require('./lib/covers/todo-goldentype.js'),
-  // require('./lib/covers/todo-hugetype.js'),
-  // require('./lib/covers/todo-hugetype2.js'),
-  // require('./lib/covers/todo-layout.circles.js'),
+  // Nice but not from matrix
+  require('./lib/covers/layout.charts.js'),  //TODO: text sticks out
+  require('./lib/covers/layout.stitch.js'), //TODO fonts missing, nice
+  require('./lib/covers/layout.bonedupl.js'),  //TODO: limit available fonts
+  require('./lib/covers/data.js'),
+  require('./lib/covers/layout.mapper.js'), // cool triangles
+  require('./lib/covers/layout.grids.js'), // cool, no text though?
+  require('./lib/covers/layout.wavecircles.js'), //TODO: text missing, cool patterns
+  require('./lib/covers/ok.covers.rule2.js'), // cool
 
-  // require('./lib/covers/x-curves.js'),
-
-  // require('./lib/covers/x-hexagons.old.js'), //TODO: text outside of text bg
-  // require('./lib/covers/x-layout.swissquad.js'), //TODO: no text bg
-  // require('./lib/covers/x-ok.covers.layout.divided2.js'), //TODO: text sticks out
-  // require('./lib/covers/x-ok.covers.layout.statistical.js'), // TODO: font missing, crazy
-  // require('./lib/covers/x-bio.js'), // TODO: author missing
-  // require('./lib/covers/x-ok.covers.minimal.js'), // nice expanding header
-  // require('./lib/covers/x-ok.covers.pattern.bak2.js'), //nice patterns
-  // require('./lib/covers/x-ok.covers.pattern.js'),
-  // require('./lib/covers/x-ok.covers.minimal.old.js'), //TODO: font missing
-  // require('./lib/covers/x-ok.covers.plain.js'), //TODO: author name overlaps
+  // Hmm
+  require('./lib/covers/kaleidoscope.js'),
+  require('./lib/covers/layouts/todo-cube.js'), //TODO: no text?
+  require('./lib/covers/hexagons.js'), //text is out
 ]
 
 const books = require('./data/books.json')
