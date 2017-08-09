@@ -139,9 +139,9 @@ Xcenter = 75 * x;
     title = OK.Covers.Typography.addLigatures(title, "Andada");
     //crayon.font("Andada", titleFontSize, "bold", 0).fill("#000000").paragraph("left", 0.25, titleWidth, true).text(title);
     //crayon.font("Andada", titleFontSize*0.85, "normal", 0).fill("#000000").paragraph("left", 0.25, titleWidth, true).text(subTitle, 0, titleFontSize/4);
-    //crayon.font("Arial", authorFontSize, author[1][1], 0).fill("#FF9000").paragraph("left", 0.25, titleWidth, false).text(author[1][0], 0, authorFontSize/2);
-    //0 + name.pixelLength of author[1][0] + " "
-    //crayon.font("Arial", authorFontSize, author[0][1], 0).fill("#FF9000").paragraph("left", -0.25, titleWidth, true).text(author[0][0], 0 + crayon.measureText(author[1][0] + " ").width, authorFontSize/2);
+    //crayon.font("Arial", authorFontSize, author.nameStyle, 0).fill("#FF9000").paragraph("left", 0.25, titleWidth, false).text(author.name, 0, authorFontSize/2);
+    //0 + name.pixelLength of author.name + " "
+    //crayon.font("Arial", authorFontSize, author.surnameStyle, 0).fill("#FF9000").paragraph("left", -0.25, titleWidth, true).text(author.surname, 0 + crayon.measureText(author.name + " ").width, authorFontSize/2);
 
     OK.Covers.Utils.addCover();
   }

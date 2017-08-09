@@ -2,9 +2,9 @@ const Crayon = require('../crayons')
 const typo = require('../typography')
 const utils = require('../utils')
 
-OK.Covers.Elements = {}
+elements = {}
 
-OK.Covers.Elements.PixelElement = function (area, x_pos, y_pos, cluster) {
+elements.PixelElement = function (area, x_pos, y_pos, cluster) {
   var color = ~~(Math.random() * 360)
   area.fillStyle = 'hsl(' + color + ', 60%, 60%)'
 
@@ -85,7 +85,7 @@ OK.Covers.Elements.PixelElement = function (area, x_pos, y_pos, cluster) {
   }
 }
 
-OK.Covers.Elements.LetterElement = function (area, letters, x_pos, y_pos, cluster) {
+elements.LetterElement = function (area, letters, x_pos, y_pos, cluster) {
   var img_matrix = new Array(16)
   drawLetters(area, img_matrix, letters, x_pos, y_pos, cluster * 2)
     // renderMatrix(area, img_matrix);
@@ -131,7 +131,7 @@ function drawLetters (area, img_matrix, letters, x, y, cluster) {
     // console.log('BD: ' + img_matrix[0]);
 }
 
-OK.Covers.Elements.TileElement = function (area, x_pos, y_pos, cluster) {
+elements.TileElement = function (area, x_pos, y_pos, cluster) {
   var margins = 0
   var borderScale = 1 + Math.random()
   var hue = Math.random() * 360
@@ -184,7 +184,7 @@ OK.Covers.Elements.TileElement = function (area, x_pos, y_pos, cluster) {
     // minimal 24, maximal 64 for cornered layout
 }
 
-OK.Covers.Elements.SolidTileElement = function (area, x_pos, y_pos, cluster, color, lightColor, radius, radius2, borderScale) {
+elements.SolidTileElement = function (area, x_pos, y_pos, cluster, color, lightColor, radius, radius2, borderScale) {
     // area.context.fillStyle = color;
     // area.context.fillRect(x_pos, y_pos, cluster, cluster);
 
@@ -228,7 +228,7 @@ OK.Covers.Elements.SolidTileElement = function (area, x_pos, y_pos, cluster, col
     // minimal 24, maximal 64 for cornered layout
 }
 
-OK.Covers.Elements.coloursArray = function (sides) {
+elements.coloursArray = function (sides) {
   var colours = new Array(sides / 2)
   for (var c = 0; c < sides / 2; c++) {
         // 64 -192
@@ -238,7 +238,7 @@ OK.Covers.Elements.coloursArray = function (sides) {
   return colours
 }
 
-OK.Covers.Elements.HexElement = function (area, x_pos, y_pos, cluster) {
+elements.HexElement = function (area, x_pos, y_pos, cluster) {
   var hue = Math.random() * 360
 
   var counter = 0
@@ -249,7 +249,7 @@ OK.Covers.Elements.HexElement = function (area, x_pos, y_pos, cluster) {
   var Ycenter = y_pos + cluster / 2
   var counter = Math.round(Math.random() * ((numberOfSides / 2) - 1))
 
-  var colour_matrix = OK.Covers.Elements.coloursArray(numberOfSides)
+  var colour_matrix = elements.coloursArray(numberOfSides)
 
   for (var i = 1; i <= numberOfSides; i += 1) {
     if (i == 1) {

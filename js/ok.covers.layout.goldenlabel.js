@@ -1,6 +1,7 @@
 const Crayon = require('../crayons')
 const typo = require('../typography')
 const utils = require('../utils')
+
 var child_colour = 'hsl(100, 50%, 50%)'
 
 var crayon
@@ -69,8 +70,8 @@ function makeCover (book) {
 
   crayon.translate(titleX, titleY)
 
-  crayon.font(fonts.authorFamily + fonts.authorFont, authorFontSize, author.nameStyle, 0).fill('#000000').paragraph('left', -0.5, titleWidth, true).text(author.name, 0, authorFontSize / 2)
-  crayon.font(fonts.authorFamily + fonts.authorFont, authorFontSize, author.surnameStyle, 0).fill('#000000').paragraph('left', 2.5, titleWidth, true).text(author.surname, 0, authorFontSize / 2)
+  crayon.font(fonts.authorFamily + fonts.authorFont, authorFontSize, author.surnameStyle, 0).fill('#000000').paragraph('left', -0.5, titleWidth, true).text(author.surname, 0, authorFontSize / 2)
+  crayon.font(fonts.authorFamily + fonts.authorFont, authorFontSize, author.nameStyle, 0).fill('#000000').paragraph('left', 2.5, titleWidth, true).text(author.name, 0, authorFontSize / 2)
 
   crayon.font(fonts.titleFamily + fonts.titleFont, titleFontSize, fonts.titleStyle, 0).fill('#FFFFFF').paragraph('left', fonts.titleLine, titleWidth, true).text(title)
   crayon.font(fonts.titleFamily + fonts.titleFont, titleFontSize * 0.75, fonts.titleStyle, 0).fill('#FFFFFF').paragraph('left', fonts.titleLine, titleWidth, true).text(subTitle, 0, titleFontSize / 4)

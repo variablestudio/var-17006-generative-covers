@@ -276,12 +276,12 @@ function makeCover (book) {
         // var randAuthor = Math.round(Math.random());
 
   if (Math.round(Math.random()) == 0) {
-            // crayon.font(fonts.authorFamily+fonts.authorFont, authorFontSize, author.nameStyle, 0).fill('#FF9000').paragraph('left', 0.25, titleWidth, false).text(author.name, 0, authorFontSize / 2);
+            // crayon.font(fonts.authorFamily+fonts.authorFont, authorFontSize, author.surnameStyle, 0).fill('#FF9000').paragraph('left', 0.25, titleWidth, false).text(author.surname, 0, authorFontSize / 2);
             // crayon.context.font = 'normal '+ authorFontSize +'px' + ' ' + fonts.authorFamily+fonts.authorFont;
-            // crayon.font(fonts.authorFamily+fonts.authorFont, authorFontSize, author.surnameStyle, 0).fill('#FF9000').paragraph('left', -0.25, titleWidth, true).text(author.surname, 0 + crayon.context.measureText(author.name + ' ').width, authorFontSize / 2);
+            // crayon.font(fonts.authorFamily+fonts.authorFont, authorFontSize, author.nameStyle, 0).fill('#FF9000').paragraph('left', -0.25, titleWidth, true).text(author.name, 0 + crayon.context.measureText(author.surname + ' ').width, authorFontSize / 2);
   } else {
-            // crayon.font(fonts.authorFamily+fonts.authorFont, authorFontSize, author.nameStyle, 0).fill('#FF9000').paragraph('left', -0.5, titleWidth, true).text(author.name, 0, authorFontSize / 2);
-            // crayon.font(fonts.authorFamily+fonts.authorFont, authorFontSize, author.surnameStyle, 0).fill('#FF9000').paragraph('left', 0.25, titleWidth, true).text(author.surname, 0, authorFontSize / 2);
+            // crayon.font(fonts.authorFamily+fonts.authorFont, authorFontSize, author.surnameStyle, 0).fill('#FF9000').paragraph('left', -0.5, titleWidth, true).text(author.surname, 0, authorFontSize / 2);
+            // crayon.font(fonts.authorFamily+fonts.authorFont, authorFontSize, author.nameStyle, 0).fill('#FF9000').paragraph('left', 0.25, titleWidth, true).text(author.name, 0, authorFontSize / 2);
   }
   utils.addCover()
 }

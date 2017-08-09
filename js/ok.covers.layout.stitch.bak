@@ -168,7 +168,7 @@ const utils = require('../utils')
         var titleFontSize = crayon.canvas.height * 0.08;
         var authorFontSize = titleFontSize * fonts.PairRatio;
         
-        if (OK.Covers.Typography.longestWord(book.title) > 10) { titleFontSize = titleFontSize * utils.remap(OK.Covers.Typography.longestWord(book.title) - 10, 0, 10, 0.75, 0.5); }
+        if (typo.longestWord(book.title) > 10) { titleFontSize = titleFontSize * utils.remap(typo.longestWord(book.title) - 10, 0, 10, 0.75, 0.5); }
     else {
     titleFontSize = titleFontSize + 100/book.title.length;
     }

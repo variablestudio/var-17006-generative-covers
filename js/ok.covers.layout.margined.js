@@ -74,8 +74,8 @@ function makeCover (book) {
       var year = book.year
       var author = typo.formatAuthorName(book.author)
 
-      letters[0] = author.name.charAt(0)
-      letters[1] = author.surname.charAt(0)
+      letters[0] = author.surname.charAt(0)
+      letters[1] = author.name.charAt(0)
       letters[2] = year.charAt(2)
       letters[3] = year.charAt(3)
       patterns.DividedLetters(crayon, 200, 200, 400, 400, letters)
@@ -156,8 +156,8 @@ function makeCover (book) {
   }
 
   crayon.context.font = 'normal ' + authorFontSize + 'px' + ' ' + fonts.authorFamily + fonts.authorFont
-  crayon.font(fonts.authorFamily + fonts.authorFont, authorFontSize, author.nameStyle, 0).fill('#000000').paragraph('right', 0.25, titleWidth, false).text(author.name, 0, authorFontSize / 2)
-  crayon.font(fonts.authorFamily + fonts.authorFont, authorFontSize, author.surnameStyle, 0).fill('000000').paragraph('right', -0.25, titleWidth, true).text(author.surname, 0 + crayon.context.measureText(author.name + '').width, authorFontSize / 2)
+  crayon.font(fonts.authorFamily + fonts.authorFont, authorFontSize, author.surnameStyle, 0).fill('#000000').paragraph('right', 0.25, titleWidth, false).text(author.surname, 0, authorFontSize / 2)
+  crayon.font(fonts.authorFamily + fonts.authorFont, authorFontSize, author.nameStyle, 0).fill('000000').paragraph('right', -0.25, titleWidth, true).text(author.name, 0 + crayon.context.measureText(author.surname + '').width, authorFontSize / 2)
 
   utils.addCover()
 }

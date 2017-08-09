@@ -99,8 +99,8 @@ function makeCover (book) {
   var titleY = crayon.canvas.width * 0.1 + titleFontSize
   var titleWidth = crayon.canvas.width * 0.45
 
-  if (OK.Covers.Typography.longestWord(book.title) > 10) {
-    titleFontSize = titleFontSize * utils.remap(OK.Covers.Typography.longestWord(book.title) - 10, 0, 10, 0.9, 0.7)
+  if (typo.longestWord(book.title) > 10) {
+    titleFontSize = titleFontSize * utils.remap(typo.longestWord(book.title) - 10, 0, 10, 0.9, 0.7)
   } else {
     titleFontSize = titleFontSize + 180 / book.title.length
   }
@@ -125,25 +125,25 @@ function makeCover (book) {
 
   crayon.context.textAlign = 'right'
 
-  if (author.nameStyle != undefined) {
-    crayon.context.font = author.nameStyle + ' ' + authorFontSize + 'px ' + fonts.authorFamily + fonts.authorFont
-  } else {
-    crayon.context.font = authorFontSize + 'px ' + fonts.authorFamily + fonts.authorFont
-  }
-  crayon.context.fillText(author.name.trim(), 550, 85)
-
-  crayon.context.textAlign = 'right'
-
-  if (author.nameStyle != undefined) {
+  if (author.surnameStyle != undefined) {
     crayon.context.font = author.surnameStyle + ' ' + authorFontSize + 'px ' + fonts.authorFamily + fonts.authorFont
   } else {
     crayon.context.font = authorFontSize + 'px ' + fonts.authorFamily + fonts.authorFont
   }
-  crayon.context.fillText(author.surname, 550, 115)
+  crayon.context.fillText(author.surname.trim(), 550, 85)
+
+  crayon.context.textAlign = 'right'
+
+  if (author.surnameStyle != undefined) {
+    crayon.context.font = author.nameStyle + ' ' + authorFontSize + 'px ' + fonts.authorFamily + fonts.authorFont
+  } else {
+    crayon.context.font = authorFontSize + 'px ' + fonts.authorFamily + fonts.authorFont
+  }
+  crayon.context.fillText(author.name, 550, 115)
 
             // crayon.context.font = 'normal ' + authorFontSize + 'px' + ' ' + fonts.authorFamily + fonts.authorFont;
-            // crayon.font(fonts.authorFamily + fonts.authorFont, authorFontSize, author.nameStyle, 0).fill('#000000').paragraph('right', 0.25, titleWidth, false).text(author.name, 0, authorFontSize / 2);
-            // crayon.font(fonts.authorFamily + fonts.authorFont, authorFontSize, author.surnameStyle, 0).fill('000000').paragraph('right', -0.25, titleWidth, true).text(author.surname, 0 + crayon.context.measureText(author.name + '').width, authorFontSize / 2);
+            // crayon.font(fonts.authorFamily + fonts.authorFont, authorFontSize, author.surnameStyle, 0).fill('#000000').paragraph('right', 0.25, titleWidth, false).text(author.surname, 0, authorFontSize / 2);
+            // crayon.font(fonts.authorFamily + fonts.authorFont, authorFontSize, author.nameStyle, 0).fill('000000').paragraph('right', -0.25, titleWidth, true).text(author.name, 0 + crayon.context.measureText(author.surname + '').width, authorFontSize / 2);
 
         // crayon.restore();
 

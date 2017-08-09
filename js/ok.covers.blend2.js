@@ -1,7 +1,8 @@
 const Crayon = require('../crayons')
 const typo = require('../typography')
 const utils = require('../utils')
-
+const chroma = require('chroma-js')
+const Pixels = require('../pixels')
 var crayon
 
 function makeCover (book) {
