@@ -39,9 +39,10 @@ canvas {
   background: rgba(255, 255, 255, 1);
 }
 
-img.thumb {
-  width: calc(2*108px);
-  height: calc(2*142px);
+img.thumb,
+#covers svg {
+  width: calc(2*120px);
+  height: calc(2*160px);
   /*width: 212px;*/
   /*height: 284px;*/
   margin: 0.5em;
