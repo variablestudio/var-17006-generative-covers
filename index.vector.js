@@ -52,7 +52,8 @@ fonts.load(() => {
     if (err) console.log(err)
     for (let i = 0; i < 26; i++) {
       const book = selectedBooks[i % selectedBooks.length]
-      const cover = layouts.bar({book, font, w, h })
+      // const cover = layouts.bar({book, font, w, h })
+      const cover = layouts.swissQuad({ book, font, w, h })
       cover.setAttribute('viewBox', `0 0 ${w} ${h}`)
       coversContainer.appendChild(cover)
     }

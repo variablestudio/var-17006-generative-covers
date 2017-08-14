@@ -24,6 +24,7 @@
     "pex-random": "^1.0.1",
     "plask-wrap": "^1.0.1",
     "rune.font.js": "0.0.3",
-    "rune.js": "^1.0.2"
+    "rune.js": "^1.0.2",
+    "word-wrapper": "^1.0.7"
   }
 }
