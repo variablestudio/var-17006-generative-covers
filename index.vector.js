@@ -51,6 +51,7 @@ fonts.load(() => {
   opentype.load('fonts/ptsans/pt_sans-web-regular-webfont.ttf', function (err, font) {
     opentype.load('fonts/opensansextra/opensans-extrabold-webfont.ttf', function (err, boldFont) {
     // opentype.load('fonts/ptserif/pt_serif-web-bold-webfont.ttf', function (err, boldFont) {
+    // opentype.load('fonts/andada/andada-regular-webfont.ttf', function (err, boldFont) {
       if (err) console.log(err)
       for (let i = 0; i < 26; i++) {
         const book = selectedBooks[i % selectedBooks.length]
