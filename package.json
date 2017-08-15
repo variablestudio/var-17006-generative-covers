@@ -25,6 +25,7 @@
     "plask-wrap": "^1.0.1",
     "rune.font.js": "0.0.3",
     "rune.js": "^1.0.2",
+    "svg-path-bounding-box": "^1.0.4",
     "word-wrapper": "^1.0.7"
   }
 }

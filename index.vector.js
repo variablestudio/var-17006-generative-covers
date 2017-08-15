@@ -49,16 +49,19 @@ var selectedBooks = [
 
 fonts.load(() => {
   opentype.load('fonts/ptsans/pt_sans-web-regular-webfont.ttf', function (err, font) {
-    if (err) console.log(err)
-    for (let i = 0; i < 26; i++) {
-      const book = selectedBooks[i % selectedBooks.length]
-      const makeCover = random.element(layouts.all)
-      // const cover = layouts.bar({book, font, w, h })
-      // const cover = layouts.swissQuad({ book, font, w, h })
-      // const cover = layouts.rightLabel({ book, font, w, h })
-      const cover = makeCover({ book, font, w, h })
-      cover.setAttribute('viewBox', `0 0 ${w} ${h}`)
-      coversContainer.appendChild(cover)
-    }
+    opentype.load('fonts/opensansextra/opensans-extrabold-webfont.ttf', function (err, boldFont) {
+    // opentype.load('fonts/ptserif/pt_serif-web-bold-webfont.ttf', function (err, boldFont) {
+      if (err) console.log(err)
+      for (let i = 0; i < 26; i++) {
+        const book = selectedBooks[i % selectedBooks.length]
+        const makeCover = random.element(layouts.all)
+        // const cover = layouts.bar({book, font, w, h })
+        // const cover = layouts.swissQuad({ book, font, w, h })
+        // const cover = layouts.rightLabel({ book, font, w, h })
+        const cover = makeCover({ book, font, boldFont, w, h })
+        cover.setAttribute('viewBox', `0 0 ${w} ${h}`)
+        coversContainer.appendChild(cover)
+      }
+    })
   })
 })
