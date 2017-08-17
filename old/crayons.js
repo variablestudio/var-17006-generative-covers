@@ -1,6 +1,6 @@
 const isBrowser = require('is-browser')
 const plask = require('plask-wrap')
-const fonts = require('../fonts')
+const fonts = require('./fonts')
 // -----------------------------------------------------------------------------
 
 function SkCanvasCrayon (canvas) {
