@@ -2,6 +2,7 @@ const opentype = require('opentype.js')
 const random = require('pex-random')
 const books = require('./data/books.json')
 const layouts = require('./lib/layouts')
+const fonts = require('./lib/fonts')
 
 // random.seed(0)
 
@@ -46,20 +47,22 @@ var selectedBooks = [
   fewestPages, mostPages
 ].concat(books.reverse())
 
-opentype.load('fonts/ptsans/pt_sans-web-regular-webfont.ttf', function (err, font) {
-  opentype.load('fonts/opensansextra/opensans-extrabold-webfont.ttf', function (err, boldFont) {
-    // opentype.load('fonts/ptserif/pt_serif-web-bold-webfont.ttf', function (err, boldFont) {
-    // opentype.load('fonts/andada/andada-regular-webfont.ttf', function (err, boldFont) {
-    if (err) console.log(err)
-    for (let i = 0; i < layouts.all.length * 10; i++) {
-      const book = selectedBooks[i % selectedBooks.length]
-      const makeCover = layouts.all[Math.floor(i / 10)]
-      // const cover = layouts.bar({book, font, w, h })
-      // const cover = layouts.swissQuad({ book, font, w, h })
-      // const cover = layouts.rightLabel({ book, font, w, h })
-      const cover = makeCover({ book, font, boldFont, w, h })
-      cover.setAttribute('viewBox', `0 0 ${w} ${h}`)
-      coversContainer.appendChild(cover)
-    }
+fonts.load(() => {
+  opentype.load('fonts/ptsans/pt_sans-web-regular-webfont.ttf', function (err, font) {
+    opentype.load('fonts/opensansextra/opensans-extrabold-webfont.ttf', function (err, boldFont) {
+      // opentype.load('fonts/ptserif/pt_serif-web-bold-webfont.ttf', function (err, boldFont) {
+      // opentype.load('fonts/andada/andada-regular-webfont.ttf', function (err, boldFont) {
+      if (err) console.log(err)
+      for (let i = 0; i < layouts.all.length * 10; i++) {
+        const book = selectedBooks[i % selectedBooks.length]
+        const makeCover = layouts.all[Math.floor(i / 10)]
+        // const cover = layouts.bar({book, font, w, h })
+        // const cover = layouts.swissQuad({ book, font, w, h })
+        // const cover = layouts.rightLabel({ book, font, w, h })
+        const cover = makeCover({ book, font, boldFont, w, h })
+        cover.setAttribute('viewBox', `0 0 ${w} ${h}`)
+        coversContainer.appendChild(cover)
+      }
+    })
   })
 })
