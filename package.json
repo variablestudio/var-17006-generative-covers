@@ -4,7 +4,7 @@
   "description": "Generative Book Covers for Biblioteka Otwartej Nauki http://bon.edu.pl",
   "main": "index.js",
   "scripts": {
-    "start": "budo index.js:bundle.js --open --live"
+    "start": "budo demo/index.js:bundle.js --open --live -- -t sheetify"
   },
   "repository": {
     "type": "git",
@@ -28,5 +28,9 @@
     "rune.js": "^1.0.2",
     "svg-path-bounding-box": "^1.0.4",
     "word-wrapper": "^1.0.7"
+  },
+  "devDependencies": {
+    "budo": "^10.0.4",
+    "sheetify": "^6.1.1"
   }
 }

@@ -1,8 +1,10 @@
 const opentype = require('opentype.js')
-const random = require('pex-random')
-const books = require('./data/books.json')
-const layouts = require('./lib/layouts')
-const fonts = require('./lib/fonts')
+const books = require('../data/books.json')
+const layouts = require('../lib/layouts')
+const fonts = require('../lib/fonts')
+const css = require('sheetify')
+
+css('./style.css')
 
 // random.seed(0)
 
@@ -55,11 +57,11 @@ fonts.load(() => {
       if (err) console.log(err)
       for (let i = 0; i < layouts.all.length * 10; i++) {
         const book = selectedBooks[i % selectedBooks.length]
-        const makeCover = layouts.all[Math.floor(i / 10)]
-        // const cover = layouts.bar({book, font, w, h })
-        // const cover = layouts.swissQuad({ book, font, w, h })
-        // const cover = layouts.rightLabel({ book, font, w, h })
-        const cover = makeCover({ book, font, boldFont, w, h })
+        // const makeCover = layouts.all[Math.floor(i / 10)]
+        const cover = layouts.bar({book, fonts, w, h })
+        // const cover = layouts.swissQuad({ book, fonts, w, h })
+        // const cover = layouts.rightLabel({ book, fonts, w, h })
+        // const cover = makeCover({ book, fonts, w, h })
         cover.setAttribute('viewBox', `0 0 ${w} ${h}`)
         coversContainer.appendChild(cover)
       }
