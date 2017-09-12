@@ -10,7 +10,7 @@ Generative Book Covers for Biblioteka Otwartej Nauki http://bon.edu.pl
 
 ## From command line
 
-```
+```sh
 # clone the repo
 git clone https://github.com/variablestudio/var-bon-generative-covers
 
@@ -40,7 +40,7 @@ node index.js [options]
 
 ### As a module
 
-```
+```sh
 # create new project
 mkdir new-project
 cd new-project
@@ -65,3 +65,8 @@ const book = {
 const svg = makeCover(book)
 console.log(svg) //
 ```
+
+# Credits
+
+Marcin Ignac [idea, design, code]
+Vladimir Kuchinov [typography, design, code]
