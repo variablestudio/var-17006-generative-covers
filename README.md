@@ -38,7 +38,7 @@ node index.js [options]
 -h, --help                 Output usage information
 ```
 
-### As a module
+## As a module
 
 ```sh
 # create new project
@@ -68,5 +68,5 @@ console.log(svg) //
 
 # Credits
 
-Marcin Ignac [idea, design, code]
-Vladimir Kuchinov [typography, design, code]
+- Marcin Ignac - idea, design, code
+- Vladimir Kuchinov - typography, design, code
