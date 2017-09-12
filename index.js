@@ -4,6 +4,8 @@ const program = require('commander')
 const path = require('path')
 const fs = require('fs')
 
+const isCommandLine = (require.main === module)
+
 const w = 600
 const h = 800
 
@@ -34,6 +36,8 @@ function makeCover (data) {
       if (data.outfile) {
         const outfile = path.resolve(__dirname, data.outfile)
         fs.writeFileSync(outfile, coverStr)
+      } else if (isCommandLine) {
+        console.log(coverStr)
       }
 
       return cover
@@ -42,7 +46,7 @@ function makeCover (data) {
 }
 
 // running in the console
-if (require.main === module) {
+if (isCommandLine) {
   program
   .version(require('./package.json').version)
   .option('-t, --title [title]', 'Book Title')
