@@ -1,5 +1,7 @@
 # Generative Covers
 
+![](covers.png)
+
 Generative Book Covers for Biblioteka Otwartej Nauki http://bon.edu.pl
 
 ## Requirements
