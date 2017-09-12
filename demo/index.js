@@ -1,7 +1,7 @@
 const opentype = require('opentype.js')
 const books = require('../data/books.json')
 const layouts = require('../lib/layouts')
-const fonts = require('../lib/fonts')
+// const fonts = require('../lib/fonts')
 const css = require('sheetify')
 
 css('./style.css')
@@ -49,22 +49,26 @@ var selectedBooks = [
   fewestPages, mostPages
 ].concat(books.reverse())
 
-fonts.load(() => {
-  opentype.load('fonts/ptsans/pt_sans-web-regular-webfont.ttf', function (err, font) {
-    opentype.load('fonts/opensansextra/opensans-extrabold-webfont.ttf', function (err, boldFont) {
-      // opentype.load('fonts/ptserif/pt_serif-web-bold-webfont.ttf', function (err, boldFont) {
-      // opentype.load('fonts/andada/andada-regular-webfont.ttf', function (err, boldFont) {
-      if (err) console.log(err)
-      for (let i = 0; i < layouts.all.length * 10; i++) {
-        const book = selectedBooks[i % selectedBooks.length]
-        // const makeCover = layouts.all[Math.floor(i / 10)]
-        const cover = layouts.bar({book, fonts, w, h })
-        // const cover = layouts.swissQuad({ book, fonts, w, h })
-        // const cover = layouts.rightLabel({ book, fonts, w, h })
-        // const cover = makeCover({ book, fonts, w, h })
-        cover.setAttribute('viewBox', `0 0 ${w} ${h}`)
-        coversContainer.appendChild(cover)
-      }
-    })
+// fonts.load(() => {
+opentype.load('fonts/ptsans/pt_sans-web-regular-webfont.ttf', function (err, font) {
+  opentype.load('fonts/opensansextra/opensans-extrabold-webfont.ttf', function (err, boldFont) {
+    const fonts = {
+      PTSans: font,
+      OpenSansExtraBold: boldFont
+    }
+    // opentype.load('fonts/ptserif/pt_serif-web-bold-webfont.ttf', function (err, boldFont) {
+    // opentype.load('fonts/andada/andada-regular-webfont.ttf', function (err, boldFont) {
+    if (err) console.log(err)
+    for (let i = 0; i < layouts.all.length * 10; i++) {
+      const book = selectedBooks[i % selectedBooks.length]
+      // const makeCover = layouts.all[Math.floor(i / 10)]
+      const cover = layouts.bar({book, fonts, w, h })
+      // const cover = layouts.swissQuad({ book, fonts, w, h })
+      // const cover = layouts.rightLabel({ book, fonts, w, h })
+      // const cover = makeCover({ book, fonts, w, h })
+      cover.setAttribute('viewBox', `0 0 ${w} ${h}`)
+      coversContainer.appendChild(cover)
+    }
   })
 })
+// })
