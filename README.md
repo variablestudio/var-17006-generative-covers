@@ -2,13 +2,13 @@
 
 Generative Book Covers for Biblioteka Otwartej Nauki http://bon.edu.pl
 
-# Requirements
+## Requirements
 
 - Node.js v6+
 
-# Usage
+## Usage
 
-## From command line
+### From command line
 
 ```sh
 # clone the repo
@@ -22,7 +22,7 @@ npm install
 node index.js -a "Jacek Jowalski" -t "Generatywne okładki" -o cover.svg
 ```
 
-### Available options:
+#### Available options:
 ```text
 node index.js [options]
 
@@ -38,7 +38,7 @@ node index.js [options]
 -h, --help                 Output usage information
 ```
 
-## As a module
+### As a module
 
 ```sh
 # create new project
@@ -66,7 +66,7 @@ const svg = makeCover(book)
 console.log(svg) //
 ```
 
-# Credits
+## Credits
 
 - Marcin Ignac - idea, design, code
 - Vladimir Kuchinov - typography, design, code
